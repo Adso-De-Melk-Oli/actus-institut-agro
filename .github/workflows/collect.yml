@@ -13,6 +13,14 @@ on:
         description: "Aperçu du digest pour une date (ex. 2026-11-05T05:20:00Z)"
         type: string
         default: ""
+      preview_only:
+        description: "Aperçu seul, sans relever les sites"
+        type: boolean
+        default: false
+      preview_fresh:
+        description: "Aperçu : contenus à marquer comme nouveaux (identifiants séparés par des virgules)"
+        type: string
+        default: ""
 
 permissions:
   contents: write
@@ -39,6 +47,8 @@ jobs:
         env:
           DEBUG: ${{ inputs.debug && '1' || '0' }}
           PREVIEW_AT: ${{ inputs.preview_at }}
+          PREVIEW_ONLY: ${{ inputs.preview_only && '1' || '0' }}
+          PREVIEW_FRESH: ${{ inputs.preview_fresh }}
       - name: Enregistrer les nouveautés
         run: |
           git config user.name "actus-bot"

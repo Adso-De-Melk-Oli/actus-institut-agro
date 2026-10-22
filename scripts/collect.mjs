@@ -291,6 +291,19 @@ const SOURCES = {
 let previous = { articles: [] };
 try { previous = JSON.parse(await readFile(OUT, "utf8")); } catch {}
 
+// aperçu seul (PREVIEW_ONLY=1) : aucun site n'est relevé, data/articles.json et le vrai digest restent intacts ;
+// PREVIEW_FRESH=id1,id2 marque ces contenus comme nouveaux pour la démonstration
+if (process.env.PREVIEW_ONLY === "1" && process.env.PREVIEW_AT) {
+  const at = new Date(process.env.PREVIEW_AT);
+  const fresh = new Set((process.env.PREVIEW_FRESH || "").split(",").map(x => x.trim()).filter(Boolean));
+  const data = { sources: Object.fromEntries(Object.keys(previous.sources ?? {}).map(k => [k, { ...previous.sources[k], ok: true }])),
+    articles: previous.articles.map(a => fresh.has(a.id) ? { ...a, firstSeen: new Date(at - 12 * 3600e3).toISOString() } : a) };
+  const pv = buildDigest(data, at, await makeThumbs(data, at, "data/preview/thumbs"));
+  await writeFile("data/preview/digest.json", JSON.stringify(pv, null, 1) + "\n");
+  console.log(`Aperçu du ${pv.forDate} : ${pv.subject} (${pv.images.length} photos)`);
+  process.exit(0);
+}
+
 const key = a => `${a.kind}|${a.url}`;
 const byKey = new Map(previous.articles.map(a => [key(a), a]));
 const status = {};
