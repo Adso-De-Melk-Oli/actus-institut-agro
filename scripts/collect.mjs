@@ -382,7 +382,9 @@ async function makeThumbs(data, at, dir) {
   for (const f of await readdir(dir)) if (!Object.values(thumbs).includes(`${dir}/${f}`)) await unlink(`${dir}/${f}`);
   return thumbs;
 }
-const thumbs = await makeThumbs({ sources: status, articles }, NOW, "data/thumbs");
+// photos jointes seulement si l'e-mail est envoyé par GitHub (secrets GMAIL_USER / GMAIL_APP_PASSWORD) :
+// l'envoi par l'outil Gmail de Claude ne permet pas de joindre les images de façon fiable
+const thumbs = process.env.GMAIL_USER ? await makeThumbs({ sources: status, articles }, NOW, "data/thumbs") : {};
 const digest = buildDigest({ sources: status, articles }, NOW, thumbs);
 // aperçu : PREVIEW_AT=2026-11-05T05:20:00Z prépare le digest de cette date dans data/preview/, sans toucher au vrai
 if (process.env.PREVIEW_AT) {
