@@ -41,7 +41,7 @@ async function allowedByRobots(url) {
   if (!robotsCache.has(u.origin)) {
     let rules = [];
     try {
-      const res = await fetch(u.origin + "/robots.txt", { headers: { "User-Agent": UA } });
+      const res = await fetch(u.origin + "/robots.txt", { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(10_000) });
       if (res.ok) {
         let applies = false;
         for (const raw of (await res.text()).split(/\r?\n/)) {
@@ -60,7 +60,18 @@ async function allowedByRobots(url) {
 async function get(url) {
   if (!(await allowedByRobots(url))) throw new Error(`robots.txt interdit ${url}`);
   await sleep(400); // politesse
-  const res = await fetch(url, { headers: { "User-Agent": UA, "Accept-Language": "fr" }, redirect: "follow" });
+  // 20 s maximum par page, et un second essai : un site en panne ne doit pas bloquer les autres
+  let res;
+  for (let attempt = 1; ; attempt++) {
+    try {
+      res = await fetch(url, { headers: { "User-Agent": UA, "Accept-Language": "fr" }, redirect: "follow", signal: AbortSignal.timeout(20_000) });
+      if (res.status >= 500 && attempt < 2) throw new Error(`${res.status}`);
+      break;
+    } catch (e) {
+      if (attempt >= 2) throw new Error(`${url} injoignable (${e.name === "TimeoutError" ? "pas de réponse en 20 s" : e.message})`);
+      await sleep(5000);
+    }
+  }
   if (!res.ok) throw new Error(`${res.status} sur ${url}`);
   const body = await res.text();
   if (DEBUG && snapshots++ < 40) { // mode diagnostic : copie des pages lues, pour ajuster les règles de lecture
@@ -112,6 +123,14 @@ async function detail(url) {
     } catch {}
   });
   const ogImage = $('meta[property="og:image"]').attr("content");
+  // titre : celui du contenu, pas celui du bandeau (« Agenda », « À la une ») ni le slogan du site
+  const stripSite = t => clean(t).replace(/\s+[|–—-]\s+[^|–—]*Institut Agro[^|–—]*$/i, "").replace(/\s+\|\s+.*$/, "");
+  const refTitles = [$('meta[property="og:title"]').attr("content"), $("title").first().text()].filter(Boolean).map(stripSite).filter(t => t.length > 3);
+  const normT = t => clean(t).toLowerCase().replace(/[«»"“”'’]/g, "").replace(/\s+/g, " ");
+  const headings = $("h1, h2").toArray()
+    .filter(h => !/sr-only|visually-hidden|element-invisible/.test($(h).attr("class") || "") && !/^block-|breadcrumb/.test($(h).attr("id") || "") && !$(h).closest("header, nav, footer, [class*=banner], [class*=bandeau], [class*=hero]").length)
+    .map(h => clean($(h).text())).filter(Boolean);
+  const pageTitle = headings.find(h => refTitles.some(r => normT(r) === normT(h))) ?? refTitles[0] ?? headings[0];
   $("header, footer, nav, script, style, noscript, form, [class*=cookie], [class*=breadcrumb], [class*=share]").remove();
   const root = $("main").first().length ? $("main").first() : $("body");
   const h1 = clean(root.find("h1").first().text());
@@ -123,8 +142,11 @@ async function detail(url) {
   const image = [ogImage, imgOf(ld.image), firstImg].filter(Boolean).map(u => new URL(u, url).toString()).find(isPhoto);
   const loc = ld.location ? [ld.location.name, [].concat(ld.location.address?.streetAddress ?? [])[0]].filter(Boolean).join(" · ") : undefined;
   const ldWhen = ld.startDate ? { date: String(ld.startDate).slice(0, 10), ...(ld.endDate && String(ld.endDate).slice(0, 10) !== String(ld.startDate).slice(0, 10) ? { endDate: String(ld.endDate).slice(0, 10) } : {}) } : null;
-  const domPlace = placeEl && placeEl.length < 120 ? placeEl.replace(/^(Lieu|Où|Adresse)\s*:?\s*/i, "") : undefined;
-  return { h1, lead, text, image, ldWhen, place: cleanPlace(loc || domPlace || placeIn(text)) };
+  // Drupal (Rennes-Angers) : <time datetime="…">Samedi 24 octobre 2026 - 14:00</time><p>Campus de Rennes</p>
+  const afterTime = clean(root.find("time[datetime]").first().next("p").text());
+  const timePlace = afterTime && afterTime.length < 80 && !/\d{4}/.test(afterTime) ? afterTime : undefined;
+  const domPlace = timePlace ?? placeEl && placeEl.length < 120 ? placeEl.replace(/^(Lieu|Où|Adresse)\s*:?\s*/i, "") : undefined;
+  return { h1: pageTitle || h1, lead, text, image, ldWhen, place: cleanPlace(loc || domPlace || placeIn(text)) };
 }
 /** Une vraie photo, pas un logo, une icône ou un pixel de suivi. */
 function isPhoto(src) { return /\.(jpe?g|png|webp|avif|gif)(\?|$)/i.test(src) && !/logo|icon|picto|sprite|avatar|placeholder|blank|pixel/i.test(src); }
