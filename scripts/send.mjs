@@ -9,7 +9,10 @@ import { readFile, writeFile } from "node:fs/promises";
 import nodemailer from "nodemailer";
 import { parisDay } from "./digest.mjs";
 
-const TO = process.env.MAIL_TO || "olivier.piau@supagro.fr";
+// destinataires du digest : secret DIGEST_TO (adresses séparées par des virgules), pour ne pas les publier dans
+// ce dépôt public ; essais et alertes ne vont qu'à l'administrateur
+const ADMIN = "olivier.piau@supagro.fr";
+const DIGEST_TO = (process.env.DIGEST_TO || ADMIN).split(/[,;\s]+/).map(x => x.trim()).filter(x => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(x));
 const { GMAIL_USER, GMAIL_APP_PASSWORD } = process.env;
 const TEST = process.env.MODE === "test";
 const now = new Date();
@@ -41,11 +44,12 @@ try {
     catch { console.warn(`photo manquante : ${img.path}`); }
   }
   const subject = (TEST ? "[Test] " : "") + digest.subject;
-  const info = await transport.sendMail({ from, to: TO, subject, html: digest.html, text: digest.text, attachments });
-  console.log(`Envoyé à ${TO} : ${subject} (${attachments.length} photos) — ${info.messageId}`);
+  const to = TEST ? [ADMIN] : DIGEST_TO;
+  const info = await transport.sendMail({ from, to, subject, html: digest.html, text: digest.text, attachments });
+  console.log(`Envoyé à ${to.length} destinataire${to.length > 1 ? "s" : ""} : ${subject} (${attachments.length} photos) — ${info.messageId}`);
 
   if (digest.alert && !TEST) {
-    await transport.sendMail({ from, to: TO, subject: digest.alert.subject, text: digest.alert.text });
+    await transport.sendMail({ from, to: ADMIN, subject: digest.alert.subject, text: digest.alert.text });
     console.log(`Alerte envoyée : ${digest.alert.subject}`);
   }
   if (!TEST) await writeFile("data/sent.json", JSON.stringify({ digestFor: today, sentAt: now.toISOString(), subject }, null, 1) + "\n");

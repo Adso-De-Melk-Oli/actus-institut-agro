@@ -38,6 +38,7 @@ jobs:
         env:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          DIGEST_TO: ${{ secrets.DIGEST_TO }}   # destinataires du digest, séparés par des virgules
           MODE: ${{ inputs.test && 'test' || 'daily' }}
       - name: Noter l'envoi
         if: ${{ !inputs.test }}
