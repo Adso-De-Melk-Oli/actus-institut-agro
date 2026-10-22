@@ -90,35 +90,44 @@ function dropLeadingDate(text) {
 }
 const goodSummary = (t, title) => t && t.length >= 40 && t.toLowerCase() !== String(title).toLowerCase();
 
+/** Charge du HTML en séparant les blocs par une espace (sinon « Montpellier</div><div>Campus » devient « MontpellierCampus »). */
+const loadSpaced = html => cheerio.load(String(html).replace(/<br\s*\/?>/gi, " ").replace(/<\/(p|div|li|h[1-6]|span|td|dd|dt|address|a|strong|em)>/gi, "$& "));
+/** Nettoie un lieu : sans « + Google Map », sans doublons, raisonnablement court. */
+function cleanPlace(p) {
+  if (!p) return undefined;
+  let t = clean(p).replace(/\+?\s*Google\s*Maps?/gi, "").replace(/^(Lieu|Où|Adresse)\s*:?\s*/i, "").replace(/[\s,·-]+$/, "");
+  if (t.length > 90) t = t.slice(0, 90).replace(/[,·-][^,·-]*$/, "");
+  return t.length >= 3 ? t : undefined;
+}
 /** Lit la page d'un contenu : titre, texte, premier paragraphe, lieu. */
 async function detail(url) {
-  const $ = cheerio.load(await get(url));
+  const $ = loadSpaced(await get(url));
+  // lu AVANT le nettoyage, qui retire les balises script
+  let ld = {};
+  $('script[type="application/ld+json"]').each((_, sc) => {
+    try {
+      const walk = o => { if (!o || typeof o !== "object") return; if (Array.isArray(o)) return o.forEach(walk);
+        if (/Event$/.test(String(o["@type"])) && o.startDate && !ld.startDate) ld = o; Object.values(o).forEach(walk); };
+      walk(JSON.parse($(sc).html()));
+    } catch {}
+  });
+  const ogImage = $('meta[property="og:image"]').attr("content");
   $("header, footer, nav, script, style, noscript, form, [class*=cookie], [class*=breadcrumb], [class*=share]").remove();
   const root = $("main").first().length ? $("main").first() : $("body");
   const h1 = clean(root.find("h1").first().text());
   const lead = clean(root.find("p").filter((_, p) => clean($(p).text()).length > 60).first().text());
   const placeEl = clean(root.find("[class*=lieu], [class*=location], [class*=venue], [class*=adresse], [class*=address], [class*=place]").first().text());
   const text = clean(root.text());
-  // fiche structurée schema.org (Drupal et WordPress la publient souvent) : dates et lieu fiables
-  let ld = {};
-  $('script[type="application/ld+json"]').each((_, sc) => {
-    try {
-      const walk = o => { if (!o || typeof o !== "object") return; if (Array.isArray(o)) return o.forEach(walk);
-        if (/Event$/.test(String(o["@type"])) && o.startDate && !ld.startDate) ld = o; Object.values(o).forEach(walk); };
-      walk(JSON.parse($(sc).contents().text()));
-    } catch {}
-  });
   const imgOf = v => typeof v === "string" ? v : Array.isArray(v) ? imgOf(v[0]) : v?.url;
-  const ogImage = $('meta[property="og:image"]').attr("content");
   const firstImg = root.find("img").toArray().map(i => $(i).attr("src") || $(i).attr("data-src")).find(src => src && isPhoto(src));
   const image = [ogImage, imgOf(ld.image), firstImg].filter(Boolean).map(u => new URL(u, url).toString()).find(isPhoto);
   const loc = ld.location ? [ld.location.name, [].concat(ld.location.address?.streetAddress ?? [])[0]].filter(Boolean).join(" · ") : undefined;
   const ldWhen = ld.startDate ? { date: String(ld.startDate).slice(0, 10), ...(ld.endDate && String(ld.endDate).slice(0, 10) !== String(ld.startDate).slice(0, 10) ? { endDate: String(ld.endDate).slice(0, 10) } : {}) } : null;
   const domPlace = placeEl && placeEl.length < 120 ? placeEl.replace(/^(Lieu|Où|Adresse)\s*:?\s*/i, "") : undefined;
-  return { h1, lead, text, image, ldWhen, place: loc || domPlace || placeIn(text) };
+  return { h1, lead, text, image, ldWhen, place: cleanPlace(loc || domPlace || placeIn(text)) };
 }
 /** Une vraie photo, pas un logo, une icône ou un pixel de suivi. */
-function isPhoto(src) { return /\.(jpe?g|png|webp)(\?|$)/i.test(src) && !/logo|icon|picto|sprite|avatar|placeholder|blank|pixel/i.test(src); }
+function isPhoto(src) { return /\.(jpe?g|png|webp|avif|gif)(\?|$)/i.test(src) && !/logo|icon|picto|sprite|avatar|placeholder|blank|pixel/i.test(src); }
 
 /* ---------- lecture RSS ---------- */
 
@@ -139,7 +148,7 @@ async function rss(url) {
 const ABS = (base, href) => new URL(href, base).toString().replace(/[#?].*$/, "");
 /** Liens de détail d'une page de liste, avec le bloc qui les entoure (titre, date, chapô). */
 function listing(html, base, pathRe) {
-  const $ = cheerio.load(html);
+  const $ = loadSpaced(html);
   $("header, footer, nav, script, style, noscript").remove();
   const seen = new Map();
   $("a[href]").each((_, a) => {
@@ -180,7 +189,7 @@ async function events(cands, { titleFromPage = false } = {}) {
     const fromList = dropLeadingDate(cleanDesc(c.teaser || c.text || "", title));
     const fromPage = dropLeadingDate(cleanDesc(d.lead ?? "", title));
     const summary = goodSummary(fromList, title) ? fromList : goodSummary(fromPage, title) ? fromPage : (fromList !== title ? fromList : "");
-    out.push({ kind: "agenda", title, url: c.url, ...when, place: c.place ?? d.place, image: d.image ?? c.image, summary: summarize(summary) });
+    out.push({ kind: "agenda", title, url: c.url, ...when, place: cleanPlace(c.place) ?? d.place, image: d.image ?? c.image, summary: summarize(summary) });
   }
   return out;
 }
