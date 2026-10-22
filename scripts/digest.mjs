@@ -11,7 +11,8 @@ const SCHOOLS = [
   ["rennes", "Institut Agro Rennes-Angers", "#1f6fd1", "#e5effb"],
   ["fondation", "Fondation de l'Institut Agro", "#0e7f81", "#e1f2f2"],
 ];
-export const MAX_PHOTOS = 6;
+export const MAX_PHOTOS = 15; // vignettes de 4 Ko environ
+export const SCHOOL_COLORS = Object.fromEntries(SCHOOLS.map(([k, l, c]) => [k, { label: l, color: c }]));
 const LABEL = Object.fromEntries(SCHOOLS.map(([k, l]) => [k, l]));
 const CAMPUS = /campus|gaillarde|lavalette|florac|institut agro|agrocampus|amphith|rennes|angers|dijon|montpellier|viala|saint[- ]brieuc/i;
 
@@ -78,10 +79,12 @@ export function buildDigest(data, now = new Date(), thumbs = {}) {
 
   // images jointes : cid:att0, cid:att1… dans l'ordre d'apparition
   const images = [];
+  // une photo, ou à défaut la vignette de remplacement de l'école (une seule pièce jointe par école)
   const photo = (a, w, h) => {
-    if (!thumbs[a.id]) return "";
-    let i = images.findIndex(x => x.id === a.id);
-    if (i < 0) { images.push({ id: a.id, path: thumbs[a.id] }); i = images.length - 1; }
+    const key = thumbs[a.id] ? a.id : thumbs[`ph:${a.source}`] ? `ph:${a.source}` : null;
+    if (!key) return "";
+    let i = images.findIndex(x => x.id === key);
+    if (i < 0) { images.push({ id: key, path: thumbs[key] }); i = images.length - 1; }
     return `<img src="cid:att${i}" width="${w}" height="${h}" alt="" style="display:block;width:${w}px;height:${h}px;border:0;border-radius:10px">`;
   };
   const school = src => SCHOOLS.find(s => s[0] === src) ?? [src, LABEL[src] ?? src, "#6e6e73", "#f0f0f2"];

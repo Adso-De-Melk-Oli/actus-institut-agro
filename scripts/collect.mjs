@@ -9,7 +9,7 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import * as cheerio from "cheerio";
 import { XMLParser } from "fast-xml-parser";
 import { parseFrenchDates, ymd } from "./dates.mjs";
-import { buildDigest, parisDay, photoCandidates } from "./digest.mjs";
+import { buildDigest, parisDay, photoCandidates, SCHOOL_COLORS } from "./digest.mjs";
 import sharp from "sharp";
 import { readdir, unlink } from "node:fs/promises";
 
@@ -379,8 +379,29 @@ async function makeThumbs(data, at, dir) {
       thumbs[a.id] = path;
     } catch (e) { console.warn(`vignette ${a.id} : ${e.message}`); }
   }
+  // vignettes de remplacement, une par école, pour les contenus sans photo
+  for (const [src, { label, color }] of Object.entries(SCHOOL_COLORS)) {
+    const path = `${dir}/_ph-${src}.jpg`;
+    try { await sharp(Buffer.from(placeholderSvg(label, color))).jpeg({ quality: 75, mozjpeg: true }).toFile(path); thumbs[`ph:${src}`] = path; }
+    catch (e) { console.warn(`vignette de remplacement ${src} : ${e.message}`); }
+  }
   for (const f of await readdir(dir)) if (!Object.values(thumbs).includes(`${dir}/${f}`)) await unlink(`${dir}/${f}`);
   return thumbs;
+}
+/** Vignette de remplacement 180 × 120 : couleur de l'école, cercles en filigrane, nom de l'école. */
+function placeholderSvg(label, color) {
+  const name = label.replace(/^Institut Agro /, "").replace(/^Fondation de l'Institut Agro$/, "Fondation").replace(/^L'Institut Agro$/, "Institut Agro");
+  const eyebrow = /^Fondation/.test(label) ? "DE L'INSTITUT AGRO" : /^L'Institut/.test(label) ? "L'" : "INSTITUT AGRO";
+  const esc = t => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/'/g, "&#39;");
+  const size = name.length > 11 ? 19 : 23;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="360" height="240" viewBox="0 0 180 120">
+  <rect width="180" height="120" fill="${color}"/>
+  <circle cx="158" cy="18" r="46" fill="#ffffff" fill-opacity=".12"/>
+  <circle cx="150" cy="104" r="26" fill="#ffffff" fill-opacity=".08"/>
+  <circle cx="22" cy="118" r="34" fill="#000000" fill-opacity=".08"/>
+  ${eyebrow === "L'" ? "" : `<text x="14" y="${/Fondation/.test(label) ? 70 : 62}" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="8.5" font-weight="700" letter-spacing="1.2" fill="#ffffff" fill-opacity=".8">${esc(eyebrow)}</text>`}
+  <text x="14" y="${/Fondation/.test(label) ? 57 : 86}" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="${size}" font-weight="700" fill="#ffffff">${esc(name)}</text>
+</svg>`;
 }
 // photos jointes seulement si l'e-mail est envoyé par GitHub (secrets GMAIL_USER / GMAIL_APP_PASSWORD) :
 // l'envoi par l'outil Gmail de Claude ne permet pas de joindre les images de façon fiable
