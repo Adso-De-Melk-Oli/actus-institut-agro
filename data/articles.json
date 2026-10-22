@@ -96,7 +96,8 @@
    "url": "https://www.institut-agro-montpellier.fr/agenda/journee-scientifique-controverse-production-transition-agriculture",
    "id": "mtp-journee-scientifique-controverse",
    "image": "https://www.institut-agro-montpellier.fr/sites/supagro/files/styles/max_1440x940/public/media/2026/09/25/journee-scientifique_controverse_bandeau-IAM.png.webp?itok=12M-jlTA",
-   "firstSeen": "2026-10-21T00:00:00.000Z"
+   "firstSeen": "2026-10-21T00:00:00.000Z",
+   "remote": true
   },
   {
    "date": "2026-11-05",
@@ -106,7 +107,7 @@
    "title": "Colloque ” Couvrir pour produire : promesses et limites des protections physiques”",
    "url": "https://fondation-institut-agro.fr/event/colloque-couvrir-pour-produire-promesses-et-limites-des-protections-physiques/",
    "id": "fon-ag-colloque-couvrir-pour-produire",
-   "place": "IA Montpellier",
+   "place": "Institut Agro Montpellier",
    "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/09/affiche_Couvrir-pour-produire_V3.avif",
    "firstSeen": "2026-10-21T00:00:00.000Z"
   },
@@ -273,7 +274,8 @@
    "url": "https://www.institut-agro-montpellier.fr/agenda/episodes-cevenols-education-par-les-pairs",
    "id": "mtp-ag-episodes-cevenols-pairs",
    "image": "https://www.institut-agro-montpellier.fr/sites/supagro/files/styles/max_1440x940/public/media/2024/10/08/episodes-cevenols-site-mtp.png.webp?itok=MEHoPtiK",
-   "firstSeen": "2026-10-21T00:00:00.000Z"
+   "firstSeen": "2026-10-21T00:00:00.000Z",
+   "remote": true
   },
   {
    "date": "2026-09-23",
@@ -329,7 +331,8 @@
    "url": "https://www.institut-agro-montpellier.fr/agenda/webconference-alimentation-activite-physique-sante",
    "id": "mtp-ag-alimentation-activite-physique",
    "image": "https://www.institut-agro-montpellier.fr/sites/supagro/files/styles/max_1440x940/public/media/2024/10/08/episodes-cevenols-site-mtp.png.webp?itok=MEHoPtiK",
-   "firstSeen": "2026-10-21T00:00:00.000Z"
+   "firstSeen": "2026-10-21T00:00:00.000Z",
+   "remote": true
   },
   {
    "date": "2026-09-08T10:12:13.000Z",

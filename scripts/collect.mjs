@@ -9,7 +9,9 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import * as cheerio from "cheerio";
 import { XMLParser } from "fast-xml-parser";
 import { parseFrenchDates, ymd } from "./dates.mjs";
-import { buildDigest, parisDay } from "./digest.mjs";
+import { buildDigest, parisDay, photoCandidates } from "./digest.mjs";
+import sharp from "sharp";
+import { readdir, unlink } from "node:fs/promises";
 
 const OUT = "data/articles.json";
 const UA = "ActusInstitutAgroBot/1.0 (+https://github.com/Adso-De-Melk-Oli/actus-institut-agro)";
@@ -107,7 +109,8 @@ const loadSpaced = html => cheerio.load(String(html).replace(/<br\s*\/?>/gi, " "
 /** Nettoie un lieu : sans « + Google Map », sans doublons, raisonnablement court. */
 function cleanPlace(p) {
   if (!p) return undefined;
-  let t = clean(cheerio.load(`<p>${p}</p>`)("p").text()).replace(/\+?\s*Google\s*Maps?/gi, "").replace(/^(Lieu|Où|Adresse)\s*:?\s*/i, "").replace(/[\s,·-]+$/, "");
+  let t = clean(cheerio.load(`<p>${p}</p>`)("p").text())
+    .replace(/\bIA\s+(Montpellier|Rennes|Angers|Rennes-Angers|Dijon)\b/g, "Institut Agro $1").replace(/\+?\s*Google\s*Maps?/gi, "").replace(/^(Lieu|Où|Adresse)\s*:?\s*/i, "").replace(/[\s,·-]+$/, "");
   if (t.length > 90) t = t.slice(0, 90).replace(/[,·-][^,·-]*$/, "");
   return t.length >= 3 ? t : undefined;
 }
@@ -212,9 +215,16 @@ async function events(cands, { titleFromPage = false } = {}) {
     const fromList = dropLeadingDate(cleanDesc(c.teaser || c.text || "", title));
     const fromPage = dropLeadingDate(cleanDesc(d.lead ?? "", title));
     const summary = goodSummary(fromList, title) ? fromList : goodSummary(fromPage, title) ? fromPage : (fromList !== title ? fromList : "");
-    out.push({ kind: "agenda", title, url: c.url, ...when, place: cleanPlace(c.place) ?? d.place, image: d.image ?? c.image, summary: summarize(summary) });
+    const remote = isRemote([title, summary, c.place, d.place, c.text, d.lead].filter(Boolean).join(" "));
+    out.push({ kind: "agenda", title, url: c.url, ...when, ...(remote ? { remote: true } : {}), place: cleanPlace(c.place) ?? d.place, image: d.image ?? c.image, summary: summarize(summary) });
   }
   return out;
+}
+/** Événement entièrement à distance (webinaire, visio…), pas un événement hybride. */
+function isRemote(text) {
+  const t = clean(text);
+  return /(^|[\s(«"’'])à distance\b|webinaire|webinar|webconférence|visioconférence|100 ?% en ligne|entièrement en ligne/i.test(t)
+    && !/(ou|et) (en )?(streaming|ligne|à distance)|(ou|et) en présentiel|hybride/i.test(t);
 }
 function placeIn(text) {
   const m = clean(text).match(/(?:Lieu|Où)\s*:?\s*([^|•\n]{3,80}?)(?=\s{2,}|\s(?:Date|Horaire|Tarif|Inscription|Gratuit|Lire|En savoir)|$)/i);
@@ -343,7 +353,31 @@ for (const s of Object.keys(status)) {
 await mkdir("data", { recursive: true });
 await writeFile(OUT, JSON.stringify({ updatedAt: NOW.toISOString(), sources: status, articles }, null, 1) + "\n");
 console.log(`\n${articles.length} contenus écrits dans ${OUT}`);
-const digest = buildDigest({ sources: status, articles }, NOW);
+// vignettes JPEG légères des contenus mis en avant dans le digest (jointes à l'e-mail)
+async function makeThumbs(data, at, dir) {
+  await mkdir(dir, { recursive: true });
+  const thumbs = {};
+  for (const a of photoCandidates(data, at)) {
+    try {
+      const res = await fetch(a.image, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(20_000) });
+      if (!res.ok) throw new Error(res.status);
+      const path = `${dir}/${a.id}.jpg`;
+      await sharp(Buffer.from(await res.arrayBuffer())).resize(180, 120, { fit: "cover", position: "attention" }).jpeg({ quality: 60, mozjpeg: true }).toFile(path);
+      thumbs[a.id] = path;
+    } catch (e) { console.warn(`vignette ${a.id} : ${e.message}`); }
+  }
+  for (const f of await readdir(dir)) if (!Object.values(thumbs).includes(`${dir}/${f}`)) await unlink(`${dir}/${f}`);
+  return thumbs;
+}
+const thumbs = await makeThumbs({ sources: status, articles }, NOW, "data/thumbs");
+const digest = buildDigest({ sources: status, articles }, NOW, thumbs);
+// aperçu : PREVIEW_AT=2026-11-05T05:20:00Z prépare le digest de cette date dans data/preview/, sans toucher au vrai
+if (process.env.PREVIEW_AT) {
+  const at = new Date(process.env.PREVIEW_AT);
+  const pv = buildDigest({ sources: status, articles }, at, await makeThumbs({ sources: status, articles }, at, "data/preview/thumbs"));
+  await writeFile("data/preview/digest.json", JSON.stringify(pv, null, 1) + "\n");
+  console.log(`Aperçu du ${pv.forDate} : ${pv.subject} (${pv.images.length} photos)`);
+}
 await writeFile("data/digest.json", JSON.stringify(digest, null, 1) + "\n");
 console.log(`Digest du ${digest.forDate} : ${digest.subject}${digest.alert ? "\nAlerte : " + digest.alert.subject : ""}`);
 for (const [s, v] of Object.entries(status)) console.log(`  ${v.ok ? "✓" : "✗"} ${s} : ${v.actus} actus, ${v.agenda} événements relevés, ${v.count} en base${v.errors.length ? " — " + v.errors.join(" ; ") : ""}`);

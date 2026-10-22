@@ -9,6 +9,10 @@ on:
         description: "Afficher le détail de chaque source"
         type: boolean
         default: false
+      preview_at:
+        description: "Aperçu du digest pour une date (ex. 2026-11-05T05:20:00Z)"
+        type: string
+        default: ""
 
 permissions:
   contents: write
@@ -34,11 +38,12 @@ jobs:
         run: npm run collect
         env:
           DEBUG: ${{ inputs.debug && '1' || '0' }}
+          PREVIEW_AT: ${{ inputs.preview_at }}
       - name: Enregistrer les nouveautés
         run: |
           git config user.name "actus-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/articles.json data/digest.json
+          git add -A data
           if git diff --cached --quiet; then echo "Rien de nouveau"; exit 0; fi
           git commit -m "Relevé du $(date -u +%Y-%m-%d)"
           git push
