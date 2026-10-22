@@ -16,7 +16,10 @@ const now = new Date();
 const today = parisDay(now);
 const parisHour = +now.toLocaleString("en-GB", { timeZone: "Europe/Paris", hour: "2-digit", hour12: false });
 
-if (!GMAIL_USER || !GMAIL_APP_PASSWORD) { console.error("Secrets GMAIL_USER / GMAIL_APP_PASSWORD absents : rien n'est envoyé."); process.exit(1); }
+// « ::error:: » : la cause apparaît dans le résumé du run GitHub, pas seulement dans son journal
+const fail = msg => { console.log(`::error title=Envoi du digest::${msg}`); process.exit(1); };
+if (!GMAIL_USER || !GMAIL_APP_PASSWORD) fail(`Secret ${!GMAIL_USER ? "GMAIL_USER" : "GMAIL_APP_PASSWORD"} absent ou vide : vérifier son nom dans Settings → Secrets and variables → Actions.`);
+process.on("unhandledRejection", e => fail(`${e.code ?? ""} ${e.responseCode ?? ""} ${String(e.response ?? e.message).replace(/\s+/g, " ").slice(0, 300)}`));
 
 const file = TEST ? "data/preview/digest.json" : "data/digest.json";
 const digest = JSON.parse(await readFile(file, "utf8"));
