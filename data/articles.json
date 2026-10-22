@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-10-22T07:47:28.942Z",
+ "updatedAt": "2026-10-22T08:54:35.883Z",
  "sources": {
   "montpellier": {
    "ok": true,
@@ -9,17 +9,23 @@
    "count": 18
   },
   "rennes": {
-   "ok": true,
-   "actus": 5,
-   "agenda": 3,
-   "errors": [],
+   "ok": false,
+   "actus": 0,
+   "agenda": 0,
+   "errors": [
+    "actus : https://www.institut-agro-rennes-angers.fr/actualites injoignable (fetch failed)",
+    "agenda : https://www.institut-agro-rennes-angers.fr/agenda injoignable (fetch failed)"
+   ],
    "count": 8
   },
   "institut": {
-   "ok": true,
-   "actus": 6,
-   "agenda": 2,
-   "errors": [],
+   "ok": false,
+   "actus": 0,
+   "agenda": 0,
+   "errors": [
+    "actus : https://www.institut-agro.fr/fr/toutes-les-actualites injoignable (fetch failed)",
+    "agenda : https://www.institut-agro.fr/fr injoignable (fetch failed)"
+   ],
    "count": 8
   },
   "fondation": {
