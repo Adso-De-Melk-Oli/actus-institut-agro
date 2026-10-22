@@ -1,39 +1,47 @@
 {
- "updatedAt": "2026-10-22T08:54:35.883Z",
+ "updatedAt": "2026-10-22T09:20:04.970Z",
  "sources": {
   "montpellier": {
    "ok": true,
    "actus": 8,
    "agenda": 10,
    "errors": [],
-   "count": 18
+   "count": 18,
+   "failDays": 0
   },
   "rennes": {
    "ok": false,
    "actus": 0,
    "agenda": 0,
    "errors": [
-    "actus : https://www.institut-agro-rennes-angers.fr/actualites injoignable (fetch failed)",
-    "agenda : https://www.institut-agro-rennes-angers.fr/agenda injoignable (fetch failed)"
+    "actus : https://www.institut-agro-rennes-angers.fr/actualites injoignable (UND_ERR_CONNECT_TIMEOUT)",
+    "agenda : https://www.institut-agro-rennes-angers.fr/agenda injoignable (UND_ERR_CONNECT_TIMEOUT)"
    ],
-   "count": 8
+   "count": 8,
+   "failDays": 1,
+   "lastFailDay": "2026-10-22",
+   "failingSince": "2026-10-22"
   },
   "institut": {
    "ok": false,
    "actus": 0,
    "agenda": 0,
    "errors": [
-    "actus : https://www.institut-agro.fr/fr/toutes-les-actualites injoignable (fetch failed)",
-    "agenda : https://www.institut-agro.fr/fr injoignable (fetch failed)"
+    "actus : https://www.institut-agro.fr/fr/toutes-les-actualites injoignable (UND_ERR_CONNECT_TIMEOUT)",
+    "agenda : https://www.institut-agro.fr/fr injoignable (UND_ERR_CONNECT_TIMEOUT)"
    ],
-   "count": 8
+   "count": 8,
+   "failDays": 1,
+   "lastFailDay": "2026-10-22",
+   "failingSince": "2026-10-22"
   },
   "fondation": {
    "ok": true,
    "actus": 10,
    "agenda": 3,
    "errors": [],
-   "count": 13
+   "count": 13,
+   "failDays": 0
   }
  },
  "articles": [
