@@ -145,7 +145,7 @@ async function detail(url) {
   // Drupal (Rennes-Angers) : <time datetime="…">Samedi 24 octobre 2026 - 14:00</time><p>Campus de Rennes</p>
   const afterTime = clean(root.find("time[datetime]").first().next("p").text());
   const timePlace = afterTime && afterTime.length < 80 && !/\d{4}/.test(afterTime) ? afterTime : undefined;
-  const domPlace = timePlace ?? placeEl && placeEl.length < 120 ? placeEl.replace(/^(Lieu|Où|Adresse)\s*:?\s*/i, "") : undefined;
+  const domPlace = timePlace ?? (placeEl && placeEl.length < 120 ? placeEl.replace(/^(Lieu|Où|Adresse)\s*:?\s*/i, "") : undefined);
   return { h1: pageTitle || h1, lead, text, image, ldWhen, place: cleanPlace(loc || domPlace || placeIn(text)) };
 }
 /** Une vraie photo, pas un logo, une icône ou un pixel de suivi. */
