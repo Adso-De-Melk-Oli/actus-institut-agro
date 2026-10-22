@@ -95,7 +95,7 @@ const loadSpaced = html => cheerio.load(String(html).replace(/<br\s*\/?>/gi, " "
 /** Nettoie un lieu : sans « + Google Map », sans doublons, raisonnablement court. */
 function cleanPlace(p) {
   if (!p) return undefined;
-  let t = clean(p).replace(/\+?\s*Google\s*Maps?/gi, "").replace(/^(Lieu|Où|Adresse)\s*:?\s*/i, "").replace(/[\s,·-]+$/, "");
+  let t = clean(cheerio.load(`<p>${p}</p>`)("p").text()).replace(/\+?\s*Google\s*Maps?/gi, "").replace(/^(Lieu|Où|Adresse)\s*:?\s*/i, "").replace(/[\s,·-]+$/, "");
   if (t.length > 90) t = t.slice(0, 90).replace(/[,·-][^,·-]*$/, "");
   return t.length >= 3 ? t : undefined;
 }
