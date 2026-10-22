@@ -117,6 +117,11 @@ main{padding-block:24px 48px}
 .cover{position:relative;aspect-ratio:16/9;max-width:100%;overflow:hidden;color:#fff;isolation:isolate}
 .cover .mesh{position:absolute;inset:-20%;z-index:-1;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
 .card:hover .cover .mesh{transform:scale(1.08) rotate(2deg)}
+.cover .photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.card:hover .cover .photo{transform:scale(1.05)}
+.cover.has-photo::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.18) 0,transparent 30%,transparent 50%,rgba(0,0,0,.55) 100%)}
+.cover.has-photo .word{display:none}
+.ev .thumb{flex:0 0 54px;height:54px;border-radius:12px;object-fit:cover}
 .cover .top{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
 .cover .big{position:absolute;left:16px;bottom:10px;right:16px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
 .cover .day{font-size:64px;font-weight:800;letter-spacing:-.05em;line-height:.85;font-variant-numeric:tabular-nums;text-shadow:0 2px 20px rgba(0,0,0,.15)}
@@ -272,7 +277,7 @@ function card(a, i, featured=false){
   const s = SOURCES[a.source] || {label:a.source,color:"--muted"};
   const d = pdate(a.date);
   return `<a class="card${featured?" feature":""}" href="${esc(a.url)}" target="_blank" rel="noopener" style="--i:${i};--c:var(${s.color})">
-    <div class="cover"><div class="mesh" style="${mesh(a)}"></div>
+    <div class="cover${a.image?" has-photo":""}"><div class="mesh" style="${mesh(a)}"></div>${a.image?`<img class="photo" src="${esc(a.image)}" alt="" loading="${featured||i<6?"eager":"lazy"}" decoding="async" referrerpolicy="no-referrer" onerror="this.parentNode.classList.remove('has-photo');this.remove()">`:""}
       <div class="top"><span class="src">${esc(s.label)}</span>${a.kind==="agenda"?'<span class="kind">Agenda</span>':""}</div>
       <div class="big">${d?`<div><div class="day">${d.getDate()}</div><div class="mon">${MONTHS[d.getMonth()]} ${d.getFullYear()}</div></div>`:`<div class="mon">Sans date</div>`}<div class="word">${esc(keyword(a))}</div></div>
     </div>
