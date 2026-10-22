@@ -32,7 +32,7 @@ try {
     if (sent.digestFor === today) { console.log(`Digest du ${today} déjà envoyé.`); process.exit(0); }
   }
 
-  const transport = nodemailer.createTransport({ service: "gmail", auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD } });
+  const transport = nodemailer.createTransport({ service: "gmail", auth: { user: GMAIL_USER.trim(), pass: GMAIL_APP_PASSWORD.replace(/\s+/g, "") } });
   const from = `"Actus | L'Institut Agro" <${GMAIL_USER}>`;
   // les photos sont référencées dans le HTML par cid:att0, cid:att1… dans l'ordre de digest.images
   const attachments = [];
