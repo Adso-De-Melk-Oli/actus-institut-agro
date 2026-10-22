@@ -68,7 +68,7 @@ async function get(url) {
       if (res.status >= 500 && attempt < 2) throw new Error(`${res.status}`);
       break;
     } catch (e) {
-      if (attempt >= 2) throw new Error(`${url} injoignable (${e.name === "TimeoutError" ? "pas de réponse en 20 s" : e.message})`);
+      if (attempt >= 2) throw new Error(`${url} injoignable (${e.name === "TimeoutError" ? "pas de réponse en 20 s" : e.cause?.code ?? e.message})`);
       await sleep(5000);
     }
   }

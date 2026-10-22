@@ -66,7 +66,7 @@
    "place": "Campus La Gaillarde, Montpellier",
    "source": "institut",
    "summary": "18e conférence étudiante d'ELLS Universities : plus de 300 jeunes chercheurs autour des sciences du vivant durables.",
-   "title": "Agenda",
+   "title": "Sustainable Life Sciences: What ELLS for the Future?",
    "url": "https://www.institut-agro.fr/fr/agenda/sustainable-life-sciences-what-ells-future",
    "id": "ia-ag-sustainable-life-sciences-ells",
    "noImage": true
@@ -111,7 +111,7 @@
    "place": "Campus La Gaillarde, Montpellier",
    "source": "institut",
    "summary": "L'alliance ELLS fête ses 25 ans et son statut d'université européenne : assemblée générale et conférence étudiante.",
-   "title": "Agenda",
+   "title": "Assemblée générale ELLS Universities",
    "url": "https://www.institut-agro.fr/fr/agenda/assemblee-generale-ells-universities",
    "id": "ia-ag-ag-ells-universities",
    "noImage": true
@@ -121,10 +121,11 @@
    "kind": "agenda",
    "source": "rennes",
    "summary": "Une exposition pour découvrir l'univers des champignons.",
-   "title": "Agenda À la une",
+   "title": "Exposition mycologique",
    "url": "https://www.institut-agro-rennes-angers.fr/agenda/exposition-mycologique-0",
    "id": "ren-ag-exposition-mycologique",
-   "image": "https://www.institut-agro-rennes-angers.fr/files/images/evenements/Affiche-exposition-mycologique-2026.jpg"
+   "image": "https://www.institut-agro-rennes-angers.fr/files/images/evenements/Affiche-exposition-mycologique-2026.jpg",
+   "place": "Campus de Rennes"
   },
   {
    "date": "2026-10-19",
@@ -269,7 +270,7 @@
    "kind": "agenda",
    "source": "rennes",
    "summary": "Des hydrolysats de coproduits aquacoles pour réduire la dépendance des poissons carnivores aux poissons fourrage.",
-   "title": "Agenda À la une",
+   "title": "Soutenance de thèse de Mikaël Hérault",
    "url": "https://www.institut-agro-rennes-angers.fr/agenda/soutenance-de-these-de-mikael-herault",
    "id": "ren-ag-soutenance-mikael-herault",
    "noImage": true
@@ -289,7 +290,7 @@
    "kind": "agenda",
    "source": "rennes",
    "summary": "Visites guidées de la bibliothèque patrimoniale et du pavillon des collections.",
-   "title": "Agenda À la une",
+   "title": "Journées européennes du patrimoine",
    "url": "https://www.institut-agro-rennes-angers.fr/agenda/journees-europeennes-du-patrimoine-3",
    "id": "ren-ag-journees-patrimoine",
    "image": "https://www.institut-agro-rennes-angers.fr/files/images/actualites/illustrations/img-masure.jpg"
