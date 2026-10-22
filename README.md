@@ -18,6 +18,10 @@ Les actualités et l'agenda de l'Institut Agro, de ses écoles (Montpellier, Ren
 | Rennes-Angers | Pages Actualités et Agenda (flux RSS vide) |
 | Dijon | Non relevé : le site refuse les robots. Le site renvoie vers ses actus. |
 
+## Digest du matin
+
+Après chaque relevé, le robot compose `data/digest.json` : les nouveautés depuis le précédent digest, rangées par école, les événements du jour sur les campus et ceux des 7 prochains jours. Une tâche Claude l'envoie par e-mail à 7 h 00 du lundi au vendredi. Si une source reste en échec deux jours de relevé de suite, le fichier contient aussi une alerte, envoyée à part (puis rappelée chaque semaine tant que la panne dure).
+
 Si une source échoue, ses contenus de la veille sont conservés et l'encadré « Sources suivies » du site affiche « Partiel ». Les actus de plus de 12 mois et les événements terminés depuis plus de 6 mois sont retirés automatiquement.
 
 ## Lancer en local

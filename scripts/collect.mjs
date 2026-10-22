@@ -9,6 +9,7 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import * as cheerio from "cheerio";
 import { XMLParser } from "fast-xml-parser";
 import { parseFrenchDates, ymd } from "./dates.mjs";
+import { buildDigest, parisDay } from "./digest.mjs";
 
 const OUT = "data/articles.json";
 const UA = "ActusInstitutAgroBot/1.0 (+https://github.com/Adso-De-Melk-Oli/actus-institut-agro)";
@@ -295,7 +296,7 @@ for (const [name, src] of Object.entries(SOURCES)) {
         const id = old?.id ?? `${src.prefix}-${it.kind === "agenda" ? "ag-" : ""}${slugFromUrl(it.url)}`;
         const fresh = Object.fromEntries(Object.entries(it).filter(([, v]) => v !== undefined && v !== ""));
         // un résumé ou un lieu déjà connus sont conservés : ils ont pu être relus à la main
-        byKey.set(k, { ...old, ...fresh, id, source: name, summary: old?.summary || fresh.summary || "" });
+        byKey.set(k, { ...old, ...fresh, id, source: name, summary: old?.summary || fresh.summary || "", firstSeen: old?.firstSeen ?? NOW.toISOString() });
       }
       status[name][kind === "actus" ? "actus" : "agenda"] = items.length;
       if (DEBUG) console.log(`\n[${name}/${kind}] ${items.length}`, JSON.stringify(items.slice(0, 3), null, 1));
@@ -326,9 +327,23 @@ const articles = [...byKey.values()].filter(a => {
 }).sort((a, b) => String(b.date ?? "").localeCompare(String(a.date ?? "")));
 
 const counts = {}; for (const a of articles) counts[a.source] = (counts[a.source] || 0) + 1;
-for (const s of Object.keys(status)) status[s].count = counts[s] || 0;
+for (const s of Object.keys(status)) {
+  status[s].count = counts[s] || 0;
+  // jours de relevé consécutifs en échec (plusieurs relevés le même jour comptent pour un)
+  const prev = previous.sources?.[s] ?? {}; const day = parisDay(NOW);
+  if (status[s].ok) status[s].failDays = 0;
+  else {
+    const already = prev.lastFailDay === day;
+    status[s].failDays = already ? (prev.failDays || 1) : (prev.failDays || 0) + 1;
+    status[s].lastFailDay = day;
+    status[s].failingSince = status[s].failDays > 1 || already ? (prev.failingSince ?? day) : day;
+  }
+}
 
 await mkdir("data", { recursive: true });
 await writeFile(OUT, JSON.stringify({ updatedAt: NOW.toISOString(), sources: status, articles }, null, 1) + "\n");
 console.log(`\n${articles.length} contenus écrits dans ${OUT}`);
+const digest = buildDigest({ sources: status, articles }, NOW);
+await writeFile("data/digest.json", JSON.stringify(digest, null, 1) + "\n");
+console.log(`Digest du ${digest.forDate} : ${digest.subject}${digest.alert ? "\nAlerte : " + digest.alert.subject : ""}`);
 for (const [s, v] of Object.entries(status)) console.log(`  ${v.ok ? "✓" : "✗"} ${s} : ${v.actus} actus, ${v.agenda} événements relevés, ${v.count} en base${v.errors.length ? " — " + v.errors.join(" ; ") : ""}`);
