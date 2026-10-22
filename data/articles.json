@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-10-22T07:44:54.194Z",
+ "updatedAt": "2026-10-22T07:47:28.942Z",
  "sources": {
   "montpellier": {
    "ok": true,
@@ -34,22 +34,24 @@
   {
    "date": "2027-01-21",
    "kind": "agenda",
-   "place": "L’Institut Agro Montpellier 2 place Viala Montpellier, France + Google Map",
+   "place": "L&#8217;Institut Agro Montpellier · 2 place Viala",
    "source": "fondation",
    "summary": "Croiser données scientifiques et savoirs locaux pour une agriculture plus résiliente. Entrée gratuite.",
    "title": "Colloque “Décalage entre risque climatique modélisé et perçu : Comment concilier données scientifiques et savoirs locaux pour une agriculture résiliente ?”",
    "url": "https://fondation-institut-agro.fr/event/colloque-decalage-entre-risque-climatique-modelise-et-percu-comment-concilier-donnees-scientifiques-et-savoirs-locaux-pour-une-agriculture-resiliente/",
-   "id": "fon-ag-colloque-risque-climatique"
+   "id": "fon-ag-colloque-risque-climatique",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/09/Colloque-DECALAGE-ENTRE-RISQUE-CLIMATIQUE-MODELISE-ET-PERCU-janvier-2027.avif"
   },
   {
    "date": "2026-11-19",
    "kind": "agenda",
-   "place": "Amphithéâtre Paul Matagrin (Rennes) 65 rue de Saint Brieuc Rennes, 35042 France + Google Map",
+   "place": "Amphithéâtre Paul Matagrin (Rennes) · 65 rue de Saint Brieuc",
    "source": "fondation",
    "summary": "Installation, innovation et formation dans les systèmes d'élevage. Entrée gratuite.",
    "title": "Journée annuelle de la Chaire Futurs d’élevage sur le thème : “S’installer, innover, former : quels systèmes d’élevage et quels métiers ?”",
    "url": "https://fondation-institut-agro.fr/event/journee-annuelle-de-la-chaire-futurs-delevage-sur-le-theme-sinstaller-innover-former-quels-systemes-delevage-et-quels-metiers/",
-   "id": "fon-ag-journee-chaire-futurs-elevage"
+   "id": "fon-ag-journee-chaire-futurs-elevage",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/09/Chaire-futurs-delevage-journee-novembre-2026.avif"
   },
   {
    "date": "2026-11-06",
@@ -60,12 +62,13 @@
    "summary": "18e conférence étudiante d'ELLS Universities : plus de 300 jeunes chercheurs autour des sciences du vivant durables.",
    "title": "Agenda",
    "url": "https://www.institut-agro.fr/fr/agenda/sustainable-life-sciences-what-ells-future",
-   "id": "ia-ag-sustainable-life-sciences-ells"
+   "id": "ia-ag-sustainable-life-sciences-ells",
+   "noImage": true
   },
   {
    "date": "2026-11-05",
    "kind": "agenda",
-   "place": "L'Institut Agro MontpellierCampus de La Gaillarde2 place Pierre Viala34060 Montpellier - France",
+   "place": "Institut Agro Montpellier · Campus La Gaillarde",
    "source": "montpellier",
    "summary": "Le 5 novembre 2026 à La Gaillarde : regards croisés sur les protections physiques en viticulture et arboriculture, leurs effets sur les paysages et la biodiversité.",
    "title": "Colloque – Couvrir pour produire : promesses et limites des protections physiques - Regards croisés sur les innovations en viticulture et arboriculture",
@@ -76,7 +79,7 @@
   {
    "date": "2026-11-05",
    "kind": "agenda",
-   "place": "L'Institut Agro - Campus de Florac9 rue Célestin Freinet48400 Florac-Trois-Rivières - France",
+   "place": "Institut Agro - Campus de Florac · 9 rue Célestin Freinet 48400 Florac-Trois-Rivières",
    "source": "montpellier",
    "summary": "Journée à distance le 5 novembre 2026, destinée surtout aux enseignants de bac professionnel de l'enseignement agricole.",
    "title": "Journée scientifique « Controverse » : que faire de la tension entre production et transition en agriculture ?",
@@ -92,7 +95,8 @@
    "title": "Colloque ” Couvrir pour produire : promesses et limites des protections physiques”",
    "url": "https://fondation-institut-agro.fr/event/colloque-couvrir-pour-produire-promesses-et-limites-des-protections-physiques/",
    "id": "fon-ag-colloque-couvrir-pour-produire",
-   "place": "IA Montpellier"
+   "place": "IA Montpellier",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/09/affiche_Couvrir-pour-produire_V3.avif"
   },
   {
    "date": "2026-11-04",
@@ -103,7 +107,8 @@
    "summary": "L'alliance ELLS fête ses 25 ans et son statut d'université européenne : assemblée générale et conférence étudiante.",
    "title": "Agenda",
    "url": "https://www.institut-agro.fr/fr/agenda/assemblee-generale-ells-universities",
-   "id": "ia-ag-ag-ells-universities"
+   "id": "ia-ag-ag-ells-universities",
+   "noImage": true
   },
   {
    "date": "2026-10-24",
@@ -119,7 +124,7 @@
    "date": "2026-10-19",
    "endDate": "2026-10-21",
    "kind": "agenda",
-   "place": "L'Institut Agro MontpellierCampus de La Gaillarde2 place Pierre Viala34060 Montpellier - France",
+   "place": "Institut Agro Montpellier · Campus La Gaillarde",
    "source": "montpellier",
    "summary": "Rencontres sur la lutte biologique par les insectes, co-organisées par plusieurs équipes de recherche du campus.",
    "title": "EntoMontpellier 2026 : les 44e Journées des Entomophagistes réunissent la communauté de la lutte biologique",
@@ -151,7 +156,7 @@
    "date": "2026-10-10",
    "endDate": "2026-10-11",
    "kind": "agenda",
-   "place": "Paris Expo Porte de Versailles 1 Pl. de la Porte de Versailles 75015 Paris",
+   "place": "Paris Expo de Versailles · 1 Pl. de la Porte de Versailles",
    "source": "montpellier",
    "summary": "38e édition du salon organisé par L'Etudiant pour aider à préparer son projet de formation.",
    "title": "Salon des Grandes Ecoles de Paris : le temps fort de la rentrée pour bien préparer votre projet de formation",
@@ -184,7 +189,7 @@
   {
    "date": "2026-10-07",
    "kind": "agenda",
-   "place": "L'Institut Agro MontpellierCampus de La Gaillarde2 place Pierre Viala34060 Montpellier - France",
+   "place": "Institut Agro Montpellier · Campus La Gaillarde",
    "source": "montpellier",
    "summary": "INRAE, l'Institut Agro, l'IFV et leurs partenaires célèbrent les ressources génétiques de la vigne.",
    "title": "Journée technique consacrée aux ressources génétiques de la vigne pour marquer le 150ème anniversaire de la collection ampélographique de Vassal-Montpellier",
@@ -229,12 +234,13 @@
    "summary": "La Chaire Futurs d'élevage récompense des travaux de master 2 et de doctorat sur la durabilité des élevages.",
    "title": "Lancement du prix durabilité 2026 !",
    "url": "https://fondation-institut-agro.fr/lancement-du-prix-durabilite-2026/",
-   "id": "fon-prix-durabilite-2026"
+   "id": "fon-prix-durabilite-2026",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/09/Flyer-prix-de-la-chaire-durabilite-des-elevages-2026.avif"
   },
   {
    "date": "2026-09-24",
    "kind": "agenda",
-   "place": "L'Institut Agro - Campus de Florac9 rue Célestin Freinet48400 Florac-Trois-Rivières - France",
+   "place": "Institut Agro - Campus de Florac · 9 rue Célestin Freinet 48400 Florac-Trois-Rivières",
    "source": "montpellier",
    "summary": "Webconférence du cycle Épisodes Cévenols proposée par le campus de Florac.",
    "title": "Webinaire – De pair à pair : les enjeux d'une éducation à l'égalité et à la vie affective relationnelle et sexuelle",
@@ -259,7 +265,8 @@
    "summary": "Des hydrolysats de coproduits aquacoles pour réduire la dépendance des poissons carnivores aux poissons fourrage.",
    "title": "Agenda À la une",
    "url": "https://www.institut-agro-rennes-angers.fr/agenda/soutenance-de-these-de-mikael-herault",
-   "id": "ren-ag-soutenance-mikael-herault"
+   "id": "ren-ag-soutenance-mikael-herault",
+   "noImage": true
   },
   {
    "date": "2026-09-21",
@@ -284,7 +291,7 @@
   {
    "date": "2026-09-10",
    "kind": "agenda",
-   "place": "L'Institut Agro - Campus de Florac9 rue Célestin Freinet48400 Florac-Trois-Rivières - France",
+   "place": "Institut Agro - Campus de Florac · 9 rue Célestin Freinet 48400 Florac-Trois-Rivières",
    "source": "montpellier",
    "summary": "Webconférence du cycle Épisodes Cévenols du campus de Florac.",
    "title": "Webinaire – Les effets positifs de l’alimentation et de l’activité physique sur la santé",
@@ -309,7 +316,8 @@
    "summary": "Aide à la mobilité pour le stage à l'étranger des élèves ingénieurs de 2e année de l'Institut Agro Dijon.",
    "title": "Appel à candidature 2026-2027 : la Chaire Agroénergies propose une bourse à la mobilité pour les étudiants de 2e année !",
    "url": "https://fondation-institut-agro.fr/appel-a-candidature-2026-2027-la-chaire-agroenergies-propose-une-bourse-a-la-mobilite-pour-les-etudiants-de-2e-annee/",
-   "id": "fon-bourse-mobilite-agroenergies"
+   "id": "fon-bourse-mobilite-agroenergies",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/09/Photo_bourse-Agroenergies.avif"
   },
   {
    "date": "2026-09-07T10:24:07.000Z",
@@ -318,7 +326,8 @@
    "summary": "Concours ouvert aux étudiants et personnels de l'Institut Agro Dijon, porté par la Chaire Agroénergies.",
    "title": "Concours photo 2026-2027 : « Comment concilier transition énergétique et agroécologie ? »",
    "url": "https://fondation-institut-agro.fr/concours-photo-transition-energetique-et-agroecologie/",
-   "id": "fon-concours-photo-agroenergies"
+   "id": "fon-concours-photo-agroenergies",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/09/Photo_concours-agroenergies.avif"
   },
   {
    "date": "2026-07-29T13:36:46.000Z",
@@ -327,13 +336,14 @@
    "summary": "Près de 2 millions d'euros collectés en 2025 auprès de mécènes, partenaires et donateurs.",
    "title": "Revivez une année d’engagement à travers le rapport d’activité 2025 de la Fondation !",
    "url": "https://fondation-institut-agro.fr/rapport-dactivite-2025/",
-   "id": "fon-rapport-activite-2025"
+   "id": "fon-rapport-activite-2025",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/07/5-HD-LIVE2995-Thomas-HAZEBROUCK-photographe.avif"
   },
   {
    "date": "2026-07-20",
    "endDate": "2026-07-24",
    "kind": "agenda",
-   "place": "L'Institut Agro MontpellierCampus de La Gaillarde2 place Pierre Viala34060 Montpellier - France",
+   "place": "Institut Agro Montpellier · Campus La Gaillarde",
    "source": "montpellier",
    "summary": "Les spécialistes mondiaux de l'étude des acariens réunis sur le campus montpelliérain.",
    "title": "XVIIe Congrès international d'acarologie : Montpellier accueille les spécialistes mondiaux",
@@ -378,7 +388,8 @@
    "summary": "Restauration d'un modèle anatomique en papier mâché du XIXe siècle, patrimoine scientifique fragilisé.",
    "title": "Le Cheval d’Auzoux, un trésor à sauvegarder",
    "url": "https://fondation-institut-agro.fr/le-cheval-dauzoux-un-tresor-a-sauvegarder/",
-   "id": "fon-cheval-auzoux"
+   "id": "fon-cheval-auzoux",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/07/focus_cheval-Auzoux-devoilement.avif"
   },
   {
    "kind": "agenda",
@@ -389,7 +400,7 @@
    "summary": "Le campus La Gaillarde accueille la 15e édition de la conférence « Levures, Modèles et Outils » (LMO15). Pendant trois jours, des chercheur·ses venu·es de toute la francophonie se retrouveront à…",
    "id": "mtp-ag-conference-lmo15-levures-recherche-francophone-montpellier-2026",
    "source": "montpellier",
-   "place": "L'Institut Agro MontpellierCampus de La Gaillarde2 place Pierre Viala34060 Montpellier - France",
+   "place": "Institut Agro Montpellier · Campus La Gaillarde",
    "image": "https://www.institut-agro-montpellier.fr/sites/supagro/files/styles/max_1440x940/public/media/2026/04/21/lmo-levure-mod%C3%A8les-outils.jpg.webp?itok=H8m4_tSY"
   },
   {
@@ -449,7 +460,8 @@
    "summary": "La Chaire Tech Agro Sup a réuni innovation scientifique, pédagogie active et enjeux de société le 29 janvier 2026.",
    "title": "DATA AGRO 2026 : lorsque science et pédagogie se rencontrent",
    "url": "https://fondation-institut-agro.fr/data-agro-2026-lorsque-science-et-pedagogie-se-rencontrent/",
-   "id": "fon-data-agro-2026"
+   "id": "fon-data-agro-2026",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/04/Institut-Agro-0011-2000px.avif"
   },
   {
    "date": "2026-04-09T07:26:03.000Z",
@@ -458,7 +470,8 @@
    "summary": "Retour sur une journée de la chaire consacrée au papier-carton pour l'emballage alimentaire.",
    "title": "Chaire Emballages 3R : retour sur une journée dédiée au papier-carton dans l’emballage alimentaire",
    "url": "https://fondation-institut-agro.fr/chaire-emballages-3r-retour-sur-une-journee-dediee-au-papier-carton-dans-lemballage-alimentaire/",
-   "id": "fon-chaire-emballages-3r"
+   "id": "fon-chaire-emballages-3r",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/04/FoodPack-2026-0150-2048px.avif"
   },
   {
    "date": "2026-03-27",
@@ -487,7 +500,8 @@
    "summary": "Retour sur une journée de la chaire autour de la gestion de l'eau en élevage.",
    "title": "Chaire Futurs d’élevage : retour sur une journée consacrée à l’eau dans les entreprises d’élevage",
    "url": "https://fondation-institut-agro.fr/chaire-futurs-delevage-retour-sur-une-journee-consacree-a-leau-dans-les-entreprises-delevage/",
-   "id": "fon-chaire-futurs-elevage-eau"
+   "id": "fon-chaire-futurs-elevage-eau",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2025/12/IMG_6055-scaled.avif"
   },
   {
    "kind": "actu",
@@ -496,7 +510,8 @@
    "date": "2025-11-27T13:59:51.000Z",
    "summary": "La Chaire Semences pour demain a organisé le 9 octobre une journée filière dédiée aux plantes de services, en présence d’environ 200 participants issus de la recherche, de la filière semences et du…",
    "id": "fon-plantes-de-services-levier-strategique-transition",
-   "source": "fondation"
+   "source": "fondation",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2025/11/Photo-bandeau-actu-web.avif"
   },
   {
    "kind": "actu",
@@ -505,7 +520,8 @@
    "date": "2025-11-20T08:32:47.000Z",
    "summary": "Avec sa campagne “Cultivons les talents”, la Fondation de l’Institut Agro rejoint le Giving tuesday, mouvement mondial de la générosité.​ #Givingtuesday Porté par un collectif engagé d’associations…",
    "id": "fon-campagne-cultivons-les-talents-2025",
-   "source": "fondation"
+   "source": "fondation",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2025/11/Visuel-actu-site-V2-1.avif"
   }
  ]
 }
