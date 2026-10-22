@@ -27,6 +27,11 @@ export function parseFrenchDates(text) {
     const y = m[4] ? +m[4] : guessYear(mon(m[3]), +m[1]);
     return { date: ymd(y, mon(m[3]), +m[1]), endDate: ymd(y, mon(m[3]), +m[2]) };
   }
+  // les 10 et 11 octobre 2026
+  if ((m = t.match(new RegExp(`(?:les|le)\\s+(\\d{1,2})(?:er)?\\s+et\\s+(?:le\\s+)?(\\d{1,2})\\s+${MON_RE}\\s*(\\d{4})?`, "i")))) {
+    const y = m[4] ? +m[4] : guessYear(mon(m[3]), +m[1]);
+    return { date: ymd(y, mon(m[3]), +m[1]), endDate: ymd(y, mon(m[3]), +m[2]) };
+  }
   // du 04/11/2026 au 07/11/2026
   if ((m = t.match(/du\s+(\d{1,2})\/(\d{1,2})\/(\d{4})\s+au\s+(\d{1,2})\/(\d{1,2})\/(\d{4})/i)))
     return { date: ymd(+m[3], +m[2], +m[1]), endDate: ymd(+m[6], +m[5], +m[4]) };

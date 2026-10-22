@@ -62,7 +62,44 @@ async function get(url) {
   await sleep(400); // politesse
   const res = await fetch(url, { headers: { "User-Agent": UA, "Accept-Language": "fr" }, redirect: "follow" });
   if (!res.ok) throw new Error(`${res.status} sur ${url}`);
-  return res.text();
+  const body = await res.text();
+  if (DEBUG && snapshots++ < 40) { // mode diagnostic : copie des pages lues, pour ajuster les règles de lecture
+    await mkdir("debug", { recursive: true });
+    await writeFile(`debug/${String(snapshots).padStart(2, "0")}-${new URL(url).hostname.split(".")[1] ?? "site"}-${slugFromUrl(url)}.html`, `<!-- ${url} -->\n` + body);
+  }
+  return body;
+}
+let snapshots = 0;
+
+/* ---------- nettoyage des textes ---------- */
+
+/** Retire du chapô le titre répété, la signature Drupal (« olivier jeu, 8 Oct 2026 - 07:31 ») et la date de tête. */
+function cleanDesc(text, title = "") {
+  let t = clean(text)
+    .replace(/(?:^|\s)[\p{L}._-]+\s+(?:lun|mar|mer|jeu|ven|sam|dim)\.?,\s+\d{1,2}\s+\p{L}+\.?\s+\d{4}\s+-\s+\d{1,2}:\d{2}/giu, " ")
+    .replace(/L[’']article .*? est apparu en premier sur .*$/i, "");
+  t = clean(t);
+  if (title && t.toLowerCase().startsWith(clean(title).toLowerCase())) t = t.slice(clean(title).length);
+  return clean(t).replace(/^[\s:,;.–—-]+/, "");
+}
+/** « Le jeudi 5 novembre 2026, l'Institut… » → « L'Institut… » */
+function dropLeadingDate(text) {
+  const m = text.match(/^(?:le|du|les|depuis le)?\s*(?:lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)?\s*\d{1,2}(?:er)?(?:\s+\S+){0,6}?\s+\d{4}(?:\s*,?\s*de\s+\d{1,2}h\d{0,2}\s+à\s+\d{1,2}h\d{0,2})?\s*[,.:–-]?\s*/i);
+  const t = m ? text.slice(m[0].length) : text;
+  return t ? t[0].toUpperCase() + t.slice(1) : t;
+}
+const goodSummary = (t, title) => t && t.length >= 40 && t.toLowerCase() !== String(title).toLowerCase();
+
+/** Lit la page d'un contenu : titre, texte, premier paragraphe, lieu. */
+async function detail(url) {
+  const $ = cheerio.load(await get(url));
+  $("header, footer, nav, script, style, noscript, form, [class*=cookie], [class*=breadcrumb], [class*=share]").remove();
+  const root = $("main").first().length ? $("main").first() : $("body");
+  const h1 = clean(root.find("h1").first().text());
+  const lead = clean(root.find("p").filter((_, p) => clean($(p).text()).length > 60).first().text());
+  const placeEl = clean(root.find("[class*=lieu], [class*=location], [class*=venue], [class*=adresse], [class*=address], [class*=place]").first().text());
+  const text = clean(root.text());
+  return { h1, lead, text, place: (placeEl && placeEl.length < 120 ? placeEl.replace(/^(Lieu|Où|Adresse)\s*:?\s*/i, "") : undefined) ?? placeIn(text) };
 }
 
 /* ---------- lecture RSS ---------- */
@@ -112,6 +149,22 @@ function dateIn(text) { // date de publication jj/mm/aaaa ou « 12 octobre 2026 
   if (m) return ymd(+m[3], +m[2], +m[1]);
   return parseFrenchDates(text)?.date ?? null;
 }
+/** Complète des événements repérés dans une liste ou un flux en lisant leur page. */
+async function events(cands, { titleFromPage = false } = {}) {
+  const out = [];
+  for (const c of cands) {
+    let d = {};
+    try { d = await detail(c.url); } catch (e) { if (DEBUG) console.warn("détail", c.url, e.message); }
+    const title = (titleFromPage && d.h1) || c.title || d.h1;
+    const when = parseFrenchDates(c.text?.replace(c.title, "") ?? "") ?? parseFrenchDates((d.text ?? "").replace(d.h1 ?? "", ""));
+    if (!title || !when) continue;
+    const fromList = dropLeadingDate(cleanDesc(c.teaser || c.text || "", title));
+    const fromPage = dropLeadingDate(cleanDesc(d.lead ?? "", title));
+    const summary = goodSummary(fromList, title) ? fromList : goodSummary(fromPage, title) ? fromPage : (fromList !== title ? fromList : "");
+    out.push({ kind: "agenda", title, url: c.url, ...when, place: c.place ?? d.place, summary: summarize(summary) });
+  }
+  return out;
+}
 function placeIn(text) {
   const m = clean(text).match(/(?:Lieu|Où)\s*:?\s*([^|•\n]{3,80}?)(?=\s{2,}|\s(?:Date|Horaire|Tarif|Inscription|Gratuit|Lire|En savoir)|$)/i);
   return m ? clean(m[1]) : undefined;
@@ -125,21 +178,11 @@ const SOURCES = {
     async actus() {
       return (await rss("https://www.institut-agro-montpellier.fr/rss.xml"))
         .filter(i => !/\/agenda\//.test(i.url))
-        .map(i => ({ kind: "actu", title: i.title, url: i.url, date: i.pubDate, summary: summarize(i.text) }));
+        .map(i => ({ kind: "actu", title: i.title, url: i.url, date: i.pubDate, summary: summarize(cleanDesc(i.text, i.title)) }));
     },
     async agenda() {
       const items = await rss("https://www.institut-agro-montpellier.fr/agenda/rss.xml");
-      const out = [];
-      for (const i of items) {
-        let when = parseFrenchDates(i.text);
-        let place;
-        if (!when) { // la description ne donne pas la date : on lit la page de l'événement
-          try { const txt = clean(cheerio.load(await get(i.url))("main, article, body").first().text()); when = parseFrenchDates(txt); place = placeIn(txt); } catch {}
-        }
-        if (!when) continue;
-        out.push({ kind: "agenda", title: i.title, url: i.url, ...when, place: place ?? placeIn(i.text), summary: summarize(i.text.replace(/^.*?\d{4}\s*/, "")) });
-      }
-      return out;
+      return events(items.map(i => ({ url: i.url, title: i.title, text: cleanDesc(i.text, i.title) })));
     },
   },
 
@@ -148,13 +191,11 @@ const SOURCES = {
     async actus() {
       const base = "https://www.institut-agro-rennes-angers.fr/actualites";
       return listing(await get(base), base, /^\/actualites\/[^/]+\/?$/).slice(0, 12)
-        .map(x => ({ kind: "actu", title: x.title, url: x.url, date: dateIn(x.text), summary: summarize(x.teaser && x.teaser !== x.title ? x.teaser : "") }));
+        .map(x => ({ kind: "actu", title: x.title, url: x.url, date: dateIn(x.text), summary: summarize(x.teaser && x.teaser !== x.title ? cleanDesc(x.teaser, x.title) : "") }));
     },
     async agenda() {
       const base = "https://www.institut-agro-rennes-angers.fr/agenda";
-      return listing(await get(base), base, /^\/agenda\/[^/]+\/?$/).slice(0, 12)
-        .map(x => ({ kind: "agenda", title: x.title, url: x.url, ...(parseFrenchDates(x.text.replace(x.title, "")) ?? {}), place: placeIn(x.text), summary: summarize(x.teaser && x.teaser !== x.title ? x.teaser : "") }))
-        .filter(x => x.date);
+      return events(listing(await get(base), base, /^\/agenda\/[^/]+\/?$/).slice(0, 12), { titleFromPage: true });
     },
   },
 
@@ -163,24 +204,11 @@ const SOURCES = {
     async actus() {
       const base = "https://www.institut-agro.fr/fr/toutes-les-actualites";
       return listing(await get(base), base, /^\/fr\/toutes-les-actualites\/[^/]+\/?$/).slice(0, 12)
-        .map(x => ({ kind: "actu", title: x.title, url: x.url, date: dateIn(x.text), summary: summarize(x.teaser && x.teaser !== x.title ? x.teaser : "") }));
+        .map(x => ({ kind: "actu", title: x.title, url: x.url, date: dateIn(x.text), summary: summarize(x.teaser && x.teaser !== x.title ? cleanDesc(x.teaser, x.title) : "") }));
     },
-    async agenda() {
+    async agenda() { // la page d'accueil ne donne pas l'année : events() lit chaque événement
       const base = "https://www.institut-agro.fr/fr";
-      const links = listing(await get(base), base, /^\/fr\/agenda\/[^/]+\/?$/).slice(0, 10);
-      const out = [];
-      for (const x of links) { // la page d'accueil ne donne pas l'année : on lit chaque événement
-        try {
-          const $ = cheerio.load(await get(x.url));
-          $("header, footer, nav, script, style").remove();
-          const txt = clean($("main, article, body").first().text());
-          const when = parseFrenchDates(txt.replace(x.title, ""));
-          if (!when) continue;
-          const lead = clean($("main p, article p").filter((_, p) => clean($(p).text()).length > 60).first().text());
-          out.push({ kind: "agenda", title: x.title, url: x.url, ...when, place: placeIn(txt), summary: summarize(lead) });
-        } catch (e) { if (DEBUG) console.warn("institut agenda", x.url, e.message); }
-      }
-      return out;
+      return events(listing(await get(base), base, /^\/fr\/agenda\/[^/]+\/?$/).slice(0, 10).map(x => ({ url: x.url })), { titleFromPage: true });
     },
   },
 
@@ -188,13 +216,11 @@ const SOURCES = {
     prefix: "fon",
     async actus() {
       return (await rss("https://fondation-institut-agro.fr/feed/"))
-        .map(i => ({ kind: "actu", title: i.title, url: i.url, date: i.pubDate, summary: summarize(i.text.replace(/L’article .*? est apparu en premier sur .*$/i, "")) }));
+        .map(i => ({ kind: "actu", title: i.title, url: i.url, date: i.pubDate, summary: summarize(cleanDesc(i.text, i.title)) }));
     },
     async agenda() {
       const base = "https://fondation-institut-agro.fr/actualites-fondation-institut-agro/";
-      return listing(await get(base), base, /^\/event\/[^/]+\/?$/).slice(0, 12)
-        .map(x => ({ kind: "agenda", title: x.title.replace(/^["«\s]+|["»\s]+$/g, ""), url: x.url, ...(parseFrenchDates(x.text.replace(x.title, "")) ?? {}), place: placeIn(x.text), summary: summarize(x.teaser && x.teaser !== x.title ? x.teaser : "") }))
-        .filter(x => x.date);
+      return events(listing(await get(base), base, /^\/event\/[^/]+\/?$/).slice(0, 12), { titleFromPage: true });
     },
   },
 };
@@ -217,7 +243,9 @@ for (const [name, src] of Object.entries(SOURCES)) {
       for (const it of items) {
         const k = key(it); const old = byKey.get(k);
         const id = old?.id ?? `${src.prefix}-${it.kind === "agenda" ? "ag-" : ""}${slugFromUrl(it.url)}`;
-        byKey.set(k, Object.fromEntries(Object.entries({ ...old, ...it, id, source: name, summary: it.summary || old?.summary || "" }).filter(([, v]) => v !== undefined)));
+        const fresh = Object.fromEntries(Object.entries(it).filter(([, v]) => v !== undefined && v !== ""));
+        // un résumé ou un lieu déjà connus sont conservés : ils ont pu être relus à la main
+        byKey.set(k, { ...old, ...fresh, id, source: name, summary: old?.summary || fresh.summary || "", ...(old?.place ? { place: old.place } : {}) });
       }
       status[name][kind === "actus" ? "actus" : "agenda"] = items.length;
       if (DEBUG) console.log(`\n[${name}/${kind}] ${items.length}`, JSON.stringify(items.slice(0, 3), null, 1));

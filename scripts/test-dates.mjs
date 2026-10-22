@@ -10,6 +10,7 @@ const cases = [
   ["Publié le 12/10/2026", { date: "2026-10-12" }],
   ["1er décembre 2026", { date: "2026-12-01" }],
   ["21 janv. 2027 Montpellier", { date: "2027-01-21" }],
+  ["Les 10 et 11 octobre 2026 à Paris", { date: "2026-10-10", endDate: "2026-10-11" }],
   ["Rien ici", null],
 ];
 for (const [txt, want] of cases) assert.deepEqual(p(txt), want, txt);

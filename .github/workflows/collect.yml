@@ -42,3 +42,11 @@ jobs:
           if git diff --cached --quiet; then echo "Rien de nouveau"; exit 0; fi
           git commit -m "Relevé du $(date -u +%Y-%m-%d)"
           git push
+      - name: Publier le diagnostic (mode détaillé seulement)
+        if: ${{ inputs.debug }}
+        run: |
+          git checkout --orphan diagnostic
+          git rm -rq --cached .
+          git add -f debug data/articles.json
+          git commit -qm "Diagnostic du $(date -u +%Y-%m-%dT%H:%M)"
+          git push -f origin diagnostic
