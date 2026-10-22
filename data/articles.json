@@ -1,0 +1,450 @@
+{
+ "updatedAt": "2026-10-22T07:10:00.000Z",
+ "sources": {
+  "montpellier": {
+   "ok": true,
+   "actus": 0,
+   "agenda": 0,
+   "errors": [],
+   "count": 17
+  },
+  "rennes": {
+   "ok": true,
+   "actus": 0,
+   "agenda": 0,
+   "errors": [],
+   "count": 8
+  },
+  "institut": {
+   "ok": true,
+   "actus": 0,
+   "agenda": 0,
+   "errors": [],
+   "count": 8
+  },
+  "fondation": {
+   "ok": true,
+   "actus": 0,
+   "agenda": 0,
+   "errors": [],
+   "count": 11
+  }
+ },
+ "articles": [
+  {
+   "date": "2027-01-21",
+   "kind": "agenda",
+   "place": "Montpellier",
+   "source": "fondation",
+   "summary": "Croiser données scientifiques et savoirs locaux pour une agriculture plus résiliente. Entrée gratuite.",
+   "title": "Colloque « Décalage entre risque climatique modélisé et perçu »",
+   "url": "https://fondation-institut-agro.fr/event/colloque-decalage-entre-risque-climatique-modelise-et-percu-comment-concilier-donnees-scientifiques-et-savoirs-locaux-pour-une-agriculture-resiliente/",
+   "id": "fon-ag-colloque-risque-climatique"
+  },
+  {
+   "date": "2026-11-19",
+   "kind": "agenda",
+   "place": "Rennes",
+   "source": "fondation",
+   "summary": "Installation, innovation et formation dans les systèmes d'élevage. Entrée gratuite.",
+   "title": "Journée annuelle de la Chaire Futurs d'élevage : « S'installer, innover, former »",
+   "url": "https://fondation-institut-agro.fr/event/journee-annuelle-de-la-chaire-futurs-delevage-sur-le-theme-sinstaller-innover-former-quels-systemes-delevage-et-quels-metiers/",
+   "id": "fon-ag-journee-chaire-futurs-elevage"
+  },
+  {
+   "date": "2026-11-06",
+   "endDate": "2026-11-07",
+   "kind": "agenda",
+   "place": "Campus La Gaillarde, Montpellier",
+   "source": "institut",
+   "summary": "18e conférence étudiante d'ELLS Universities : plus de 300 jeunes chercheurs autour des sciences du vivant durables.",
+   "title": "Sustainable Life Sciences: What ELLS for the Future?",
+   "url": "https://www.institut-agro.fr/fr/agenda/sustainable-life-sciences-what-ells-future",
+   "id": "ia-ag-sustainable-life-sciences-ells"
+  },
+  {
+   "date": "2026-11-05",
+   "kind": "agenda",
+   "place": "Campus La Gaillarde, Montpellier",
+   "source": "montpellier",
+   "summary": "Le 5 novembre 2026 à La Gaillarde : regards croisés sur les protections physiques en viticulture et arboriculture, leurs effets sur les paysages et la biodiversité.",
+   "title": "Colloque – Couvrir pour produire : promesses et limites des protections physiques",
+   "url": "https://www.institut-agro-montpellier.fr/agenda/colloque-couvrir-pour-produire-promesses-et-limites-des-protections-physiques-regards",
+   "id": "mtp-colloque-couvrir-pour-produire"
+  },
+  {
+   "date": "2026-11-05",
+   "kind": "agenda",
+   "place": "Campus de Florac (à distance)",
+   "source": "montpellier",
+   "summary": "Journée à distance le 5 novembre 2026, destinée surtout aux enseignants de bac professionnel de l'enseignement agricole.",
+   "title": "Journée scientifique « Controverse » : que faire de la tension entre production et transition en agriculture ?",
+   "url": "https://www.institut-agro-montpellier.fr/agenda/journee-scientifique-controverse-production-transition-agriculture",
+   "id": "mtp-journee-scientifique-controverse"
+  },
+  {
+   "date": "2026-11-05",
+   "kind": "agenda",
+   "source": "fondation",
+   "summary": "Apports et limites des protections physiques en viticulture et arboriculture. Entrée gratuite.",
+   "title": "Colloque « Couvrir pour produire : promesses et limites des protections physiques »",
+   "url": "https://fondation-institut-agro.fr/event/colloque-couvrir-pour-produire-promesses-et-limites-des-protections-physiques/",
+   "id": "fon-ag-colloque-couvrir-pour-produire"
+  },
+  {
+   "date": "2026-11-04",
+   "endDate": "2026-11-07",
+   "kind": "agenda",
+   "place": "Campus La Gaillarde, Montpellier",
+   "source": "institut",
+   "summary": "L'alliance ELLS fête ses 25 ans et son statut d'université européenne : assemblée générale et conférence étudiante.",
+   "title": "Assemblée générale ELLS Universities",
+   "url": "https://www.institut-agro.fr/fr/agenda/assemblee-generale-ells-universities",
+   "id": "ia-ag-ag-ells-universities"
+  },
+  {
+   "date": "2026-10-24",
+   "kind": "agenda",
+   "source": "rennes",
+   "summary": "Une exposition pour découvrir l'univers des champignons.",
+   "title": "Exposition mycologique",
+   "url": "https://www.institut-agro-rennes-angers.fr/agenda/exposition-mycologique-0",
+   "id": "ren-ag-exposition-mycologique"
+  },
+  {
+   "date": "2026-10-19",
+   "endDate": "2026-10-21",
+   "kind": "agenda",
+   "place": "Campus La Gaillarde, Montpellier",
+   "source": "montpellier",
+   "summary": "Rencontres sur la lutte biologique par les insectes, co-organisées par plusieurs équipes de recherche du campus.",
+   "title": "EntoMontpellier 2026 : les 44e Journées des Entomophagistes",
+   "url": "https://www.institut-agro-montpellier.fr/agenda/entomontpellier-2026-journees-entomophagistes",
+   "id": "mtp-ag-entomontpellier-2026"
+  },
+  {
+   "date": "2026-10-13T15:46:40Z",
+   "kind": "actu",
+   "source": "montpellier",
+   "summary": "Concours doté de 80 000 € qui accompagne les jeunes viticulteurs dans la création de leur exploitation. Candidatures ouvertes jusqu'au 15 décembre 2026.",
+   "title": "C'est parti pour la 11ème édition du Concours Vignerons et Terroirs d'Avenir !",
+   "url": "https://www.institut-agro-montpellier.fr/actualites/concours-vignerons-terroirs-avenir-2027",
+   "id": "mtp-concours-vignerons-terroirs-avenir-2027"
+  },
+  {
+   "date": "2026-10-12",
+   "kind": "actu",
+   "source": "rennes",
+   "summary": "Semaine internationale sur les campus, avec un focus sur les déplacements en train et à vélo.",
+   "title": "#ErasmusDays2026",
+   "url": "https://www.institut-agro-rennes-angers.fr/actualites/erasmusdays2026",
+   "id": "ren-erasmusdays2026"
+  },
+  {
+   "date": "2026-10-10",
+   "endDate": "2026-10-11",
+   "kind": "agenda",
+   "place": "Paris Expo, porte de Versailles",
+   "source": "montpellier",
+   "summary": "38e édition du salon organisé par L'Etudiant pour aider à préparer son projet de formation.",
+   "title": "Salon des Grandes Écoles de Paris",
+   "url": "https://www.institut-agro-montpellier.fr/agenda/salon-grandes-ecoles-paris-2026-agro",
+   "id": "mtp-ag-salon-grandes-ecoles-paris-2026"
+  },
+  {
+   "date": "2026-10-08T05:31:03Z",
+   "kind": "actu",
+   "source": "montpellier",
+   "summary": "Programme du ministère de l'Europe et des Affaires étrangères qui finance des mobilités en master et doctorat pour attirer des étudiants étrangers d'excellence.",
+   "title": "Candidatez à la bourse France Excellence Eiffel session 2027 !",
+   "url": "https://www.institut-agro-montpellier.fr/actualites/bourse-excellence-eiffel-2027",
+   "id": "mtp-bourse-excellence-eiffel-2027"
+  },
+  {
+   "date": "2026-10-07",
+   "endDate": "2026-10-15",
+   "kind": "agenda",
+   "place": "Cirad",
+   "source": "montpellier",
+   "summary": "Séminaire de rentrée de la Chaire UNESCO Alimentations du monde, en quatre sessions sur les grands enjeux actuels de l'alimentation.",
+   "title": "Séminaire – Enjeux contemporains de l'alimentation : quatre sessions de formation",
+   "url": "https://www.institut-agro-montpellier.fr/agenda/seminaire-enjeux-contemporains-alimentation-octobre-2026",
+   "id": "mtp-ag-seminaire-enjeux-alimentation"
+  },
+  {
+   "date": "2026-10-07",
+   "kind": "agenda",
+   "place": "Campus La Gaillarde, Montpellier",
+   "source": "montpellier",
+   "summary": "INRAE, l'Institut Agro, l'IFV et leurs partenaires célèbrent les ressources génétiques de la vigne.",
+   "title": "Journée technique : les 150 ans de la collection ampélographique de Vassal-Montpellier",
+   "url": "https://www.institut-agro-montpellier.fr/agenda/journee-ressources-genetiques-vigne-vassal-montpellier",
+   "id": "mtp-ag-ressources-genetiques-vigne-vassal"
+  },
+  {
+   "date": "2026-10-05T05:15:53Z",
+   "kind": "actu",
+   "source": "montpellier",
+   "summary": "Concours d'aide aux projets en agriculture, alimentation, environnement ou paysage, ouvert aux étudiants et diplômés. Inscriptions du 6 octobre au 30 novembre 2026.",
+   "title": "Graines d'Agro 2026-2027 : la 18e édition est lancée !",
+   "url": "https://www.institut-agro-montpellier.fr/actualites/concours-graines-agro-2026-2027",
+   "id": "mtp-concours-graines-agro-2026-2027"
+  },
+  {
+   "date": "2026-10-02",
+   "kind": "actu",
+   "source": "rennes",
+   "summary": "Découvrir les formations de l'école de l'intérieur. Inscriptions ouvertes depuis le 5 octobre.",
+   "title": "Immersions individuelles",
+   "url": "https://www.institut-agro-rennes-angers.fr/actualites/immersions-individuelles",
+   "id": "ren-immersions-individuelles"
+  },
+  {
+   "date": "2026-09-28",
+   "kind": "actu",
+   "source": "rennes",
+   "summary": "Journées portes ouvertes, version en ligne et salons pour découvrir les formations.",
+   "title": "JPO, JPO en ligne et salons : rencontrons-nous !",
+   "url": "https://www.institut-agro-rennes-angers.fr/actualites/jpo-jpo-en-ligne-et-salons-rencontrons-nous",
+   "id": "ren-jpo-salons"
+  },
+  {
+   "date": "2026-09-24T13:47:03Z",
+   "kind": "actu",
+   "source": "fondation",
+   "summary": "La Chaire Futurs d'élevage récompense des travaux de master 2 et de doctorat sur la durabilité des élevages.",
+   "title": "Lancement du prix durabilité 2026 !",
+   "url": "https://fondation-institut-agro.fr/lancement-du-prix-durabilite-2026/",
+   "id": "fon-prix-durabilite-2026"
+  },
+  {
+   "date": "2026-09-24",
+   "kind": "agenda",
+   "place": "En ligne",
+   "source": "montpellier",
+   "summary": "Webconférence du cycle Épisodes Cévenols proposée par le campus de Florac.",
+   "title": "Webinaire – De pair à pair : éducation à l'égalité et à la vie affective, relationnelle et sexuelle",
+   "url": "https://www.institut-agro-montpellier.fr/agenda/episodes-cevenols-education-par-les-pairs",
+   "id": "mtp-ag-episodes-cevenols-pairs"
+  },
+  {
+   "date": "2026-09-23",
+   "kind": "actu",
+   "source": "rennes",
+   "summary": "Premier Village des sciences organisé sur le campus de Rennes les 2 et 5 octobre 2026.",
+   "title": "Fête de la science 2026",
+   "url": "https://www.institut-agro-rennes-angers.fr/actualites/fete-de-la-science-2026",
+   "id": "ren-fete-de-la-science-2026"
+  },
+  {
+   "date": "2026-09-22",
+   "kind": "agenda",
+   "source": "rennes",
+   "summary": "Des hydrolysats de coproduits aquacoles pour réduire la dépendance des poissons carnivores aux poissons fourrage.",
+   "title": "Soutenance de thèse de Mikaël Hérault",
+   "url": "https://www.institut-agro-rennes-angers.fr/agenda/soutenance-de-these-de-mikael-herault",
+   "id": "ren-ag-soutenance-mikael-herault"
+  },
+  {
+   "date": "2026-09-21",
+   "kind": "actu",
+   "source": "rennes",
+   "summary": "Un forum consacré aux savoirs, à l'évolution des métiers et aux attentes des étudiants.",
+   "title": "L'Institut Agro Rennes-Angers engagé dans le Forum Séisme 2026",
+   "url": "https://www.institut-agro-rennes-angers.fr/actualites/linstitut-agro-rennes-angers-engage-dans-le-forum-seisme-2026",
+   "id": "ren-forum-seisme-2026"
+  },
+  {
+   "date": "2026-09-19",
+   "kind": "agenda",
+   "source": "rennes",
+   "summary": "Visites guidées de la bibliothèque patrimoniale et du pavillon des collections.",
+   "title": "Journées européennes du patrimoine",
+   "url": "https://www.institut-agro-rennes-angers.fr/agenda/journees-europeennes-du-patrimoine-3",
+   "id": "ren-ag-journees-patrimoine"
+  },
+  {
+   "date": "2026-09-10",
+   "kind": "agenda",
+   "place": "En ligne",
+   "source": "montpellier",
+   "summary": "Webconférence du cycle Épisodes Cévenols du campus de Florac.",
+   "title": "Webinaire – Les effets positifs de l'alimentation et de l'activité physique sur la santé",
+   "url": "https://www.institut-agro-montpellier.fr/agenda/webconference-alimentation-activite-physique-sante",
+   "id": "mtp-ag-alimentation-activite-physique"
+  },
+  {
+   "date": "2026-09-08T10:12:13Z",
+   "kind": "actu",
+   "source": "montpellier",
+   "summary": "232 élèves ingénieurs de première année ont fait leur rentrée le 31 août 2026 sur le campus de La Gaillarde.",
+   "title": "Rentrée 2026 : 232 nouveaux élèves ingénieurs ont débarqué sur le campus !",
+   "url": "https://www.institut-agro-montpellier.fr/actualites/rentree-eleves-ingenieurs-2026",
+   "id": "mtp-rentree-eleves-ingenieurs-2026"
+  },
+  {
+   "date": "2026-09-07T12:04:58Z",
+   "kind": "actu",
+   "source": "fondation",
+   "summary": "Aide à la mobilité pour le stage à l'étranger des élèves ingénieurs de 2e année de l'Institut Agro Dijon.",
+   "title": "Appel à candidature 2026-2027 : une bourse à la mobilité de la Chaire Agroénergies",
+   "url": "https://fondation-institut-agro.fr/appel-a-candidature-2026-2027-la-chaire-agroenergies-propose-une-bourse-a-la-mobilite-pour-les-etudiants-de-2e-annee/",
+   "id": "fon-bourse-mobilite-agroenergies"
+  },
+  {
+   "date": "2026-09-07T10:24:07Z",
+   "kind": "actu",
+   "source": "fondation",
+   "summary": "Concours ouvert aux étudiants et personnels de l'Institut Agro Dijon, porté par la Chaire Agroénergies.",
+   "title": "Concours photo 2026-2027 : « Comment concilier transition énergétique et agroécologie ? »",
+   "url": "https://fondation-institut-agro.fr/concours-photo-transition-energetique-et-agroecologie/",
+   "id": "fon-concours-photo-agroenergies"
+  },
+  {
+   "date": "2026-07-29T13:36:46Z",
+   "kind": "actu",
+   "source": "fondation",
+   "summary": "Près de 2 millions d'euros collectés en 2025 auprès de mécènes, partenaires et donateurs.",
+   "title": "Revivez une année d'engagement à travers le rapport d'activité 2025 de la Fondation !",
+   "url": "https://fondation-institut-agro.fr/rapport-dactivite-2025/",
+   "id": "fon-rapport-activite-2025"
+  },
+  {
+   "date": "2026-07-20",
+   "endDate": "2026-07-24",
+   "kind": "agenda",
+   "place": "Campus La Gaillarde, Montpellier",
+   "source": "montpellier",
+   "summary": "Les spécialistes mondiaux de l'étude des acariens réunis sur le campus montpelliérain.",
+   "title": "XVIIe Congrès international d'acarologie",
+   "url": "https://www.institut-agro-montpellier.fr/agenda/congres-international-acarologie-montpellier-2026",
+   "id": "mtp-ag-congres-acarologie-2026"
+  },
+  {
+   "date": "2026-07-15T14:02:30Z",
+   "kind": "actu",
+   "source": "montpellier",
+   "summary": "Événement final du projet européen, du 1er au 3 juillet à Paris au Muséum national d'Histoire naturelle, autour de la valorisation des recettes traditionnelles.",
+   "title": "Tradinnovations clôture son programme de coopération européenne autour de l'innovation alimentaire",
+   "url": "https://www.institut-agro-montpellier.fr/actualites/tradinnovations-cloture-son-programme-de-cooperation-europeenne-autour-de-linnovation",
+   "id": "mtp-tradinnovations-cloture"
+  },
+  {
+   "date": "2026-07-09",
+   "kind": "actu",
+   "source": "institut",
+   "summary": "L'alliance EuroLeague of Life Sciences Universities, dont l'Institut Agro est membre, reçoit le label Université européenne.",
+   "title": "L'alliance ELLS Universities labellisée Université européenne",
+   "url": "https://www.institut-agro.fr/fr/toutes-les-actualites/lalliance-ells-universities-labellisee-universite-europeenne",
+   "id": "ia-ells-universite-europeenne"
+  },
+  {
+   "date": "2026-07-09",
+   "kind": "actu",
+   "source": "institut",
+   "summary": "Une alliance stratégique pour accélérer les transitions agricoles, annoncée lors d'un séminaire à Angers.",
+   "title": "L'Institut Agro et l'Acta - les instituts techniques agricoles",
+   "url": "https://www.institut-agro.fr/fr/toutes-les-actualites/linstitut-agro-et-lacta-les-instituts-techniques-agricoles",
+   "id": "ia-acta-instituts-techniques"
+  },
+  {
+   "date": "2026-07-01T09:34:15Z",
+   "kind": "actu",
+   "source": "fondation",
+   "summary": "Restauration d'un modèle anatomique en papier mâché du XIXe siècle, patrimoine scientifique fragilisé.",
+   "title": "Le Cheval d'Auzoux, un trésor à sauvegarder",
+   "url": "https://fondation-institut-agro.fr/le-cheval-dauzoux-un-tresor-a-sauvegarder/",
+   "id": "fon-cheval-auzoux"
+  },
+  {
+   "date": "2026-06-24",
+   "kind": "actu",
+   "source": "institut",
+   "summary": "Classement THE Sustainability Impact Ratings 2026, fondé sur la contribution aux objectifs de développement durable.",
+   "title": "Contribution aux ODD : l'Institut Agro, 9e au monde et 1er en Europe",
+   "url": "https://www.institut-agro.fr/fr/toutes-les-actualites/contribution-aux-odd-linstitut-agro-9e-au-monde-et-1er-en-europe",
+   "id": "ia-odd-9e-monde"
+  },
+  {
+   "date": "2026-06-15T07:19:02Z",
+   "kind": "actu",
+   "source": "montpellier",
+   "summary": "Le 8 juin 2026, près de 200 étudiants de première année ont planché sur les défis de l'arboriculture fruitière. Trois projets primés.",
+   "title": "Challenge FuturAgro 2e édition : 200 étudiant·es imaginent le verger de demain",
+   "url": "https://www.institut-agro-montpellier.fr/actualites/challenge-futuragro-2e-edition",
+   "id": "mtp-challenge-futuragro-2e-edition"
+  },
+  {
+   "date": "2026-05-29T13:08:06Z",
+   "kind": "actu",
+   "source": "montpellier",
+   "summary": "Une étudiante béninoise de première année obtient une bourse France Margaret McNamara pour son engagement en faveur des femmes et des enfants.",
+   "title": "Une élève ingénieure récompensée par une bourse Margaret McNamara Education Grants",
+   "url": "https://www.institut-agro-montpellier.fr/actualites/une-eleve-ingenieure-recompensee-par-une-bourse-detudes-attribuee-par-margaret-mcnamara",
+   "id": "mtp-bourse-margaret-mcnamara"
+  },
+  {
+   "date": "2026-05-19T04:47:27Z",
+   "kind": "actu",
+   "source": "montpellier",
+   "summary": "Projet cofinancé par Digital Europe, lancé en 2024 pour quatre ans, qui crée un catalogue de formations avancées en agriculture numérique.",
+   "title": "AGRITECH EU, un projet européen pour former les expert·es de l'agriculture numérique de demain",
+   "url": "https://www.institut-agro-montpellier.fr/actualites/agritech-eu-projet-europeen-agriculture-numerique",
+   "id": "mtp-agritech-eu"
+  },
+  {
+   "date": "2026-04-22",
+   "kind": "actu",
+   "source": "institut",
+   "summary": "Sept parcours tournés vers l'agriculture, dans le cadre d'un nouveau diplôme national Bac+3.",
+   "title": "7 parcours de bachelor agro dès la rentrée 2026",
+   "url": "https://www.institut-agro.fr/fr/toutes-les-actualites/7-parcours-de-bachelor-agro-des-la-rentree-2026",
+   "id": "ia-7-parcours-bachelor-agro"
+  },
+  {
+   "date": "2026-04-09T12:16:20Z",
+   "kind": "actu",
+   "source": "fondation",
+   "summary": "La Chaire Tech Agro Sup a réuni innovation scientifique, pédagogie active et enjeux de société le 29 janvier 2026.",
+   "title": "DATA AGRO 2026 : lorsque science et pédagogie se rencontrent",
+   "url": "https://fondation-institut-agro.fr/data-agro-2026-lorsque-science-et-pedagogie-se-rencontrent/",
+   "id": "fon-data-agro-2026"
+  },
+  {
+   "date": "2026-04-09T07:26:03Z",
+   "kind": "actu",
+   "source": "fondation",
+   "summary": "Retour sur une journée de la chaire consacrée au papier-carton pour l'emballage alimentaire.",
+   "title": "Chaire Emballages 3R : une journée dédiée au papier-carton dans l'emballage alimentaire",
+   "url": "https://fondation-institut-agro.fr/chaire-emballages-3r-retour-sur-une-journee-dediee-au-papier-carton-dans-lemballage-alimentaire/",
+   "id": "fon-chaire-emballages-3r"
+  },
+  {
+   "date": "2026-03-27",
+   "kind": "actu",
+   "source": "institut",
+   "summary": "La place de l'Institut Agro dans ses disciplines de référence au sein des classements thématiques internationaux.",
+   "title": "Classements thématiques internationaux",
+   "url": "https://www.institut-agro.fr/fr/toutes-les-actualites/classements-thematiques-internationaux-0",
+   "id": "ia-classements-thematiques"
+  },
+  {
+   "date": "2026-02-06",
+   "kind": "actu",
+   "source": "institut",
+   "summary": "L'Institut Agro au Salon du 21 février au 1er mars 2026, avec ses étudiants et sa directrice générale Anne-Lucie Wack.",
+   "title": "Salon International de l'Agriculture",
+   "url": "https://www.institut-agro.fr/fr/toutes-les-actualites/salon-international-de-lagriculture-0",
+   "id": "ia-salon-agriculture-2026"
+  },
+  {
+   "date": "2025-12-10T15:14:00Z",
+   "kind": "actu",
+   "source": "fondation",
+   "summary": "Retour sur une journée de la chaire autour de la gestion de l'eau en élevage.",
+   "title": "Chaire Futurs d'élevage : une journée consacrée à l'eau dans les entreprises d'élevage",
+   "url": "https://fondation-institut-agro.fr/chaire-futurs-delevage-retour-sur-une-journee-consacree-a-leau-dans-les-entreprises-delevage/",
+   "id": "fon-chaire-futurs-elevage-eau"
+  }
+ ]
+}

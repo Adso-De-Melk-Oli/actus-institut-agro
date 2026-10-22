@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Les actualités et l'agenda de l'Institut Agro, de ses écoles et de sa Fondation, réunis en un seul fil.">
+<meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F8AC00'/%3E%3Ctext x='32' y='44' font-family='-apple-system,Helvetica,Arial' font-size='34' font-weight='800' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E">
+<title>Actus | L'Institut Agro</title>
+<style>
+/* Layout: Apple-News-like — large title, frosted sticky bar with source pills, one featured story, then a 3/2/1-column grid of story cards with generated covers. */
+:root{
+  --bg:#f5f5f7; --surface:#ffffff; --fg:#1d1d1f; --muted:#6e6e73; --hair:rgba(0,0,0,.08);
+  --glass:rgba(245,245,247,.78); --chip:#e8e8ed; --accent:#0071e3; --ok:#1f8f4e; --warn:#b26a00;
+  --brand:#F8AC00;
+  --s-institut:#2f8f46; --s-montpellier:#e2632b; --s-rennes:#1f6fd1; --s-dijon:#8e2b4e; --s-fondation:#0e8a8c;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.06);
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --font-serif:"New York","Iowan Old Style",Georgia,serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#000000; --surface:#1c1c1e; --fg:#f5f5f7; --muted:#98989d; --hair:rgba(255,255,255,.1);
+  --glass:rgba(0,0,0,.72); --chip:#2c2c2e; --accent:#2997ff; --ok:#30d158; --warn:#ffb340;
+  --s-institut:#4cc26a; --s-montpellier:#ff8a52; --s-rennes:#5aa2ff; --s-dijon:#e0628f; --s-fondation:#3cc8c9;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#000000; --surface:#1c1c1e; --fg:#f5f5f7; --muted:#98989d; --hair:rgba(255,255,255,.1);
+  --glass:rgba(0,0,0,.72); --chip:#2c2c2e; --accent:#2997ff; --ok:#30d158; --warn:#ffb340;
+  --s-institut:#4cc26a; --s-montpellier:#ff8a52; --s-rennes:#5aa2ff; --s-dijon:#e0628f; --s-fondation:#3cc8c9;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--glass)}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Masthead */
+.mast{padding-block:28px 6px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.eyebrow{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+h1{margin:2px 0 0;font-size:clamp(34px,6vw,52px);font-weight:700;letter-spacing:-.025em;line-height:1.05}
+h1{color:var(--brand)}
+h1 .sep{font-weight:300;opacity:.55;margin:0 .08em}
+.mast-side{display:flex;align-items:center;gap:12px}
+.updated{font-size:13px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.refresh{all:unset;cursor:pointer;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--surface);box-shadow:var(--shadow);color:var(--accent);transition:transform .15s}
+.refresh:hover{transform:scale(1.06)}
+.refresh:active{transform:scale(.94)}
+.refresh:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.refresh svg{width:20px;height:20px}
+.refresh.spin svg{animation:spin .8s cubic-bezier(.5,0,.3,1) infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Sticky bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--hair)}
+.bar .wrap{display:flex;gap:12px;align-items:center;padding-block:10px;flex-wrap:wrap}
+.pills{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex:1 1 auto;min-width:0;padding-block:2px}
+.pills::-webkit-scrollbar{display:none}
+.pill{all:unset;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:999px;background:var(--chip);font-size:14px;font-weight:500;color:var(--fg);transition:background .2s,color .2s}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:var(--c,var(--muted))}
+.pill .n{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.pill[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.pill[aria-pressed="true"] .n{color:inherit;opacity:.7}
+.pill[aria-pressed="true"] .dot{box-shadow:0 0 0 2px var(--bg)}
+.pill:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.search{flex:0 1 240px;min-width:0;position:relative}
+.search input{width:100%;font:inherit;font-size:14px;padding:8px 12px 8px 32px;border-radius:10px;border:0;background:var(--chip);color:var(--fg)}
+.search input:focus{outline:3px solid color-mix(in srgb,var(--accent) 45%,transparent)}
+.search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--muted)}
+
+/* Source pill on covers & cards */
+.src{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.01em;padding:4px 10px 4px 8px;border-radius:999px;background:color-mix(in srgb,var(--c) 14%,var(--surface));color:var(--c)}
+.src::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c)}
+.cover .src{background:rgba(255,255,255,.88);color:#1d1d1f;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.cover .src::before{background:var(--c)}
+.kind{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 8px;border-radius:6px;background:rgba(0,0,0,.35);color:#fff}
+
+/* Type switch (segmented control) */
+.seg{display:inline-flex;background:var(--chip);border-radius:10px;padding:2px;flex:0 0 auto}
+.seg button{all:unset;cursor:pointer;padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--fg);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.seg button:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+
+/* Upcoming rail */
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(260px,300px);gap:14px;overflow-x:auto;padding:4px 2px 14px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.ev{scroll-snap-align:start;display:flex;gap:14px;align-items:flex-start;background:var(--surface);border-radius:16px;padding:14px;box-shadow:var(--shadow);transition:transform .2s;animation:rise .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0) * 40ms)}
+.ev:hover{transform:translateY(-3px)}
+.ev:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.cal{flex:0 0 54px;border-radius:12px;overflow:hidden;text-align:center;background:var(--chip);font-variant-numeric:tabular-nums}
+.cal .m{display:block;background:var(--c);color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 0}
+.cal .d{display:block;font-size:24px;font-weight:700;padding:4px 0 2px;letter-spacing:-.02em}
+.cal .w{display:block;font-size:11px;color:var(--muted);padding-bottom:5px}
+.ev .t{display:flex;flex-direction:column;gap:6px;min-width:0}
+.ev h3{margin:0;font-size:15px;line-height:1.25;font-weight:650;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ev .where{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev .src{align-self:flex-start}
+
+/* Feed */
+main{padding-block:24px 48px}
+.section-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:34px 0 14px}
+.section-h h2{margin:0;font-size:22px;font-weight:700;letter-spacing:-.01em}
+.section-h span{font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:960px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.grid{grid-template-columns:minmax(0,1fr)}}
+
+.card{display:flex;flex-direction:column;background:var(--surface);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s;animation:rise .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0) * 40ms)}
+.card:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 2px 4px rgba(0,0,0,.05),0 18px 40px rgba(0,0,0,.12)}
+.card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@keyframes rise{from{transform:translateY(14px);opacity:.001}to{transform:none;opacity:1}}
+
+.cover{position:relative;aspect-ratio:16/9;max-width:100%;overflow:hidden;color:#fff;isolation:isolate}
+.cover .mesh{position:absolute;inset:-20%;z-index:-1;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.card:hover .cover .mesh{transform:scale(1.08) rotate(2deg)}
+.cover .top{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.cover .big{position:absolute;left:16px;bottom:10px;right:16px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.cover .day{font-size:64px;font-weight:800;letter-spacing:-.05em;line-height:.85;font-variant-numeric:tabular-nums;text-shadow:0 2px 20px rgba(0,0,0,.15)}
+.cover .mon{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;opacity:.92;padding-bottom:6px}
+.cover .word{font-family:var(--font-serif);font-style:italic;font-size:15px;opacity:.9;text-align:right;max-width:55%;padding-bottom:6px;line-height:1.2}
+.body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.body h3{margin:0;font-size:18px;line-height:1.25;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+.body p{margin:0;color:var(--muted);font-size:14px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.meta{margin-top:auto;padding-top:8px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
+.meta .read{color:var(--accent);font-weight:600}
+
+/* Featured */
+.feature{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);border-radius:24px}
+.feature .cover{aspect-ratio:auto;min-height:340px}
+.feature .cover .day{font-size:120px}
+.feature .body{padding:32px;justify-content:center;gap:14px}
+.feature .body h3{font-size:clamp(24px,3vw,34px);letter-spacing:-.02em;line-height:1.12}
+.feature .body p{font-size:16px;-webkit-line-clamp:5}
+.feature .flag{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em}
+@media (max-width:760px){.feature{grid-template-columns:minmax(0,1fr)}.feature .cover{min-height:0;aspect-ratio:16/9}.feature .cover .day{font-size:84px}.feature .body{padding:20px}}
+
+/* States */
+.empty{text-align:center;padding:72px 16px;color:var(--muted)}
+.empty h2{color:var(--fg);font-size:22px;margin:0 0 8px}
+.skel{background:var(--surface);border-radius:18px;height:300px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.skel::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,var(--hair) 50%,transparent 70%);animation:sh 1.4s infinite}
+@keyframes sh{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+
+/* Sources footer */
+.sources{margin-top:44px;padding:20px;background:var(--surface);border-radius:18px;box-shadow:var(--shadow)}
+.sources h2{margin:0 0 12px;font-size:17px}
+.srow{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,2fr) auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--hair);font-size:14px}
+.srow:first-of-type{border-top:0}
+.srow .how{color:var(--muted);font-size:13px}
+.srow .state{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+.state.ok{color:var(--ok)}.state.warn{color:var(--warn)}
+@media (max-width:600px){.srow{grid-template-columns:minmax(0,1fr) auto}.srow .how{grid-column:1/-1;order:3}}
+
+.site-foot{padding-block:8px 40px;color:var(--muted);font-size:13px;display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
+.site-foot a{color:var(--accent)}
+.linkout{display:inline-flex;margin-top:14px;padding:10px 18px;border-radius:999px;background:var(--fg);color:var(--bg);font-weight:600}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;background:var(--fg);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:14px;font-weight:500;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:all .3s cubic-bezier(.2,.8,.2,1);pointer-events:none;z-index:20;max-width:calc(100% - 32px)}
+.toast.show{transform:translate(-50%,0);opacity:1}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="wrap mast">
+  <div>
+    <div class="eyebrow" id="today"></div>
+    <h1>Actus <span class="sep">|</span> L'Institut Agro</h1>
+  </div>
+  <div class="mast-side">
+    <div class="updated" id="updated">Chargement…</div>
+    <button class="refresh" id="refresh" type="button" aria-label="Réactualiser" title="Réactualiser">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+    </button>
+  </div>
+</header>
+
+<nav class="bar" aria-label="Filtrer par source">
+  <div class="wrap">
+    <div class="seg" id="seg" role="group" aria-label="Type de contenu"><button type="button" data-t="all" aria-pressed="true">Tout</button><button type="button" data-t="actu" aria-pressed="false">Actus</button><button type="button" data-t="agenda" aria-pressed="false">Agenda</button></div>
+    <div class="pills" id="pills" role="toolbar"></div>
+    <label class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Rechercher" aria-label="Rechercher une actu">
+    </label>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div id="feed">
+    <div class="grid" aria-hidden="true"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
+  </div>
+  <section class="sources" id="sources" hidden>
+    <h2>Sources suivies</h2>
+    <div id="srows"></div>
+  </section>
+</main>
+<footer class="wrap site-foot"><span>Relevé automatique chaque matin en semaine, à partir des flux RSS et des pages publiques des sites.</span><a href="https://github.com/Adso-De-Melk-Oli/actus-institut-agro" rel="noopener">Code source</a></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const SOURCES = {
+  institut:    {label:"Institut Agro",  method:"Pages Actualités et Agenda (pas de flux RSS)", color:"--s-institut",    home:"https://www.institut-agro.fr/fr/toutes-les-actualites"},
+  montpellier: {label:"Montpellier",    method:"Flux RSS actus et agenda", color:"--s-montpellier", home:"https://www.institut-agro-montpellier.fr/actualites"},
+  rennes:      {label:"Rennes-Angers",  method:"Pages Actualités et Agenda (flux RSS vide)", color:"--s-rennes",   home:"https://www.institut-agro-rennes-angers.fr/actualites"},
+  dijon:       {label:"Dijon",          method:"Non relevé : le site refuse les robots", linkOnly:true, color:"--s-dijon",           home:"https://institut-agro-dijon.fr/actualites"},
+  fondation:   {label:"Fondation",      method:"Flux RSS + page Événements", color:"--s-fondation",   home:"https://fondation-institut-agro.fr/actualites-fondation-institut-agro/"},
+};
+const ORDER = ["institut","montpellier","rennes","dijon","fondation"];
+const state = {articles:[], meta:null, filter:"all", type:"all", q:"", loaded:false, dbOk:true};
+let filterMem = "all";
+try{ filterMem = localStorage.getItem("ia-filter") || "all"; }catch(e){}
+state.filter = SOURCES[filterMem] ? filterMem : "all";
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const MONTHS = ["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];
+
+$("#today").textContent = new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+
+function hash(str){let h=2166136261;for(const ch of str){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function cssVar(name){return getComputedStyle(document.documentElement).getPropertyValue(name).trim()}
+
+/* Generated cover: a mesh of radial gradients seeded by the article URL, tinted by its source colour. */
+function mesh(a){
+  const h = hash(a.url || a.title);
+  const base = {institut:140,montpellier:20,rennes:215,dijon:340,fondation:180}[a.source] ?? 200;
+  const hue = i => (base + ((h >> (i*4)) & 31) - 16 + i*18 + 360) % 360;
+  const pos = i => `${(h >> (i*3)) % 100}% ${(h >> (i*5+2)) % 100}%`;
+  return `background:
+    radial-gradient(at ${pos(1)}, hsl(${hue(1)} 85% 62%) 0, transparent 55%),
+    radial-gradient(at ${pos(2)}, hsl(${hue(2)} 80% 48%) 0, transparent 50%),
+    radial-gradient(at ${pos(3)}, hsl(${hue(3)} 90% 70%) 0, transparent 45%),
+    radial-gradient(at ${pos(4)}, hsl(${(hue(0)+40)%360} 70% 40%) 0, transparent 60%),
+    hsl(${hue(0)} 65% 45%)`;
+}
+function keyword(a){
+  const t = (a.title||"").toLowerCase();
+  const words = [["concours","Concours"],["bourse","Bourse"],["rentrée","Rentrée"],["colloque","Colloque"],["salon","Salon"],["classement","Classement"],["erasmus","International"],["science","Sciences"],["jpo","Portes ouvertes"],["portes","Portes ouvertes"],["bachelor","Formation"],["européen","Europe"],["europe","Europe"],["challenge","Challenge"],["forum","Forum"],["journée","Journée"],["immersion","Immersion"],["alliance","Alliance"],["odd","Durabilité"]];
+  for(const [k,v] of words) if(t.includes(k)) return v;
+  return a.kind==="agenda" ? "Agenda" : "Actualité";
+}
+function rel(iso){
+  if(!iso) return "Date non communiquée";
+  const d = pdate(iso); const n = new Date(); const days = Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate()) - new Date(n.getFullYear(),n.getMonth(),n.getDate()))/86400000);
+  const rtf = new Intl.RelativeTimeFormat("fr",{numeric:"auto"});
+  if(days === 0) return "Aujourd'hui";
+  if(Math.abs(days) < 30) return rtf.format(days,"day");
+  return d.toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"});
+}
+
+const DAYS = ["dim.","lun.","mar.","mer.","jeu.","ven.","sam."];
+function pdate(v){ if(!v) return null; return /^\d{4}-\d{2}-\d{2}$/.test(v) ? new Date(v+"T12:00:00") : new Date(v); }
+function todayKey(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
+function isUpcoming(a){ return a.kind==="agenda" && a.date && String(a.endDate||a.date).slice(0,10) >= todayKey(); }
+function evWhen(a){
+  const d = pdate(a.date); if(!d) return "";
+  let s = d.toLocaleDateString("fr-FR",{weekday:"short",day:"numeric",month:"long"});
+  const e = pdate(a.endDate); if(e && e.toDateString()!==d.toDateString()) s += " → " + e.toLocaleDateString("fr-FR",{day:"numeric",month:"long"});
+  return s;
+}
+function evCard(a,i){
+  const s = SOURCES[a.source]; const d = pdate(a.date);
+  return `<a class="ev" href="${esc(a.url)}" target="_blank" rel="noopener" style="--i:${i};--c:var(${s.color})">
+    <div class="cal"><span class="m">${MONTHS[d.getMonth()].replace(".","")}</span><span class="d">${d.getDate()}</span><span class="w">${DAYS[d.getDay()]}</span></div>
+    <div class="t"><span class="src">${esc(s.label)}</span><h3>${esc(a.title)}</h3><span class="where">${esc(rel(a.date))}${a.place?" · "+esc(a.place):""}</span></div></a>`;
+}
+function card(a, i, featured=false){
+  const s = SOURCES[a.source] || {label:a.source,color:"--muted"};
+  const d = pdate(a.date);
+  return `<a class="card${featured?" feature":""}" href="${esc(a.url)}" target="_blank" rel="noopener" style="--i:${i};--c:var(${s.color})">
+    <div class="cover"><div class="mesh" style="${mesh(a)}"></div>
+      <div class="top"><span class="src">${esc(s.label)}</span>${a.kind==="agenda"?'<span class="kind">Agenda</span>':""}</div>
+      <div class="big">${d?`<div><div class="day">${d.getDate()}</div><div class="mon">${MONTHS[d.getMonth()]} ${d.getFullYear()}</div></div>`:`<div class="mon">Sans date</div>`}<div class="word">${esc(keyword(a))}</div></div>
+    </div>
+    <div class="body">
+      ${featured?'<div class="flag">À la une</div>':""}
+      <h3>${esc(a.title)}</h3>
+      ${a.summary?`<p>${esc(a.summary)}</p>`:""}
+      <div class="meta"><span>${esc(a.kind==="agenda" ? evWhen(a)+(a.place?" · "+a.place:"") : rel(a.date))}</span><span class="read">Lire ›</span></div>
+    </div></a>`;
+}
+
+function visible(){
+  const q = state.q.trim().toLowerCase();
+  return state.articles
+    .filter(a => state.filter==="all" || a.source===state.filter)
+    .filter(a => state.type==="all" || a.kind===state.type)
+    .filter(a => !q || (a.title+" "+(a.summary||"")).toLowerCase().includes(q));
+}
+
+function renderPills(){
+  const pool = state.articles.filter(a => state.type==="all" || a.kind===state.type);
+  const counts = {}; pool.forEach(a => counts[a.source]=(counts[a.source]||0)+1);
+  const items = [["all","Toutes",null,pool.length], ...ORDER.map(k=>[k,SOURCES[k].label,SOURCES[k].color,SOURCES[k].linkOnly?"↗":(counts[k]||0)])];
+  $("#pills").innerHTML = items.map(([k,l,c,n]) =>
+    `<button class="pill" type="button" data-k="${k}" aria-pressed="${state.filter===k}" style="${c?`--c:var(${c})`:""}">${c?'<span class="dot"></span>':""}${esc(l)}<span class="n">${n}</span></button>`).join("");
+}
+
+function render(){
+  renderPills();
+  const feed = $("#feed");
+  if(!state.dbOk){
+    feed.innerHTML = `<div class="empty"><h2>Impossible de charger les actus</h2><p>Vérifiez votre connexion puis touchez Réactualiser.</p></div>`;
+    return;
+  }
+  if(!state.loaded) return;
+  if(state.filter!=="all" && SOURCES[state.filter].linkOnly){
+    const S = SOURCES[state.filter];
+    feed.innerHTML = `<div class="empty"><h2>L'Institut Agro ${esc(S.label)}</h2><p>Ce site n'autorise pas la lecture automatique, ses actus ne peuvent donc pas être reprises ici.</p><a class="linkout" href="${esc(S.home)}" rel="noopener">Voir ses actus sur son site</a></div>`;
+    renderSources(); return;
+  }
+  const list = visible();
+  if(!state.articles.length){
+    feed.innerHTML = `<div class="empty"><h2>Aucune actu pour l'instant</h2><p>Le premier relevé des sites de l'Institut Agro et de ses écoles apparaîtra ici.</p></div>`;
+  } else if(!list.length){
+    feed.innerHTML = `<div class="empty"><h2>Rien ne correspond</h2><p>Essayez une autre source ou un autre mot-clé.</p></div>`;
+  } else {
+    const label = state.filter==="all" ? "" : " · " + SOURCES[state.filter].label;
+    const up = list.filter(isUpcoming).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+    const others = list.filter(a => !isUpcoming(a));
+    const count = n => `${n} article${n>1?"s":""}`;
+    let html = "";
+    if(state.type==="agenda"){
+      html += up.length ? `<div class="section-h"><h2>À venir${esc(label)}</h2><span>${up.length} événement${up.length>1?"s":""}</span></div><div class="grid">${up.map((a,i)=>card(a,i)).join("")}</div>`
+                        : `<div class="empty"><h2>Aucun événement à venir</h2><p>Les prochains événements apparaîtront ici dès qu'ils seront annoncés.</p></div>`;
+      if(others.length) html += `<div class="section-h"><h2>Passés</h2><span>${others.length}</span></div><div class="grid">${others.map((a,i)=>card(a,i)).join("")}</div>`;
+    } else {
+      const fi = Math.max(0, others.findIndex(a => a.kind !== "agenda"));
+      const first = others[fi]; const rest = others.filter((_, k) => k !== fi);
+      if(first) html += card(first,0,true);
+      if(up.length) html += `<div class="section-h"><h2>À venir${esc(label)}</h2><span>${up.length} événement${up.length>1?"s":""}</span></div><div class="rail">${up.map((a,i)=>evCard(a,i)).join("")}</div>`;
+      if(rest.length) html += `<div class="section-h"><h2>${state.type==="actu"?"Actus":"Toutes les actus"}${esc(label)}</h2><span>${count(rest.length)}</span></div><div class="grid">${rest.map((a,i)=>card(a,i+1)).join("")}</div>`;
+    }
+    feed.innerHTML = html;
+  }
+  renderSources();
+}
+
+function renderSources(){
+  const m = state.meta; const box = $("#sources");
+  if(!m || !m.sources){ box.hidden = true; return; }
+  box.hidden = false;
+  $("#srows").innerHTML = ORDER.map(k => {
+    const s = m.sources[k] || {}; const S = SOURCES[k];
+    const st = S.linkOnly ? `<span class="state warn">Lien</span>` : `<span class="state ${s.ok?"ok":"warn"}" title="${esc((s.errors||[]).join(" ; "))}">${s.ok?`${s.count ?? 0} contenus`:`Partiel · ${s.count ?? 0}`}</span>`;
+    return `<div class="srow" style="--c:var(${S.color})"><a class="src" href="${esc(S.home)}" target="_blank" rel="noopener">${esc(S.label)}</a>
+      <span class="how">${esc(S.method)}</span>${st}</div>`;
+  }).join("");
+}
+
+function setUpdated(){
+  const u = state.meta && state.meta.updatedAt;
+  $("#updated").innerHTML = u ? `Relevé ${esc(rel(u).toLowerCase()==="aujourd'hui" ? "aujourd'hui à "+new Date(u).toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}) : "le "+new Date(u).toLocaleDateString("fr-FR",{day:"numeric",month:"long"}))}` : (!state.dbOk ? "" : state.loaded ? "Pas encore de relevé" : "Chargement…");
+}
+
+function ingest(list){
+  state.articles = (list||[])
+    .filter(a => a.title && a.url && SOURCES[a.source] && !SOURCES[a.source].linkOnly)
+    .sort((a,b) => (pdate(b.date)?.getTime() ?? -Infinity) - (pdate(a.date)?.getTime() ?? -Infinity));
+}
+
+let toastT;
+function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2600)}
+
+async function load(){
+  const res = await fetch("data/articles.json?t=" + Date.now(), {cache:"no-store"});
+  if(!res.ok) throw new Error(res.status);
+  return res.json();
+}
+async function refresh(manual){
+  const btn = $("#refresh");
+  btn.classList.add("spin"); btn.disabled = true;
+  const before = new Set(state.articles.map(a=>a.kind+"|"+a.url));
+  const t0 = Date.now();
+  try{
+    const data = await load();
+    ingest(data.articles); state.meta = {updatedAt:data.updatedAt, sources:data.sources}; state.loaded = true; state.dbOk = true;
+    const fresh = state.articles.filter(a => !before.has(a.kind+"|"+a.url)).length;
+    await new Promise(r => setTimeout(r, Math.max(0, 650 - (Date.now()-t0))));
+    render(); setUpdated(); lastLoad = Date.now();
+    if(manual) toast(fresh && before.size ? `${fresh} nouveauté${fresh>1?"s":""}` : `À jour · ${state.articles.length} contenus`);
+  }catch(e){
+    if(!state.loaded){ state.dbOk = false; state.loaded = true; render(); setUpdated(); }
+    if(manual) toast("Impossible de charger les actus pour le moment");
+  }finally{ btn.classList.remove("spin"); btn.disabled = false; }
+}
+
+$("#refresh").addEventListener("click", () => refresh(true));
+$("#pills").addEventListener("click", e => {
+  const b = e.target.closest(".pill"); if(!b) return;
+  state.filter = b.dataset.k; try{localStorage.setItem("ia-filter",state.filter)}catch(err){}
+  render(); window.scrollTo({top:0,behavior:"smooth"});
+});
+$("#seg").addEventListener("click", e => {
+  const b = e.target.closest("button"); if(!b) return;
+  state.type = b.dataset.t;
+  document.querySelectorAll("#seg button").forEach(x => x.setAttribute("aria-pressed", x===b));
+  render(); window.scrollTo({top:0,behavior:"smooth"});
+});
+let qT; $("#q").addEventListener("input", e => {clearTimeout(qT); qT=setTimeout(()=>{state.q=e.target.value;render()},120)});
+
+let lastLoad = Date.now();
+renderPills();
+refresh(false);
+/* la page reste ouverte longtemps : on recharge les données quand on y revient */
+document.addEventListener("visibilitychange", () => { if(!document.hidden && state.loaded && Date.now() - lastLoad > 15*60*1000) refresh(false); });
+</script>
+</body>
+</html>

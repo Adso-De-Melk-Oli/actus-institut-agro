@@ -1,0 +1,44 @@
+name: Relevé des actus
+
+on:
+  schedule:
+    - cron: "33 5 * * 1-5"   # 7 h 33 à Paris en été, 6 h 33 en hiver, du lundi au vendredi
+  workflow_dispatch:
+    inputs:
+      debug:
+        description: "Afficher le détail de chaque source"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collect
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Tester la lecture des dates
+        run: npm test
+      - name: Relever les sites
+        run: npm run collect
+        env:
+          DEBUG: ${{ inputs.debug && '1' || '0' }}
+      - name: Enregistrer les nouveautés
+        run: |
+          git config user.name "actus-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/articles.json
+          if git diff --cached --quiet; then echo "Rien de nouveau"; exit 0; fi
+          git commit -m "Relevé du $(date -u +%Y-%m-%d)"
+          git push
