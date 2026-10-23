@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-10-22T09:20:04.970Z",
+ "updatedAt": "2026-10-23T09:23:20.711Z",
  "sources": {
   "montpellier": {
    "ok": true,
@@ -18,8 +18,8 @@
     "agenda : https://www.institut-agro-rennes-angers.fr/agenda injoignable (UND_ERR_CONNECT_TIMEOUT)"
    ],
    "count": 8,
-   "failDays": 1,
-   "lastFailDay": "2026-10-22",
+   "failDays": 2,
+   "lastFailDay": "2026-10-23",
    "failingSince": "2026-10-22"
   },
   "institut": {
@@ -31,8 +31,8 @@
     "agenda : https://www.institut-agro.fr/fr injoignable (UND_ERR_CONNECT_TIMEOUT)"
    ],
    "count": 8,
-   "failDays": 1,
-   "lastFailDay": "2026-10-22",
+   "failDays": 2,
+   "lastFailDay": "2026-10-23",
    "failingSince": "2026-10-22"
   },
   "fondation": {
@@ -40,7 +40,7 @@
    "actus": 10,
    "agenda": 3,
    "errors": [],
-   "count": 13,
+   "count": 14,
    "failDays": 0
   }
  },
@@ -143,6 +143,17 @@
    "image": "https://www.institut-agro-rennes-angers.fr/files/images/evenements/Affiche-exposition-mycologique-2026.jpg",
    "place": "Campus de Rennes",
    "firstSeen": "2026-10-21T00:00:00.000Z"
+  },
+  {
+   "kind": "actu",
+   "title": "Appel à candidatures – Bourses de prototypage 2026",
+   "url": "https://fondation-institut-agro.fr/appel-a-candidatures-bourses-de-prototypage-2025/",
+   "date": "2026-10-22T09:03:00.000Z",
+   "summary": "Dans le cadre du programme Esprit d’entreprendre et d’innover en entreprise, la Fondation de l’Institut Agro lance l’appel à candidatures pour les bourses de prototypage 2026, à destination des…",
+   "id": "fon-appel-a-candidatures-bourses-de-prototypage-2025",
+   "source": "fondation",
+   "firstSeen": "2026-10-23T09:23:20.711Z",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2025/09/Etudiants-scaled.jpg"
   },
   {
    "date": "2026-10-19",
