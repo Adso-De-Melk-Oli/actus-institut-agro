@@ -20,6 +20,12 @@ const today = parisDay(now);
 const parisHour = +now.toLocaleString("en-GB", { timeZone: "Europe/Paris", hour: "2-digit", hour12: false });
 
 // « ::error:: » : la cause apparaît dans le résumé du run GitHub, pas seulement dans son journal
+/** Décalage horaire de Paris à cette date, au format « +02:00 ». */
+function parisOffset(d) {
+  const p = new Date(d.toLocaleString("en-US", { timeZone: "Europe/Paris" })), u = new Date(d.toLocaleString("en-US", { timeZone: "UTC" }));
+  const m = Math.round((p - u) / 60000);
+  return `${m >= 0 ? "+" : "-"}${String(Math.floor(Math.abs(m) / 60)).padStart(2, "0")}:${String(Math.abs(m) % 60).padStart(2, "0")}`;
+}
 const fail = msg => { console.log(`::error title=Envoi du digest::${msg}`); process.exit(1); };
 if (!GMAIL_USER || !GMAIL_APP_PASSWORD) fail(`Secret ${!GMAIL_USER ? "GMAIL_USER" : "GMAIL_APP_PASSWORD"} absent ou vide : vérifier son nom dans Settings → Secrets and variables → Actions.`);
 
@@ -31,7 +37,14 @@ try {
 
   if (!TEST) {
     if (digest.forDate !== today) { console.log(`Digest du ${digest.forDate}, pas d'aujourd'hui (${today}) : le relevé n'est pas encore passé, on attend le prochain créneau.`); process.exit(0); }
-    if (parisHour < 7) { console.log(`Il est ${parisHour} h à Paris : envoi à partir de 7 h.`); process.exit(0); }
+    if (parisHour < 7) {
+      // lancé juste après le relevé (WAIT=1) : on attend 7 h, deux heures au plus ; sinon on laisse un créneau suivant envoyer
+      const at7 = new Date(`${today}T07:00:00${parisOffset(now)}`);
+      const ms = at7 - Date.now();
+      if (process.env.WAIT !== "1" || ms > 2 * 3600e3) { console.log(`Il est ${parisHour} h à Paris : envoi à partir de 7 h.`); process.exit(0); }
+      console.log(`Attente jusqu'à 7 h (${Math.round(ms / 60000)} min)…`);
+      await new Promise(r => setTimeout(r, Math.max(0, ms)));
+    }
     if (sent.digestFor === today) { console.log(`Digest du ${today} déjà envoyé.`); process.exit(0); }
   }
 
@@ -48,11 +61,14 @@ try {
   const info = await transport.sendMail({ from, to, subject, html: digest.html, text: digest.text, attachments });
   console.log(`Envoyé à ${to.length} destinataire${to.length > 1 ? "s" : ""} : ${subject} (${attachments.length} photos) — ${info.messageId}`);
 
+  const alerts = { ...(sent.alerts ?? {}) };
   if (digest.alert && !TEST) {
     await transport.sendMail({ from, to: ADMIN, subject: digest.alert.subject, text: digest.alert.text });
+    for (const a of digest.alert.sources ?? []) alerts[a.source] = { since: a.since, at: today };
     console.log(`Alerte envoyée : ${digest.alert.subject}`);
   }
-  if (!TEST) await writeFile("data/sent.json", JSON.stringify({ digestFor: today, sentAt: now.toISOString(), subject }, null, 1) + "\n");
+  // windowTo : le prochain digest reprendra exactement là où celui-ci s'arrête
+  if (!TEST) await writeFile("data/sent.json", JSON.stringify({ digestFor: today, sentAt: new Date().toISOString(), subject, windowTo: digest.window?.to, alerts }, null, 1) + "\n");
 } catch (e) {
   fail(`${e.code ?? ""} ${e.responseCode ?? ""} ${String(e.response ?? e.message).replace(/\s+/g, " ").slice(0, 300)}`);
 }

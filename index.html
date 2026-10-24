@@ -211,7 +211,7 @@ const SOURCES = {
   institut:    {label:"Institut Agro",  method:"Pages Actualités et Agenda (pas de flux RSS)", color:"--s-institut",    home:"https://www.institut-agro.fr/fr/toutes-les-actualites"},
   montpellier: {label:"Montpellier",    method:"Flux RSS actus et agenda", color:"--s-montpellier", home:"https://www.institut-agro-montpellier.fr/actualites"},
   rennes:      {label:"Rennes-Angers",  method:"Pages Actualités et Agenda (flux RSS vide)", color:"--s-rennes",   home:"https://www.institut-agro-rennes-angers.fr/actualites"},
-  dijon:       {label:"Dijon",          method:"Non relevé : le site refuse les robots", linkOnly:true, color:"--s-dijon",           home:"https://institut-agro-dijon.fr/actualites"},
+  dijon:       {label:"Dijon",          method:"Flux RSS", color:"--s-dijon",           home:"https://institut-agro-dijon.fr/actualites"},
   fondation:   {label:"Fondation",      method:"Flux RSS + page Événements", color:"--s-fondation",   home:"https://fondation-institut-agro.fr/actualites-fondation-institut-agro/"},
 };
 const ORDER = ["institut","montpellier","rennes","dijon","fondation"];
@@ -315,7 +315,7 @@ function render(){
   if(!state.loaded) return;
   if(state.filter!=="all" && SOURCES[state.filter].linkOnly){
     const S = SOURCES[state.filter];
-    feed.innerHTML = `<div class="empty"><h2>L'Institut Agro ${esc(S.label)}</h2><p>Ce site n'autorise pas la lecture automatique, ses actus ne peuvent donc pas être reprises ici.</p><a class="linkout" href="${esc(S.home)}" rel="noopener">Voir ses actus sur son site</a></div>`;
+    feed.innerHTML = `<div class="empty"><h2>${esc(S.label)}</h2><p>Aucune actu de cette source n'a encore pu être relevée.</p><a class="linkout" href="${esc(S.home)}" rel="noopener">Voir ses actus sur son site</a></div>`;
     renderSources(); return;
   }
   const list = visible();
@@ -353,7 +353,7 @@ function renderSources(){
     const s = m.sources[k] || {}; const S = SOURCES[k];
     const st = S.linkOnly ? `<span class="state warn">Lien</span>` : `<span class="state ${s.ok?"ok":"warn"}" title="${esc((s.errors||[]).join(" ; "))}">${s.ok?`${s.count ?? 0} contenus`:`Partiel · ${s.count ?? 0}`}</span>`;
     return `<div class="srow" style="--c:var(${S.color})"><a class="src" href="${esc(S.home)}" target="_blank" rel="noopener">${esc(S.label)}</a>
-      <span class="how">${esc(S.method)}</span>${st}</div>`;
+      <span class="how">${esc(S.linkOnly ? "Pas encore relevé : voir son site" : S.method)}</span>${st}</div>`;
   }).join("");
 }
 
@@ -363,6 +363,8 @@ function setUpdated(){
 }
 
 function ingest(list){
+  // une source sans aucun contenu relevé devient un simple lien vers son site
+  for (const k of ORDER) SOURCES[k].linkOnly = !(list||[]).some(a => a.source === k);
   state.articles = (list||[])
     .filter(a => a.title && a.url && SOURCES[a.source] && !SOURCES[a.source].linkOnly)
     .sort((a,b) => (pdate(b.date)?.getTime() ?? -Infinity) - (pdate(a.date)?.getTime() ?? -Infinity));

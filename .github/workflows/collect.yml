@@ -1,8 +1,15 @@
 name: Relevé des actus
 
 on:
+  # Déclencheur principal : une tâche Claude lance ce workflow vers 6 h 35 (heure de Paris), du lundi au vendredi.
+  # Les horaires GitHub ci-dessous ne sont que des filets de sécurité : GitHub les retarde parfois de plusieurs
+  # heures. Un lancement planifié ne fait rien si le digest du jour est déjà parti.
   schedule:
-    - cron: "15 4 * * 1-5"   # 6 h 15 à Paris en été, 5 h 15 en hiver, du lundi au vendredi : avant l'envoi du digest de 7 h
+    - cron: "41 4 * * 1-5"
+    - cron: "11 5 * * 1-5"
+    - cron: "41 5 * * 1-5"
+    - cron: "41 6 * * 1-5"
+    - cron: "41 8 * * 1-5"
   workflow_dispatch:
     inputs:
       debug:
@@ -32,17 +39,27 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 150   # le relevé peut attendre 7 h pour envoyer le digest
     steps:
       - uses: actions/checkout@v4
+      - name: Digest du jour déjà envoyé ?
+        id: done
+        if: ${{ github.event_name == 'schedule' }}
+        run: |
+          today=$(TZ=Europe/Paris date +%F)
+          if grep -q "\"digestFor\": \"$today\"" data/sent.json 2>/dev/null; then echo "skip=1" >> "$GITHUB_OUTPUT"; echo "Déjà envoyé aujourd'hui : rien à faire."; fi
       - uses: actions/setup-node@v4
+        if: ${{ !steps.done.outputs.skip }}
         with:
           node-version: 20
           cache: npm
       - run: npm ci
+        if: ${{ !steps.done.outputs.skip }}
       - name: Tester la lecture des dates
+        if: ${{ !steps.done.outputs.skip }}
         run: npm test
       - name: Relever les sites
+        if: ${{ !steps.done.outputs.skip }}
         run: npm run collect
         env:
           DEBUG: ${{ inputs.debug && '1' || '0' }}
@@ -51,6 +68,7 @@ jobs:
           PREVIEW_FRESH: ${{ inputs.preview_fresh }}
           GMAIL_USER: ${{ secrets.GMAIL_USER }}   # présent : on prépare les photos du digest
       - name: Enregistrer les nouveautés
+        if: ${{ !steps.done.outputs.skip }}
         run: |
           git config user.name "actus-bot"
           git config user.email "actions@users.noreply.github.com"
@@ -58,6 +76,21 @@ jobs:
           if git diff --cached --quiet; then echo "Rien de nouveau"; exit 0; fi
           git commit -m "Relevé du $(date -u +%Y-%m-%d)"
           git push
+      - name: Envoyer le digest du jour (à partir de 7 h)
+        if: ${{ !steps.done.outputs.skip && !inputs.preview_only }}
+        run: node scripts/send.mjs
+        env:
+          WAIT: "1"
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          DIGEST_TO: ${{ secrets.DIGEST_TO }}
+      - name: Noter l'envoi
+        if: ${{ !steps.done.outputs.skip && !inputs.preview_only }}
+        run: |
+          git add data/sent.json 2>/dev/null || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Digest envoyé ($(TZ=Europe/Paris date +%F))"
+          git pull --rebase -q && git push
       - name: Publier le diagnostic (mode détaillé seulement)
         if: ${{ inputs.debug }}
         run: |

@@ -8,7 +8,7 @@ Les actualités et l'agenda de l'Institut Agro, de ses écoles (Montpellier, Ren
 
 - `index.html` : le site. Il lit `data/articles.json` ; le bouton Réactualiser recharge ce fichier.
 - `scripts/collect.mjs` : le robot de collecte. Il lit les flux RSS quand ils existent, sinon les pages Actualités et Agenda, et respecte le `robots.txt` de chaque site.
-- `.github/workflows/collect.yml` : lance le robot du lundi au vendredi à 7 h 33 (heure de Paris en été) et enregistre les nouveautés. Une collecte peut aussi être lancée à la main depuis l'onglet **Actions** → **Relevé des actus** → **Run workflow**.
+- `.github/workflows/collect.yml` : relève les sites, enregistre les nouveautés puis envoie le digest à partir de 7 h. Une tâche Claude le lance vers 6 h 35 du lundi au vendredi ; des horaires GitHub servent de filet de sécurité (GitHub les retarde parfois de plusieurs heures). Une collecte peut aussi être lancée à la main depuis l'onglet **Actions** → **Relevé des actus** → **Run workflow**.
 
 | Source | Méthode |
 |---|---|
@@ -16,7 +16,7 @@ Les actualités et l'agenda de l'Institut Agro, de ses écoles (Montpellier, Ren
 | Fondation | Flux RSS + page Événements |
 | Institut Agro | Pages Actualités et Agenda (pas de flux RSS) |
 | Rennes-Angers | Pages Actualités et Agenda (flux RSS vide) |
-| Dijon | Non relevé : le site refuse les robots. Le site renvoie vers ses actus. |
+| Dijon | Flux RSS (actus ; ses événements quand le flux en contient) |
 
 ## Digest du matin
 

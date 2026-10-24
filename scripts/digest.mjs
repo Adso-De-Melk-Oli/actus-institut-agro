@@ -9,6 +9,7 @@ const SCHOOLS = [
   ["institut", "L'Institut Agro", "#2f8f46", "#e6f3e9"],
   ["montpellier", "Institut Agro Montpellier", "#c9531f", "#fbebe3"],
   ["rennes", "Institut Agro Rennes-Angers", "#1f6fd1", "#e5effb"],
+  ["dijon", "Institut Agro Dijon", "#8e2b4e", "#f6e6ec"],
   ["fondation", "Fondation de l'Institut Agro", "#0e7f81", "#e1f2f2"],
 ];
 export const MAX_PHOTOS = 15; // vignettes de 4 Ko environ
@@ -31,9 +32,12 @@ export function parisInstant(day, hh) {
   return new Date(guess - (asParis - asUtc));
 }
 /** Le digest préparé maintenant est celui du prochain envoi de 7 h 00 (jours ouvrés). */
-export function digestDayFor(now) {
+/** Jour du prochain digest : aujourd'hui (jour ouvré) tant qu'il n'est pas parti, même si le relevé est en retard ;
+ *  sinon le jour ouvré suivant. sent = contenu de data/sent.json ({ digestFor, windowTo, alerts }). */
+export function digestDayFor(now, sent = {}) {
   const today = parisDay(now);
-  return nextWorkday(parisHour(now) < 7 ? today : addDays(today, 1));
+  const workday = ![0, 6].includes(weekday(today));
+  return workday && sent.digestFor !== today ? today : nextWorkday(addDays(today, 1));
 }
 
 const fmtDay = (day, opts = { weekday: "long", day: "numeric", month: "long" }) => new Date(day + "T12:00:00Z").toLocaleDateString("fr-FR", { ...opts, timeZone: "UTC" });
@@ -48,9 +52,11 @@ function when(a) {
 /* ---------- composition ---------- */
 
 /** Sélection du jour : nouveautés, événements du jour (sur place / à distance), semaine à venir. */
-function select(data, now) {
-  const day = digestDayFor(now);
-  const from = parisInstant(prevWorkday(day), 7), to = parisInstant(day, 7);
+function select(data, now, sent = {}) {
+  const day = digestDayFor(now, sent);
+  // fenêtre : depuis la fin de celle du dernier digest envoyé, jusqu'à maintenant (ou 7 h le jour même)
+  const from = sent.windowTo ? new Date(sent.windowTo) : parisInstant(prevWorkday(day), 7);
+  const to = day === parisDay(now) ? new Date(Math.max(+now, +parisInstant(day, 7))) : parisInstant(day, 7);
   const arts = data.articles ?? [];
   const fresh = arts.filter(a => a.firstSeen && new Date(a.firstSeen) > from && new Date(a.firstSeen) <= to);
   const today = arts.filter(a => a.kind === "agenda" && eventDay(a) <= day && day <= eventEnd(a));
@@ -61,15 +67,16 @@ function select(data, now) {
   return { day, from, to, fresh, onCampus, remote, upcoming };
 }
 /** Contenus qui auront une photo dans le digest, par ordre d'importance (6 au plus). */
-export function photoCandidates(data, now = new Date()) {
-  const { onCampus, fresh } = select(data, now);
+export function photoCandidates(data, now = new Date(), sent = {}) {
+  const { onCampus, fresh } = select(data, now, sent);
   const order = [...onCampus, ...fresh.filter(a => a.kind === "actu"), ...fresh.filter(a => a.kind === "agenda")];
   return [...new Map(order.filter(a => a.image).map(a => [a.id, a])).values()].slice(0, MAX_PHOTOS);
 }
 
 /** thumbs : { [id]: chemin de la vignette } pour les contenus dont la vignette a pu être préparée. */
-export function buildDigest(data, now = new Date(), thumbs = {}) {
-  const { day, from, to, fresh, onCampus, remote, upcoming } = select(data, now);
+export function buildDigest(data, now = new Date(), thumbs = {}, sent = {}) {
+  const { day, from, to, fresh, onCampus, remote, upcoming } = select(data, now, sent);
+  const sinceLabel = `${fmtDay(parisDay(from))} à ${from.toLocaleTimeString("fr-FR", { timeZone: TZ, hour: "2-digit", minute: "2-digit" }).replace(":", " h ")}`;
   const nActu = fresh.filter(a => a.kind === "actu").length, nEv = fresh.filter(a => a.kind === "agenda").length;
   const parts = [];
   if (onCampus.length) parts.push(`${onCampus.length} événement${onCampus.length > 1 ? "s" : ""} sur les campus aujourd'hui`);
@@ -131,7 +138,7 @@ export function buildDigest(data, now = new Date(), thumbs = {}) {
 <div style="font-size:13px;font-weight:700;color:#86868b;text-transform:uppercase;letter-spacing:.08em;padding:0 6px">${esc(fmtDay(day))}</div>
 <div style="font-size:34px;font-weight:800;letter-spacing:-.03em;color:#F8AC00;margin:4px 0 22px;padding:0 6px">Actus <span style="font-weight:300;color:#d9d9de">|</span> L'Institut Agro</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#ffffff" style="background-color:#ffffff;border-radius:22px;padding:28px 28px 30px">${html}</td></tr></table>
-<div style="font-size:13px;color:#86868b;line-height:1.5;margin:20px 6px 0">Nouveautés relevées depuis le ${esc(fmtDay(prevWorkday(day)))} à 7 h. Dijon n'est pas couvert : son site refuse les robots.<br><a href="${SITE}" style="color:#0071e3;font-weight:600">Ouvrir le fil complet</a></div>
+<div style="font-size:13px;color:#86868b;line-height:1.5;margin:20px 6px 0">Nouveautés relevées depuis le ${esc(sinceLabel)}.<br><a href="${SITE}" style="color:#0071e3;font-weight:600">Ouvrir le fil complet</a></div>
 </td></tr></table></div>`;
 
   /* --- version texte --- */
@@ -149,8 +156,15 @@ export function buildDigest(data, now = new Date(), thumbs = {}) {
   if (failing.length) lines.push(`Relevé incomplet ce matin pour : ${failing.join(", ")}.`, "");
   lines.push(`Fil complet : ${SITE}`);
   /* --- alerte : une source en échec deux jours ouvrés de suite (puis rappel chaque semaine) --- */
-  const down = Object.entries(data.sources ?? {}).filter(([, s]) => (s.failDays ?? 0) >= 2 && (s.failDays - 2) % 5 === 0 && s.lastFailDay === parisDay(now));
+  // une alerte par panne (dès 2 jours de relevé en échec), puis un rappel tous les 7 jours tant qu'elle dure ;
+  // sent.alerts[source] = { since, at } est noté par l'envoi : une alerte non envoyée sera reproposée
+  const down = Object.entries(data.sources ?? {}).filter(([k, s]) => {
+    if ((s.failDays ?? 0) < 2 || !s.failingSince) return false;
+    const last = sent.alerts?.[k];
+    return !last || last.since !== s.failingSince || (now - new Date(last.at + "T12:00:00Z")) / 864e5 >= 6.5;
+  });
   const alert = down.length ? {
+    sources: down.map(([k, s]) => ({ source: k, since: s.failingSince })),
     subject: `Actus Institut Agro · alerte : ${down.map(([k]) => LABEL[k] ?? k).join(", ")} injoignable${down.length > 1 ? "s" : ""} depuis ${down[0][1].failDays} jours`,
     text: [
       "Le robot de collecte n'arrive plus à lire :", "",

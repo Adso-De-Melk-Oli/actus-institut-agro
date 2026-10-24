@@ -1,17 +1,10 @@
-name: Envoi du digest
+name: Envoi du digest (essai)
 
 on:
-  schedule:
-    # 7 h à Paris : 5 h UTC en été, 6 h UTC en hiver. Plusieurs créneaux, le script n'envoie
-    # qu'une fois par jour, à partir de 7 h, et seulement quand le relevé du matin est passé.
-    - cron: "0 5 * * 1-5"
-    - cron: "0 6 * * 1-5"
-    - cron: "30 6 * * 1-5"
-    - cron: "0 7 * * 1-5"
   workflow_dispatch:
     inputs:
       test:
-        description: "Envoyer l'aperçu (data/preview) avec l'objet [Test]"
+        description: "Envoyer l'aperçu (data/preview) avec l'objet [Test] — l'envoi quotidien est fait par « Relevé des actus »"
         type: boolean
         default: true
 

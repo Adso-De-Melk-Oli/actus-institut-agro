@@ -157,16 +157,24 @@ function isPhoto(src) { return /\.(jpe?g|png|webp|avif|gif)(\?|$)/i.test(src) &&
 
 /* ---------- lecture RSS ---------- */
 
-const xml = new XMLParser({ ignoreAttributes: true, processEntities: true, htmlEntities: true });
+const xml = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "@_", processEntities: true, htmlEntities: true });
+const txt = v => typeof v === "object" && v !== null ? (v["#text"] ?? "") : (v ?? "");
 async function rss(url) {
   const doc = xml.parse(await get(url));
   const items = doc?.rss?.channel?.item ?? [];
-  return (Array.isArray(items) ? items : [items]).map(it => ({
-    title: clean(stripHtml(String(it.title ?? ""))),
-    url: clean(it.link),
-    pubDate: it.pubDate ? new Date(it.pubDate).toISOString() : null,
-    text: stripHtml(String(it["content:encoded"] ?? it.description ?? "")),
-  })).filter(i => i.title && i.url);
+  return (Array.isArray(items) ? items : [items]).map(it => {
+    const html = String(txt(it["content:encoded"]) || txt(it.description) || "");
+    const media = [].concat(it.enclosure ?? [], it["media:content"] ?? [], it["media:thumbnail"] ?? []).map(m => m?.["@_url"]).find(u => u && isPhoto(u));
+    const inline = (html.match(/<img[^>]+src=["']([^"']+)["']/i) ?? [])[1];
+    const image = [media, inline].filter(Boolean).map(u => { try { return new URL(u, url).toString(); } catch { return null; } }).find(u => u && isPhoto(u));
+    return {
+      title: clean(stripHtml(String(txt(it.title)))),
+      url: clean(txt(it.link)),
+      pubDate: it.pubDate ? new Date(txt(it.pubDate)).toISOString() : null,
+      text: stripHtml(html),
+      image,
+    };
+  }).filter(i => i.title && i.url);
 }
 
 /* ---------- lecture des pages de liste ---------- */
@@ -239,7 +247,7 @@ const SOURCES = {
     async actus() {
       return (await rss("https://www.institut-agro-montpellier.fr/rss.xml"))
         .filter(i => !/\/agenda\//.test(i.url))
-        .map(i => ({ kind: "actu", title: i.title, url: i.url, date: i.pubDate, summary: summarize(cleanDesc(i.text, i.title)) }));
+        .map(i => ({ kind: "actu", title: i.title, url: i.url, date: i.pubDate, image: i.image, summary: summarize(cleanDesc(i.text, i.title)) }));
     },
     async agenda() {
       const items = await rss("https://www.institut-agro-montpellier.fr/agenda/rss.xml");
@@ -273,11 +281,26 @@ const SOURCES = {
     },
   },
 
+  dijon: {
+    prefix: "dij",
+    optionalAgenda: true, // le flux ne contient pas toujours d'événements
+    async actus() {
+      return (await rss("https://institut-agro-dijon.fr/rss.xml"))
+        .filter(i => !/\/agenda\//.test(i.url))
+        // quelques entrées portent une date future (date d'un événement) : on garde alors le jour où l'actu est apparue
+        .map(i => ({ kind: "actu", title: i.title, url: i.url, date: i.pubDate && new Date(i.pubDate) > NOW ? undefined : i.pubDate, image: i.image, summary: summarize(cleanDesc(i.text, i.title)) }));
+    },
+    async agenda() {
+      const items = (await rss("https://institut-agro-dijon.fr/rss.xml")).filter(i => /\/agenda\//.test(i.url));
+      return events(items.map(i => ({ url: i.url, title: i.title, text: cleanDesc(i.text, i.title), image: i.image })));
+    },
+  },
+
   fondation: {
     prefix: "fon",
     async actus() {
       return (await rss("https://fondation-institut-agro.fr/feed/"))
-        .map(i => ({ kind: "actu", title: i.title, url: i.url, date: i.pubDate, summary: summarize(cleanDesc(i.text, i.title)) }));
+        .map(i => ({ kind: "actu", title: i.title, url: i.url, date: i.pubDate, image: i.image, summary: summarize(cleanDesc(i.text, i.title)) }));
     },
     async agenda() {
       const base = "https://fondation-institut-agro.fr/actualites-fondation-institut-agro/";
@@ -289,6 +312,8 @@ const SOURCES = {
 /* ---------- fusion et écriture ---------- */
 
 let previous = { articles: [] };
+let sent = {};
+try { sent = JSON.parse(await readFile("data/sent.json", "utf8")); } catch {}
 try { previous = JSON.parse(await readFile(OUT, "utf8")); } catch {}
 
 // aperçu seul (PREVIEW_ONLY=1) : aucun site n'est relevé, data/articles.json et le vrai digest restent intacts ;
@@ -313,13 +338,15 @@ for (const [name, src] of Object.entries(SOURCES)) {
   for (const kind of ["actus", "agenda"]) {
     try {
       const items = (await src[kind]()).filter(i => i.title && i.url);
-      if (!items.length) throw new Error("aucun contenu trouvé (la page a peut-être changé)");
+      if (!items.length && !(kind === "agenda" && src.optionalAgenda)) throw new Error("aucun contenu trouvé (la page a peut-être changé)");
       for (const it of items) {
         const k = key(it); const old = byKey.get(k);
         const id = old?.id ?? `${src.prefix}-${it.kind === "agenda" ? "ag-" : ""}${slugFromUrl(it.url)}`;
         const fresh = Object.fromEntries(Object.entries(it).filter(([, v]) => v !== undefined && v !== ""));
         // un résumé ou un lieu déjà connus sont conservés : ils ont pu être relus à la main
-        byKey.set(k, { ...old, ...fresh, id, source: name, summary: old?.summary || fresh.summary || "", firstSeen: old?.firstSeen ?? NOW.toISOString() });
+        const merged = { ...old, ...fresh, id, source: name, summary: old?.summary || fresh.summary || "", firstSeen: old?.firstSeen ?? NOW.toISOString() };
+        if (!merged.date && merged.kind === "actu") merged.date = merged.firstSeen;
+        byKey.set(k, merged);
       }
       status[name][kind === "actus" ? "actus" : "agenda"] = items.length;
       if (DEBUG) console.log(`\n[${name}/${kind}] ${items.length}`, JSON.stringify(items.slice(0, 3), null, 1));
@@ -367,10 +394,10 @@ await mkdir("data", { recursive: true });
 await writeFile(OUT, JSON.stringify({ updatedAt: NOW.toISOString(), sources: status, articles }, null, 1) + "\n");
 console.log(`\n${articles.length} contenus écrits dans ${OUT}`);
 // vignettes JPEG légères des contenus mis en avant dans le digest (jointes à l'e-mail)
-async function makeThumbs(data, at, dir) {
+async function makeThumbs(data, at, dir, snt = {}) {
   await mkdir(dir, { recursive: true });
   const thumbs = {};
-  for (const a of photoCandidates(data, at)) {
+  for (const a of photoCandidates(data, at, snt)) {
     try {
       const res = await fetch(a.image, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(20_000) });
       if (!res.ok) throw new Error(res.status);
@@ -405,8 +432,8 @@ function placeholderSvg(label, color) {
 }
 // photos jointes seulement si l'e-mail est envoyé par GitHub (secrets GMAIL_USER / GMAIL_APP_PASSWORD) :
 // l'envoi par l'outil Gmail de Claude ne permet pas de joindre les images de façon fiable
-const thumbs = process.env.GMAIL_USER ? await makeThumbs({ sources: status, articles }, NOW, "data/thumbs") : {};
-const digest = buildDigest({ sources: status, articles }, NOW, thumbs);
+const thumbs = process.env.GMAIL_USER ? await makeThumbs({ sources: status, articles }, NOW, "data/thumbs", sent) : {};
+const digest = buildDigest({ sources: status, articles }, NOW, thumbs, sent);
 // aperçu : PREVIEW_AT=2026-11-05T05:20:00Z prépare le digest de cette date dans data/preview/, sans toucher au vrai
 if (process.env.PREVIEW_AT) {
   const at = new Date(process.env.PREVIEW_AT);
