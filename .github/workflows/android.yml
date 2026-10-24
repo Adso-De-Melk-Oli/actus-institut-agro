@@ -62,7 +62,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cp out/*-release.apk ActusInstitutAgro.apk
+          cp /tmp/res/*-release.apk ActusInstitutAgro.apk   # out/ a été vidé par l'étape précédente
           notes="Version $(date -u +%F) — installer ActusInstitutAgro.apk sur le téléphone (Android 8 et plus)."
           gh release view android >/dev/null 2>&1 || gh release create android --title "Application Android" --notes "$notes" --target main
           gh release edit android --notes "$notes"
