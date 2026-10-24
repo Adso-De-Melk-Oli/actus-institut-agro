@@ -72,17 +72,17 @@ fun SchoolPill(school: School, modifier: Modifier = Modifier, onImage: Boolean =
 
 /** Photo du contenu ; à défaut (ou pendant le chargement) une vignette aux couleurs de l'école. */
 @Composable
-fun ArticleImage(article: Article, modifier: Modifier = Modifier, showLabel: Boolean = true) {
+fun ArticleImage(article: Article, modifier: Modifier = Modifier, large: Boolean = false) {
     Box(modifier.background(article.school.color)) {
-        if (showLabel) {
-            Text(
-                article.school.shortLabel,
-                color = Color.White,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.align(Alignment.BottomStart).padding(10.dp),
-            )
-        }
+        // vignette de remplacement : nom de l'école, sans couper les mots (« Montpellier » tient sur une ligne)
+        Text(
+            article.school.shortLabel.replace("-", "-\u200B"),
+            color = Color.White,
+            style = if (large) MaterialTheme.typography.headlineMedium else MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.Bold,
+            maxLines = 2,
+            modifier = Modifier.align(Alignment.BottomStart).padding(if (large) 20.dp else 8.dp),
+        )
         if (!article.image.isNullOrBlank()) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current).data(article.image).crossfade(true).build(),
@@ -103,7 +103,7 @@ fun FeaturedCard(article: Article, today: LocalDate, onOpen: (Article) -> Unit, 
         modifier = Modifier.fillMaxWidth(),
     ) {
         Box(Modifier.fillMaxWidth().aspectRatio(16f / 9f)) {
-            ArticleImage(article, Modifier.fillMaxSize(), showLabel = false)
+            ArticleImage(article, Modifier.fillMaxSize(), large = true)
             Box(
                 Modifier.fillMaxSize().background(
                     Brush.verticalGradient(0f to Color.Black.copy(alpha = 0.25f), 0.35f to Color.Transparent),
