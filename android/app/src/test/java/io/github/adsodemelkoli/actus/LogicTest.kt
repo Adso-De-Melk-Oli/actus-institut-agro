@@ -4,6 +4,8 @@ import io.github.adsodemelkoli.actus.data.Article
 import io.github.adsodemelkoli.actus.data.Feed
 import io.github.adsodemelkoli.actus.data.FeedJson
 import io.github.adsodemelkoli.actus.notify.CheckWorker
+import io.github.adsodemelkoli.actus.ui.Actions
+import io.github.adsodemelkoli.actus.ui.longPress
 import io.github.adsodemelkoli.actus.ui.relativeLabel
 import io.github.adsodemelkoli.actus.ui.whenLabel
 import org.junit.Assert.assertEquals
@@ -38,6 +40,19 @@ class LogicTest {
         // historique d'une nouvelle source : jamais signalé
         val dijon = feed.articles.first { it.source == "dijon" && it.seed }
         assertTrue(CheckWorker.newItems(feed, all - dijon.id, setOf("dijon")).isEmpty())
+    }
+
+    @Test fun appuiLong() {
+        val done = mutableListOf<String>()
+        val actions = Actions(onShare = { done += "partage:" + it.id }, onAddToCalendar = { done += "agenda:" + it.id })
+        val press = actions.longPress(LocalDate.of(2026, 11, 5))
+        press(a("ia-ag-ag-ells-universities"))                  // événement en cours : agenda du téléphone
+        press(a("mtp-ag-congres-acarologie-2026"))              // événement passé (juillet) : partage
+        press(a("mtp-concours-vignerons-terroirs-avenir-2027")) // actu : partage
+        assertEquals(
+            listOf("agenda:ia-ag-ag-ells-universities", "partage:mtp-ag-congres-acarologie-2026", "partage:mtp-concours-vignerons-terroirs-avenir-2027"),
+            done,
+        )
     }
 
     @Test fun libellesDeDates() {

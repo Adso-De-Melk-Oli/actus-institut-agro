@@ -25,6 +25,7 @@ import io.github.adsodemelkoli.actus.ui.Brand
 import io.github.adsodemelkoli.actus.ui.SettingsState
 import io.github.adsodemelkoli.actus.ui.Tab
 import io.github.adsodemelkoli.actus.ui.UiState
+import io.github.adsodemelkoli.actus.ui.UpdateState
 import org.junit.Rule
 import org.junit.Test
 import java.time.LocalDate
@@ -47,7 +48,14 @@ class ScreenshotTest {
     @Test fun filRecherche() = shot(Tab.FEED, state = UiState(feed = feed, searchOpen = true, query = "colloque"))
     @Test fun agenda() = shot(Tab.AGENDA)
     @Test fun agendaSombre() = shot(Tab.AGENDA, dark = true)
-    @Test fun reglages() = shot(Tab.SETTINGS, s = settings.copy(canNotify = false))
+    @Test fun reglages() {
+        paparazzi.unsafeUpdateConfig(deviceConfig = DeviceConfig.PIXEL_6.copy(screenHeight = 5200))
+        shot(Tab.SETTINGS, s = settings.copy(canNotify = false, builtOn = "24 octobre 2026", update = UpdateState(latest = "1.0.4")))
+    }
+    @Test fun reglagesMiseAJour() {
+        paparazzi.unsafeUpdateConfig(deviceConfig = DeviceConfig.PIXEL_6.copy(screenHeight = 5200))
+        shot(Tab.SETTINGS, dark = true, s = settings.copy(builtOn = "24 octobre 2026", update = UpdateState(latest = "1.0.9", downloadUrl = "https://example.org/a.apk")))
+    }
     @Test fun horsLigne() = shot(Tab.FEED, state = UiState(feed = feed, offline = true, error = "timeout"))
     @Test fun vide() = shot(Tab.FEED, state = UiState())
 
@@ -58,6 +66,7 @@ class ScreenshotTest {
                     Image(painterResource(R.drawable.ic_launcher_foreground), null, Modifier.size(108.dp))
                 }
             }
+            Image(painterResource(R.drawable.logo_institut_agro), null, Modifier.size(108.dp))
         }
     }
 }

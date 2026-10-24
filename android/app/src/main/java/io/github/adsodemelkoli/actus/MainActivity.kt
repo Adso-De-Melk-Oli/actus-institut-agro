@@ -33,6 +33,11 @@ import io.github.adsodemelkoli.actus.ui.ActusTheme
 import io.github.adsodemelkoli.actus.ui.SettingsState
 import io.github.adsodemelkoli.actus.ui.Tab
 import io.github.adsodemelkoli.actus.ui.UiState
+import io.github.adsodemelkoli.actus.ui.UpdateState
+import io.github.adsodemelkoli.actus.data.Updates
+import android.provider.CalendarContract
+import android.widget.Toast
+import java.time.ZoneOffset
 import io.github.adsodemelkoli.actus.widget.AgendaWidget
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -53,10 +58,12 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     private val prefs = Prefs(app)
     private val _state = MutableStateFlow(UiState())
     val state = _state.asStateFlow()
-    private val _settings = MutableStateFlow(readSettings())
+    private val _settings: MutableStateFlow<SettingsState> = MutableStateFlow(SettingsState())
     val settings = _settings.asStateFlow()
 
     init {
+        _settings.value = readSettings()
+        checkUpdate()
         viewModelScope.launch {
             repo.cached()?.let { cached -> _state.update { it.copy(feed = cached) } }
             refresh()
@@ -72,6 +79,22 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             if (!r.fromCache) {
                 CheckWorker.check(getApplication(), r.feed)
                 AgendaWidget.refreshAll(getApplication())
+            }
+        }
+    }
+
+    /** Dernière version publiée sur GitHub (release « android ») comparée à celle installée. */
+    fun checkUpdate() {
+        if (_settings.value.update.checking) return
+        _settings.update { it.copy(update = it.update.copy(checking = true, error = false)) }
+        viewModelScope.launch {
+            val u = runCatching { Updates.latest() }.getOrNull()
+            _settings.update {
+                it.copy(update = when {
+                    u == null -> UpdateState(error = true)
+                    u.versionCode > BuildConfig.VERSION_CODE -> UpdateState(latest = u.versionName, downloadUrl = u.url)
+                    else -> UpdateState(latest = u.versionName)
+                })
             }
         }
     }
@@ -94,7 +117,10 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             notifySchools = prefs.notifySchools,
             dynamicColor = app.getSharedPreferences("actus", 0).getBoolean("dynamic", false),
             canNotify = Notifier.canNotify(app),
-            version = runCatching { app.packageManager.getPackageInfo(app.packageName, 0).versionName }.getOrNull() ?: "",
+            version = BuildConfig.VERSION_NAME,
+            builtOn = java.time.Instant.ofEpochMilli(BuildConfig.BUILD_TIME).atZone(PARIS).toLocalDate()
+                .format(java.time.format.DateTimeFormatter.ofPattern("d MMMM yyyy", java.util.Locale.FRENCH)),
+            update = _settings.value.update,
         )
     }
 }
@@ -129,6 +155,9 @@ class MainActivity : ComponentActivity() {
                         onSearchOpen = model::setSearchOpen,
                         onOpen = ::open,
                         onShare = ::share,
+                        onAddToCalendar = ::addToCalendar,
+                        onCheckUpdate = model::checkUpdate,
+                        onInstallUpdate = { settings.update.downloadUrl?.let { url -> startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) } },
                         onNotifyNew = model::setNotifyNew,
                         onNotifyToday = model::setNotifyToday,
                         onNotifySchool = model::setNotifySchool,
@@ -172,6 +201,27 @@ class MainActivity : ComponentActivity() {
         runCatching {
             CustomTabsIntent.Builder().setDefaultColorSchemeParams(params).setShowTitle(true).build().launchUrl(this, Uri.parse(url))
         }.onFailure { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) }
+    }
+
+    /**
+     * Ouvre l'écran « Nouvel événement » de l'agenda du téléphone, prérempli : l'utilisateur choisit
+     * l'agenda et confirme. Aucune autorisation n'est nécessaire.
+     */
+    private fun addToCalendar(a: Article) {
+        val start = a.day ?: return
+        val end = (a.endDay ?: start).plusDays(1) // journée entière : fin exclusive, à minuit UTC
+        val description = listOfNotNull(a.summary?.takeIf { it.isNotBlank() }, a.school.label, a.url).joinToString("\n\n")
+        val intent = Intent(Intent.ACTION_INSERT)
+            .setData(CalendarContract.Events.CONTENT_URI)
+            .putExtra(CalendarContract.Events.TITLE, a.title)
+            .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, start.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli())
+            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, end.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli())
+            .putExtra(CalendarContract.Events.EVENT_LOCATION, if (a.remote) "À distance" else a.place ?: "")
+            .putExtra(CalendarContract.Events.DESCRIPTION, description)
+            .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_FREE)
+        runCatching { startActivity(intent) }
+            .onFailure { Toast.makeText(this, "Aucune application d'agenda n'est installée", Toast.LENGTH_LONG).show() }
     }
 
     private fun share(a: Article) {

@@ -21,6 +21,7 @@ android {
         targetSdk = 34
         versionCode = versionCodeFromCi
         versionName = "1.0.$versionCodeFromCi"
+        buildConfigField("long", "BUILD_TIME", "${System.currentTimeMillis()}L")
     }
 
     signingConfigs {
@@ -48,7 +49,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions { jvmTarget = "17" }
-    buildFeatures { compose = true }
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
 }
 
 dependencies {

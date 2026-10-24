@@ -140,14 +140,18 @@ fun FeaturedCard(article: Article, today: LocalDate, onOpen: (Article) -> Unit, 
 /** Une actu dans la liste : vignette à gauche, texte à droite. Appui long pour partager. */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ArticleRow(article: Article, today: LocalDate, onOpen: (Article) -> Unit, onShare: (Article) -> Unit) {
+fun ArticleRow(article: Article, today: LocalDate, onOpen: (Article) -> Unit, onLongPress: (Article) -> Unit) {
+    val haptic = androidx.compose.ui.platform.LocalHapticFeedback.current
     Card(
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .combinedClickable(onClick = { onOpen(article) }, onLongClick = { onShare(article) }),
+            .combinedClickable(onClick = { onOpen(article) }, onLongClick = {
+                haptic.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.LongPress)
+                onLongPress(article)
+            }),
     ) {
         Row(Modifier.padding(12.dp), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
             ArticleImage(article, Modifier.size(width = 104.dp, height = 78.dp).clip(RoundedCornerShape(14.dp)))
@@ -195,12 +199,19 @@ fun CalendarBlock(article: Article, modifier: Modifier = Modifier) {
 
 /** Événement dans le bandeau « À venir ». */
 @Composable
-fun UpcomingCard(article: Article, onOpen: (Article) -> Unit) {
+@OptIn(ExperimentalFoundationApi::class)
+fun UpcomingCard(article: Article, onOpen: (Article) -> Unit, onLongPress: (Article) -> Unit = {}) {
+    val haptic = androidx.compose.ui.platform.LocalHapticFeedback.current
     Card(
-        onClick = { onOpen(article) },
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
-        modifier = Modifier.width(280.dp),
+        modifier = Modifier.width(280.dp).clip(RoundedCornerShape(20.dp)).combinedClickable(
+            onClick = { onOpen(article) },
+            onLongClick = {
+                haptic.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.LongPress)
+                onLongPress(article)
+            },
+        ),
     ) {
         Row(Modifier.padding(14.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             CalendarBlock(article)

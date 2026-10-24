@@ -84,7 +84,19 @@ data class SettingsState(
     val dynamicColor: Boolean = false,
     val canNotify: Boolean = true,
     val version: String = "",
+    val builtOn: String = "",
+    val update: UpdateState = UpdateState(),
 )
+
+/** Mises à jour : l'application est installée hors Play Store, elle vérifie elle-même la dernière version publiée. */
+data class UpdateState(
+    val checking: Boolean = false,
+    val latest: String? = null,
+    val downloadUrl: String? = null,
+    val error: Boolean = false,
+) {
+    val available: Boolean get() = downloadUrl != null
+}
 
 class Actions(
     val onTab: (Tab) -> Unit = {},
@@ -94,6 +106,9 @@ class Actions(
     val onSearchOpen: (Boolean) -> Unit = {},
     val onOpen: (Article) -> Unit = {},
     val onShare: (Article) -> Unit = {},
+    val onAddToCalendar: (Article) -> Unit = {},
+    val onCheckUpdate: () -> Unit = {},
+    val onInstallUpdate: () -> Unit = {},
     val onNotifyNew: (Boolean) -> Unit = {},
     val onNotifyToday: (Boolean) -> Unit = {},
     val onNotifySchool: (String, Boolean) -> Unit = { _, _ -> },
@@ -101,6 +116,11 @@ class Actions(
     val onAskPermission: () -> Unit = {},
     val onOpenSite: () -> Unit = {},
 )
+
+/** Appui long : un événement à venir s'ajoute à l'agenda du téléphone, le reste se partage. */
+fun Actions.longPress(today: LocalDate): (Article) -> Unit = { a ->
+    if (a.isEvent && a.isUpcoming(today)) onAddToCalendar(a) else onShare(a)
+}
 
 /** L'application entière, sans dépendance à Android : utilisée telle quelle par les captures automatiques. */
 @Composable
@@ -269,14 +289,14 @@ fun FeedScreen(state: UiState, today: LocalDate, actions: Actions) {
             item { Box(Modifier.padding(horizontal = 16.dp)) { SectionTitle("À venir", "${upcoming.size} événement${if (upcoming.size > 1) "s" else ""}") } }
             item {
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
-                    items(upcoming, key = { it.id }) { UpcomingCard(it, actions.onOpen) }
+                    items(upcoming, key = { it.id }) { UpcomingCard(it, actions.onOpen, actions.longPress(today)) }
                 }
             }
         }
         if (news.size > 1) {
             item { Box(Modifier.padding(horizontal = 16.dp)) { SectionTitle("Dernières actus") } }
             items(news.drop(1), key = { it.id }) { a ->
-                Box(Modifier.padding(horizontal = 16.dp)) { ArticleRow(a, today, actions.onOpen, actions.onShare) }
+                Box(Modifier.padding(horizontal = 16.dp)) { ArticleRow(a, today, actions.onOpen, actions.longPress(today)) }
             }
         }
         item { Footer(state, today) }
@@ -297,6 +317,13 @@ fun AgendaScreen(state: UiState, today: LocalDate, actions: Actions) {
     ) {
         header(state, actions)
         if (upcoming.isEmpty() && !state.loading) item { EmptyState("Aucun événement à venir", "Les prochains événements apparaîtront ici dès qu'ils seront annoncés.") }
+        else item {
+            Row(Modifier.padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Filled.DateRange, null, Modifier.size(16.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                Spacer(Modifier.size(8.dp))
+                Text("Appui long sur un événement pour l'ajouter à l'agenda du téléphone", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
         groups.forEach { (day, list) ->
             item(key = "j$day") {
                 Text(
@@ -305,11 +332,11 @@ fun AgendaScreen(state: UiState, today: LocalDate, actions: Actions) {
                     modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 10.dp),
                 )
             }
-            items(list, key = { "a" + it.id }) { a -> Box(Modifier.padding(horizontal = 16.dp)) { ArticleRow(a, today, actions.onOpen, actions.onShare) } }
+            items(list, key = { "a" + it.id }) { a -> Box(Modifier.padding(horizontal = 16.dp)) { ArticleRow(a, today, actions.onOpen, actions.longPress(today)) } }
         }
         if (past.isNotEmpty()) {
             item { Box(Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)) { SectionTitle("Passés", "${past.size}") } }
-            items(past.take(20), key = { "p" + it.id }) { a -> Box(Modifier.padding(horizontal = 16.dp)) { ArticleRow(a, today, actions.onOpen, actions.onShare) } }
+            items(past.take(20), key = { "p" + it.id }) { a -> Box(Modifier.padding(horizontal = 16.dp)) { ArticleRow(a, today, actions.onOpen, actions.longPress(today)) } }
         }
         item { Footer(state, today) }
     }
@@ -389,16 +416,29 @@ fun SettingsScreen(state: UiState, settings: SettingsState, today: LocalDate, ac
             )
         }
         item {
-            Column(Modifier.padding(horizontal = 20.dp, vertical = 12.dp)) {
+            Column(Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
                 Text(updatedLabel(state.feed.updatedAt, today), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(10.dp))
                 OutlinedButton(onClick = actions.onOpenSite) { Text("Ouvrir le site") }
-                Spacer(Modifier.height(16.dp))
-                Text(
-                    "Outil interne au service communication. Les contenus sont relevés chaque matin sur les sites de l'Institut Agro, de ses écoles et de sa Fondation.\nVersion ${settings.version}",
-                    style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
             }
+        }
+        item { HorizontalDivider(Modifier.padding(vertical = 8.dp)) }
+        item { SettingsHeader("À propos") }
+        item {
+            ListItem(
+                leadingContent = { androidx.compose.foundation.Image(androidx.compose.ui.res.painterResource(io.github.adsodemelkoli.actus.R.drawable.logo_institut_agro), null, Modifier.size(44.dp)) },
+                headlineContent = { Text("L'Institut Agro en actualités", fontWeight = FontWeight.SemiBold) },
+                supportingContent = { Text("Version ${settings.version}" + if (settings.builtOn.isNotEmpty()) " · ${settings.builtOn}" else "") },
+                colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface),
+            )
+        }
+        item { UpdateRow(settings.update, actions) }
+        item {
+            Text(
+                "Outil interne au service communication. Les contenus sont relevés chaque matin sur les sites de l'Institut Agro, de ses écoles et de sa Fondation.",
+                style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
+            )
         }
     }
 }
@@ -420,4 +460,28 @@ private fun SwitchRow(title: String, text: String, checked: Boolean, onChange: (
         colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface),
         modifier = Modifier.padding(horizontal = 4.dp),
     )
+}
+
+@Composable
+private fun UpdateRow(u: UpdateState, actions: Actions) {
+    Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+        when {
+            u.checking -> {
+                androidx.compose.material3.CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
+                Spacer(Modifier.size(12.dp))
+                Text("Recherche d'une mise à jour…", style = MaterialTheme.typography.bodyMedium)
+            }
+            u.available -> {
+                Text("La version ${u.latest} est disponible", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
+                Button(onClick = actions.onInstallUpdate) { Text("Installer") }
+            }
+            else -> {
+                Text(
+                    when { u.error -> "Mise à jour non vérifiée (hors ligne ?)"; u.latest != null -> "Application à jour"; else -> "" },
+                    style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.weight(1f),
+                )
+                androidx.compose.material3.TextButton(onClick = actions.onCheckUpdate) { Text("Vérifier") }
+            }
+        }
+    }
 }
