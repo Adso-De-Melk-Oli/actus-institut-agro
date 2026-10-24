@@ -22,7 +22,12 @@ data class SourceStatus(
     val ok: Boolean = true,
     val count: Int = 0,
     val errors: List<String> = emptyList(),
-)
+    /** Cause de l'échec en français courant, écrite par le robot (absente des anciens relevés). */
+    val problem: String? = null,
+    val failDays: Int = 0,
+) {
+    val plainProblem: String get() = problem?.takeIf { it.isNotBlank() } ?: "le site n'a pas pu être lu"
+}
 
 @Serializable
 data class Article(
@@ -104,3 +109,7 @@ val FeedJson = Json {
 fun Feed.sorted(): List<Article> = articles
     .filter { it.title.isNotBlank() && it.url.isNotBlank() }
     .sortedWith(compareByDescending<Article, Instant?>(nullsFirst()) { it.sortInstant })
+
+/** Les écoles dont le site n'a pas pu être lu au dernier relevé. */
+fun Feed.downSources(): List<Pair<School, SourceStatus>> =
+    School.listed.mapNotNull { s -> sources[s.key]?.takeIf { !it.ok }?.let { s to it } }

@@ -15,7 +15,9 @@ import io.github.adsodemelkoli.actus.data.Feed
 import io.github.adsodemelkoli.actus.data.PARIS
 import io.github.adsodemelkoli.actus.data.Prefs
 import io.github.adsodemelkoli.actus.data.Repository
-import io.github.adsodemelkoli.actus.widget.AgendaWidget
+import io.github.adsodemelkoli.actus.data.dueReminders
+import io.github.adsodemelkoli.actus.data.expiredFollows
+import io.github.adsodemelkoli.actus.widget.Widgets
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalTime
@@ -31,7 +33,7 @@ class CheckWorker(context: Context, params: WorkerParameters) : CoroutineWorker(
         val result = Repository(applicationContext).refresh()
         if (result.fromCache && result.feed.articles.isEmpty()) return Result.retry()
         check(applicationContext, result.feed)
-        AgendaWidget.refreshAll(applicationContext)
+        Widgets.refreshAll(applicationContext)
         return Result.success()
     }
 
@@ -39,6 +41,7 @@ class CheckWorker(context: Context, params: WorkerParameters) : CoroutineWorker(
         /** Logique commune au travail périodique et au rafraîchissement manuel. */
         fun check(context: Context, feed: Feed, now: ZonedDateTime = ZonedDateTime.now(PARIS)) {
             val prefs = Prefs(context)
+            remind(context, prefs, feed, now)
             val ids = feed.articles.map { it.id }.toSet()
             // premier lancement : tout l'existant est considéré comme déjà vu
             if (!prefs.initialized) { prefs.seenIds = ids; return }
@@ -51,6 +54,21 @@ class CheckWorker(context: Context, params: WorkerParameters) : CoroutineWorker(
             if (prefs.notifyToday && weekday && now.toLocalTime() >= LocalTime.of(7, 15) && prefs.lastMorning != today.toString()) {
                 prefs.lastMorning = today.toString()
                 Notifier.postToday(context, todayOnCampus(feed, today))
+            }
+        }
+
+        /** Rappels des événements suivis (la veille, une semaine avant), puis oubli des suivis périmés. */
+        private fun remind(context: Context, prefs: Prefs, feed: Feed, now: ZonedDateTime) {
+            if (feed.articles.isEmpty()) return
+            val follows = prefs.follows
+            if (follows.isEmpty()) return
+            val due = dueReminders(feed, follows, prefs.remindersSent, now.toLocalDate(), now.toLocalTime(), prefs.remindDayBefore, prefs.remindWeekBefore)
+            due.forEach { Notifier.postReminder(context, it) }
+            val gone = expiredFollows(feed, follows, now.toLocalDate())
+            if (due.isNotEmpty()) prefs.remindersSent = prefs.remindersSent + due.map { it.key }
+            if (gone.isNotEmpty()) {
+                prefs.follows = follows - gone
+                prefs.remindersSent = prefs.remindersSent.filterNot { k -> gone.any { k.startsWith("$it:") } }.toSet()
             }
         }
 
@@ -95,7 +113,7 @@ class MorningWorker(context: Context, params: WorkerParameters) : CoroutineWorke
     override suspend fun doWork(): Result {
         val result = Repository(applicationContext).refresh()
         CheckWorker.check(applicationContext, result.feed)
-        AgendaWidget.refreshAll(applicationContext)
+        Widgets.refreshAll(applicationContext)
         // se reprogramme pour le lendemain, après la fin de ce passage
         CheckWorker.scheduleMorning(applicationContext, ExistingWorkPolicy.APPEND_OR_REPLACE)
         return Result.success()

@@ -22,6 +22,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.StarOutline
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Card
@@ -43,6 +48,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import io.github.adsodemelkoli.actus.data.Article
@@ -67,6 +73,52 @@ fun SchoolPill(school: School, modifier: Modifier = Modifier, onImage: Boolean =
                 color = if (onImage) Color(0xFF1D1D1F) else school.color,
             )
         }
+    }
+}
+
+/** Mention « Nouveau » : contenu apparu depuis la dernière visite dans l'application. */
+@Composable
+fun NewPill(modifier: Modifier = Modifier) {
+    Surface(shape = CircleShape, color = Brand, modifier = modifier) {
+        Text(
+            "Nouveau", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = Color(0xFF2B1D00),
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
+        )
+    }
+}
+
+/** Pilule « Bêta » au-dessus du titre de l'application. */
+@Composable
+fun BetaPill(modifier: Modifier = Modifier) {
+    val dark = MaterialTheme.colorScheme.surface.luminance() < 0.5f
+    Surface(shape = CircleShape, color = Brand.copy(alpha = if (dark) 0.22f else 0.16f), modifier = modifier) {
+        Text(
+            "BÊTA", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold,
+            letterSpacing = 1.2.sp,
+            color = if (dark) Brand else Color(0xFF8A5A00),
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 1.dp),
+        )
+    }
+}
+
+/** Étoile pour suivre un événement (rappel la veille et une semaine avant). */
+@Composable
+fun FollowButton(followed: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    IconButton(onClick = onClick, modifier = modifier.size(40.dp)) {
+        Icon(
+            if (followed) Icons.Filled.Star else Icons.Outlined.StarOutline,
+            contentDescription = if (followed) "Ne plus suivre cet événement" else "Suivre cet événement et recevoir un rappel",
+            tint = if (followed) Brand else MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+/** Pastille de l'école et, s'il y a lieu, la mention « Nouveau ». */
+@Composable
+fun PillsLine(article: Article, isNew: Boolean) {
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        SchoolPill(article.school)
+        if (isNew) NewPill()
     }
 }
 
@@ -96,7 +148,7 @@ fun ArticleImage(article: Article, modifier: Modifier = Modifier, large: Boolean
 
 /** L'actu à la une : grande photo, titre, résumé. */
 @Composable
-fun FeaturedCard(article: Article, today: LocalDate, onOpen: (Article) -> Unit, onShare: (Article) -> Unit) {
+fun FeaturedCard(article: Article, today: LocalDate, onOpen: (Article) -> Unit, onShare: (Article) -> Unit, isNew: Boolean = false) {
     ElevatedCard(
         onClick = { onOpen(article) },
         shape = RoundedCornerShape(28.dp),
@@ -112,7 +164,10 @@ fun FeaturedCard(article: Article, today: LocalDate, onOpen: (Article) -> Unit, 
             SchoolPill(article.school, Modifier.padding(12.dp).align(Alignment.TopStart), onImage = true)
         }
         Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 12.dp)) {
-            Text("À la une", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text("À la une", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                if (isNew) NewPill()
+            }
             Spacer(Modifier.height(6.dp))
             Text(article.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
             if (!article.summary.isNullOrBlank()) {
@@ -140,7 +195,10 @@ fun FeaturedCard(article: Article, today: LocalDate, onOpen: (Article) -> Unit, 
 /** Une actu dans la liste : vignette à gauche, texte à droite. Appui long pour partager. */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ArticleRow(article: Article, today: LocalDate, onOpen: (Article) -> Unit, onLongPress: (Article) -> Unit) {
+fun ArticleRow(
+    article: Article, today: LocalDate, onOpen: (Article) -> Unit, onLongPress: (Article) -> Unit,
+    isNew: Boolean = false, followed: Boolean? = null, onFollow: (Article) -> Unit = {},
+) {
     val haptic = androidx.compose.ui.platform.LocalHapticFeedback.current
     Card(
         shape = RoundedCornerShape(20.dp),
@@ -156,7 +214,7 @@ fun ArticleRow(article: Article, today: LocalDate, onOpen: (Article) -> Unit, on
         Row(Modifier.padding(12.dp), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
             ArticleImage(article, Modifier.size(width = 104.dp, height = 78.dp).clip(RoundedCornerShape(14.dp)))
             Column(Modifier.weight(1f)) {
-                SchoolPill(article.school)
+                PillsLine(article, isNew)
                 Spacer(Modifier.height(6.dp))
                 Text(
                     article.title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold,
@@ -170,6 +228,8 @@ fun ArticleRow(article: Article, today: LocalDate, onOpen: (Article) -> Unit, on
                     maxLines = 1, overflow = TextOverflow.Ellipsis,
                 )
             }
+            // étoile seulement pour un événement à venir (null : pas d'étoile)
+            if (followed != null) FollowButton(followed, { onFollow(article) }, Modifier.align(Alignment.Top).padding(top = 0.dp))
         }
     }
 }
@@ -200,7 +260,10 @@ fun CalendarBlock(article: Article, modifier: Modifier = Modifier) {
 /** Événement dans le bandeau « À venir ». */
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
-fun UpcomingCard(article: Article, onOpen: (Article) -> Unit, onLongPress: (Article) -> Unit = {}) {
+fun UpcomingCard(
+    article: Article, onOpen: (Article) -> Unit, onLongPress: (Article) -> Unit = {},
+    isNew: Boolean = false, followed: Boolean = false, onFollow: (Article) -> Unit = {},
+) {
     val haptic = androidx.compose.ui.platform.LocalHapticFeedback.current
     Card(
         shape = RoundedCornerShape(20.dp),
@@ -213,10 +276,13 @@ fun UpcomingCard(article: Article, onOpen: (Article) -> Unit, onLongPress: (Arti
             },
         ),
     ) {
-        Row(Modifier.padding(14.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            CalendarBlock(article)
+        Row(Modifier.padding(start = 14.dp, end = 6.dp, top = 8.dp, bottom = 14.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            CalendarBlock(article, Modifier.padding(top = 6.dp))
             Column(Modifier.weight(1f)) {
-                SchoolPill(article.school)
+                Row(verticalAlignment = Alignment.Top) {
+                    Box(Modifier.weight(1f).padding(top = 6.dp)) { PillsLine(article, isNew) }
+                    FollowButton(followed, { onFollow(article) }, Modifier.padding(start = 2.dp))
+                }
                 Spacer(Modifier.height(6.dp))
                 Text(article.title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold, maxLines = 3, overflow = TextOverflow.Ellipsis)
                 val where = if (article.remote) "À distance" else article.place

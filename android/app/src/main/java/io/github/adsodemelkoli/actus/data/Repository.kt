@@ -23,7 +23,7 @@ class Repository(private val context: Context) {
     }
 
     suspend fun refresh(): Result = withContext(Dispatchers.IO) {
-        var lastError: String? = null
+        var lastError: Throwable? = null
         for (url in SOURCES) {
             try {
                 val text = download(url)
@@ -31,12 +31,16 @@ class Repository(private val context: Context) {
                 cache.writeText(text)
                 return@withContext Result(feed, fromCache = false)
             } catch (e: Exception) {
-                lastError = e.message ?: e.javaClass.simpleName
+                // pas de réseau : inutile d'essayer l'adresse de secours
+                lastError = e
+                if (e is java.net.UnknownHostException) break
             }
         }
+        // message lisible par tous, jamais le détail technique
+        val message = Problems.plain(lastError)
         val local = cached()
-        if (local != null) Result(local, fromCache = true, error = lastError)
-        else Result(Feed(), fromCache = true, error = lastError ?: "Aucune donnée")
+        if (local != null) Result(local, fromCache = true, error = message)
+        else Result(Feed(), fromCache = true, error = message)
     }
 
     private fun download(url: String): String {
@@ -46,7 +50,7 @@ class Repository(private val context: Context) {
         conn.setRequestProperty("Accept", "application/json")
         conn.setRequestProperty("Cache-Control", "no-cache")
         try {
-            if (conn.responseCode !in 200..299) throw IllegalStateException("Erreur ${conn.responseCode}")
+            if (conn.responseCode !in 200..299) throw HttpStatusException(conn.responseCode)
             return conn.inputStream.bufferedReader().use { it.readText() }
         } finally {
             conn.disconnect()

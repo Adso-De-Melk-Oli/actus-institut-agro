@@ -96,11 +96,7 @@ class AgendaWidget : GlanceAppWidget() {
     }
 
     companion object {
-        suspend fun refreshAll(context: Context) {
-            runCatching {
-                if (GlanceAppWidgetManager(context).getGlanceIds(AgendaWidget::class.java).isNotEmpty()) AgendaWidget().updateAll(context)
-            }
-        }
+        suspend fun refreshAll(context: Context) = Widgets.refreshAll(context)
     }
 }
 

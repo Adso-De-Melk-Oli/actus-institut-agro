@@ -146,6 +146,9 @@ main{padding-block:24px 48px}
 @media (max-width:760px){.feature{grid-template-columns:minmax(0,1fr)}.feature .cover{min-height:0;aspect-ratio:16/9}.feature .cover .day{font-size:84px}.feature .body{padding:20px}}
 
 /* States */
+.notice{display:flex;gap:12px;align-items:flex-start;margin:0 0 22px;padding:14px 16px;border-radius:14px;background:color-mix(in srgb,var(--warn) 12%,var(--surface));color:var(--fg);font-size:14px;line-height:1.45}
+.notice b{font-weight:600}.notice .ico{flex:none;width:22px;height:22px;border-radius:50%;background:var(--warn);color:#fff;font-weight:700;display:grid;place-items:center;font-size:13px;margin-top:1px}
+.srow .why{grid-column:1/-1;margin-top:-4px;color:var(--warn);font-size:13px}
 .empty{text-align:center;padding:72px 16px;color:var(--muted)}
 .empty h2{color:var(--fg);font-size:22px;margin:0 0 8px}
 .skel{background:var(--surface);border-radius:18px;height:300px;box-shadow:var(--shadow);position:relative;overflow:hidden}
@@ -197,6 +200,7 @@ main{padding-block:24px 48px}
 </nav>
 
 <main class="wrap">
+  <div class="notice" id="notice" role="status" hidden></div>
   <div id="feed">
     <div class="grid" aria-hidden="true"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
   </div>
@@ -344,7 +348,7 @@ function render(){
     }
     feed.innerHTML = html;
   }
-  renderSources();
+  renderSources(); renderNotice();
 }
 
 function renderSources(){
@@ -353,10 +357,27 @@ function renderSources(){
   box.hidden = false;
   $("#srows").innerHTML = ORDER.map(k => {
     const s = m.sources[k] || {}; const S = SOURCES[k];
-    const st = S.linkOnly ? `<span class="state warn">Lien</span>` : `<span class="state ${s.ok?"ok":"warn"}" title="${esc((s.errors||[]).join(" ; "))}">${s.ok?`${s.count ?? 0} contenus`:`Partiel · ${s.count ?? 0}`}</span>`;
+    const st = S.linkOnly ? `<span class="state warn">Lien</span>` : `<span class="state ${s.ok?"ok":"warn"}">${s.ok?`${s.count ?? 0} contenus`:`À vérifier · ${s.count ?? 0}`}</span>`;
+    const why = !S.linkOnly && s.ok === false ? `<span class="why">Dernier relevé : ${esc(problemOf(s))}. Les contenus déjà connus restent affichés.</span>` : "";
     return `<div class="srow" style="--c:var(${S.color})"><a class="src" href="${esc(S.home)}" target="_blank" rel="noopener">${esc(S.label)}</a>
-      <span class="how">${esc(S.linkOnly ? "Pas encore relevé : voir son site" : S.method)}</span>${st}</div>`;
+      <span class="how">${esc(S.linkOnly ? "Pas encore relevé : voir son site" : S.method)}</span>${st}${why}</div>`;
   }).join("");
+}
+
+// phrase écrite par le robot ; les anciens relevés n'en ont pas
+function problemOf(s){ return s.problem || "le site n'a pas pu être lu"; }
+
+/* un site d'école qui ne répond pas : on le dit simplement, en haut du fil */
+function renderNotice(){
+  const box = $("#notice"); const m = state.meta;
+  const down = !m || !m.sources || !state.dbOk ? [] : ORDER.filter(k => !SOURCES[k].linkOnly && m.sources[k] && m.sources[k].ok === false);
+  if(!down.length){ box.hidden = true; return; }
+  const FULL = {institut:"L'Institut Agro", montpellier:"Institut Agro Montpellier", rennes:"Institut Agro Rennes-Angers", dijon:"Institut Agro Dijon", fondation:"Fondation de l'Institut Agro"};
+  const name = k => `<b>${esc(FULL[k] || SOURCES[k].label)}</b>`;
+  box.innerHTML = `<span class="ico" aria-hidden="true">!</span><span>` + (down.length === 1
+    ? `${name(down[0])} — lors du dernier relevé, ${esc(problemOf(m.sources[down[0]]))}. Ses contenus déjà connus restent affichés ; nouvel essai au prochain relevé.`
+    : `Certains sites n'ont pas pu être lus lors du dernier relevé : ${down.map(k => `${name(k)} (${esc(problemOf(m.sources[k]))})`).join(", ")}. Leurs contenus déjà connus restent affichés ; nouvel essai au prochain relevé.`) + `</span>`;
+  box.hidden = false;
 }
 
 function setUpdated(){

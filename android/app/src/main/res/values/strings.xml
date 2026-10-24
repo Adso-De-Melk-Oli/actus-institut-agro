@@ -3,4 +3,6 @@
     <string name="app_name">L\'Institut Agro en actualités</string>
     <string name="widget_name">Agenda Institut Agro</string>
     <string name="widget_description">Les prochains événements des écoles de l\'Institut Agro</string>
+    <string name="news_widget_name">Dernières actus Institut Agro</string>
+    <string name="news_widget_description">Les dernières actus de l\'Institut Agro, de ses écoles et de sa Fondation</string>
 </resources>

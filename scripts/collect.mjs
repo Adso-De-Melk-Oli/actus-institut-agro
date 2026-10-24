@@ -5,6 +5,7 @@
 // on respecte robots.txt (Dijon refuse les robots : on ne le lit pas) ; si une source
 // échoue, on garde ses contenus de la veille.
 
+import { sourceProblem } from "./reasons.mjs";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import * as cheerio from "cheerio";
 import { XMLParser } from "fast-xml-parser";
@@ -381,6 +382,8 @@ const articles = [...byKey.values()].filter(a => {
 const counts = {}; for (const a of articles) counts[a.source] = (counts[a.source] || 0) + 1;
 for (const s of Object.keys(status)) {
   status[s].count = counts[s] || 0;
+  // phrase lisible par tous (site, application) ; les détails techniques restent dans errors
+  if (!status[s].ok) status[s].problem = sourceProblem(status[s].errors);
   // jours de relevé consécutifs en échec (plusieurs relevés le même jour comptent pour un)
   const prev = previous.sources?.[s] ?? {}; const day = parisDay(NOW);
   if (status[s].ok) status[s].failDays = 0;

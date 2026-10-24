@@ -2,6 +2,8 @@
 // sur les campus) et l'éventuelle alerte de panne. Écrit data/digest.json, que la tâche
 // d'envoi de 7 h 00 lit tel quel.
 
+import { sourceProblem } from "./reasons.mjs";
+
 const TZ = "Europe/Paris";
 const SITE = "https://adso-de-melk-oli.github.io/actus-institut-agro/";
 // [clé, nom, couleur, teinte claire opaque] — les messageries retirent les couleurs semi-transparentes
@@ -174,7 +176,7 @@ export function buildDigest(data, now = new Date(), thumbs = {}, sent = {}) {
     subject: `Actus Institut Agro · alerte : ${down.map(([k]) => LABEL[k] ?? k).join(", ")} injoignable${down.length > 1 ? "s" : ""} depuis ${down[0][1].failDays} jours`,
     text: [
       "Le robot de collecte n'arrive plus à lire :", "",
-      ...down.flatMap(([k, s]) => [`- ${LABEL[k] ?? k} : en échec depuis ${s.failDays} jours de relevé (depuis le ${fmtDay(s.failingSince)}).`, ...(s.errors ?? []).map(e => `  ${e}`)]), "",
+      ...down.flatMap(([k, s]) => [`- ${LABEL[k] ?? k} : en échec depuis ${s.failDays} jours de relevé (depuis le ${fmtDay(s.failingSince)}).`, `  Cause probable : ${s.problem ?? sourceProblem(s.errors) ?? "inconnue"}.`, ...(s.errors ?? []).map(e => `  Détail technique — ${e}`)]), "",
       "Ses contenus déjà connus restent affichés sur le site. Si la cause est « 403 » ou « connexion refusée », le site bloque peut-être les robots ; si c'est « aucun contenu trouvé », sa mise en page a probablement changé : il faut ajuster les règles de lecture.",
       "", `Fil : ${SITE}`, "Relancer un relevé : https://github.com/Adso-De-Melk-Oli/actus-institut-agro/actions/workflows/collect.yml",
     ].join("\n"),

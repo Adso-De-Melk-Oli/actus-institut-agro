@@ -1,8 +1,9 @@
 package io.github.adsodemelkoli.actus.data
 
 import android.content.Context
+import java.time.LocalDate
 
-/** Réglages et mémoire des notifications (contenus déjà signalés, dernier résumé du matin). */
+/** Réglages et mémoire de l'application (contenus déjà signalés, événements suivis, dernière visite). */
 class Prefs(context: Context) {
     private val p = context.getSharedPreferences("actus", Context.MODE_PRIVATE)
 
@@ -33,4 +34,39 @@ class Prefs(context: Context) {
     var askedPermission: Boolean
         get() = p.getBoolean("askedPermission", false)
         set(v) = p.edit().putBoolean("askedPermission", v).apply()
+
+    // --- Badge « Nouveau » : contenus connus à la fin de la dernière visite dans l'application ---
+
+    /** null tant que l'application n'a jamais été quittée : rien n'est alors marqué « Nouveau ». */
+    var visitIds: Set<String>?
+        get() = p.getStringSet("visitIds", null)
+        set(v) = p.edit().putStringSet("visitIds", v).apply()
+
+    // --- Événements suivis et rappels ---
+
+    /** Événements suivis, avec le jour où ils l'ont été (un rappel n'est jamais antérieur au suivi). */
+    var follows: Map<String, LocalDate>
+        get() = (p.getStringSet("follows", emptySet()) ?: emptySet()).mapNotNull { line ->
+            val i = line.lastIndexOf('|')
+            if (i <= 0) null else runCatching { line.substring(0, i) to LocalDate.parse(line.substring(i + 1)) }.getOrNull()
+        }.toMap()
+        set(v) = p.edit().putStringSet("follows", v.map { (id, d) -> "$id|$d" }.toSet()).apply()
+
+    var remindDayBefore: Boolean
+        get() = p.getBoolean("remindDayBefore", true)
+        set(v) = p.edit().putBoolean("remindDayBefore", v).apply()
+
+    var remindWeekBefore: Boolean
+        get() = p.getBoolean("remindWeekBefore", true)
+        set(v) = p.edit().putBoolean("remindWeekBefore", v).apply()
+
+    /** Rappels déjà envoyés, notés « id:1 » (veille) ou « id:7 » (semaine). */
+    var remindersSent: Set<String>
+        get() = p.getStringSet("remindersSent", emptySet()) ?: emptySet()
+        set(v) = p.edit().putStringSet("remindersSent", v).apply()
+
+    // --- Mise à jour en attente d'autorisation d'installation ---
+    var pendingApk: String?
+        get() = p.getString("pendingApk", null)
+        set(v) = p.edit().putString("pendingApk", v).apply()
 }

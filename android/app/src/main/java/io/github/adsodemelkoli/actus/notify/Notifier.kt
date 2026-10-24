@@ -15,11 +15,13 @@ import androidx.core.content.ContextCompat
 import io.github.adsodemelkoli.actus.MainActivity
 import io.github.adsodemelkoli.actus.R
 import io.github.adsodemelkoli.actus.data.Article
+import io.github.adsodemelkoli.actus.data.Reminder
 import io.github.adsodemelkoli.actus.ui.whenLabel
 
 object Notifier {
     const val CH_NEW = "nouveautes"
     const val CH_TODAY = "aujourdhui"
+    const val CH_REMIND = "rappels"
     private const val ID_NEW = 1
     private const val ID_TODAY = 2
     private const val BRAND = 0xFFF8AC00.toInt()
@@ -34,6 +36,10 @@ object Notifier {
         nm.createNotificationChannel(
             NotificationChannel(CH_TODAY, "Aujourd'hui sur les campus", NotificationManager.IMPORTANCE_DEFAULT)
                 .apply { description = "Le matin, les événements du jour sur les campus" },
+        )
+        nm.createNotificationChannel(
+            NotificationChannel(CH_REMIND, "Rappels des événements suivis", NotificationManager.IMPORTANCE_HIGH)
+                .apply { description = "La veille et une semaine avant un événement que vous suivez" },
         )
     }
 
@@ -65,6 +71,7 @@ object Notifier {
             .setContentTitle(title)
             .setContentText(text)
             .setStyle(style)
+            .setNumber(items.size)
             .setAutoCancel(true)
             .setContentIntent(tapIntent(context, items.singleOrNull()))
             .build()
@@ -88,6 +95,27 @@ object Notifier {
             .setContentIntent(tapIntent(context, events.singleOrNull()))
             .build()
         notify(context, ID_TODAY, n)
+    }
+
+    /** Un rappel par événement : « Demain » ou « Dans 7 jours », avec la date et le lieu. */
+    fun postReminder(context: Context, r: Reminder) {
+        if (!canNotify(context)) return
+        val a = r.article
+        val left = a.day?.let { java.time.temporal.ChronoUnit.DAYS.between(java.time.LocalDate.now(io.github.adsodemelkoli.actus.data.PARIS), it) } ?: r.daysBefore.toLong()
+        val title = when (left) { 1L -> "Demain"; 7L -> "Dans une semaine"; else -> "Dans $left jours" } + " : ${a.title}"
+        val where = if (a.remote) "À distance" else a.place?.takeIf { it.isNotBlank() } ?: a.school.label
+        val text = "${a.whenLabel().replaceFirstChar { it.uppercase() }} · $where"
+        val n = NotificationCompat.Builder(context, CH_REMIND)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setColor(BRAND)
+            .setContentTitle(title)
+            .setContentText(text)
+            .setStyle(NotificationCompat.BigTextStyle().bigText("$text\nÉvénement suivi · ${a.school.label}"))
+            .setCategory(NotificationCompat.CATEGORY_EVENT)
+            .setAutoCancel(true)
+            .setContentIntent(tapIntent(context, a))
+            .build()
+        notify(context, 1000 + (r.key.hashCode() and 0x7fffffff) % 100_000, n)
     }
 
     @Suppress("MissingPermission")
