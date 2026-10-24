@@ -94,6 +94,12 @@ export function buildDigest(data, now = new Date(), thumbs = {}, sent = {}) {
     if (i < 0) { images.push({ id: key, path: thumbs[key] }); i = images.length - 1; }
     return `<img src="cid:att${i}" width="${w}" height="${h}" alt="" style="display:block;width:${w}px;height:${h}px;border:0;border-radius:10px">`;
   };
+  // logo de l'Institut Agro en tête (thumbs.logo = chemin du PNG, fourni quand l'e-mail part de GitHub)
+  let logoCell = "";
+  if (thumbs.logo) {
+    images.push({ id: "logo", path: thumbs.logo });
+    logoCell = `<td width="56" valign="middle" style="padding:0 0 0 6px"><img src="cid:att${images.length - 1}" width="48" height="48" alt="L'Institut Agro" style="display:block;width:48px;height:48px;border:0"></td>`;
+  }
   const school = src => SCHOOLS.find(s => s[0] === src) ?? [src, LABEL[src] ?? src, "#6e6e73", "#f0f0f2"];
   const F = "-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif";
   const pill = src => { const [, label, color, tint] = school(src); return `<span style="display:inline-block;padding:3px 10px;border-radius:999px;background-color:${tint};color:${color};font-size:12px;font-weight:700;letter-spacing:.01em">${esc(label)}</span>`; };
@@ -136,7 +142,7 @@ export function buildDigest(data, now = new Date(), thumbs = {}, sent = {}) {
 
   html = `<div style="background-color:#f5f5f7;padding:28px 12px;font-family:${F}"><table role="presentation" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:640px;margin:0 auto"><tr><td>
 <div style="font-size:13px;font-weight:700;color:#86868b;text-transform:uppercase;letter-spacing:.08em;padding:0 6px">${esc(fmtDay(day))}</div>
-<div style="font-size:34px;font-weight:800;letter-spacing:-.03em;color:#F8AC00;margin:4px 0 22px;padding:0 6px">Actus <span style="font-weight:300;color:#d9d9de">|</span> L'Institut Agro</div>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:4px 0 22px"><tr>${logoCell}<td style="padding:0 6px;font-size:34px;font-weight:800;letter-spacing:-.03em;color:#F8AC00">Actus <span style="font-weight:300;color:#d9d9de">|</span> L'Institut Agro</td></tr></table>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#ffffff" style="background-color:#ffffff;border-radius:22px;padding:28px 28px 30px">${html}</td></tr></table>
 <div style="font-size:13px;color:#86868b;line-height:1.5;margin:20px 6px 0">Nouveautés relevées depuis le ${esc(sinceLabel)}.<br><a href="${SITE}" style="color:#0071e3;font-weight:600">Ouvrir le fil complet</a></div>
 </td></tr></table></div>`;

@@ -323,7 +323,7 @@ if (process.env.PREVIEW_ONLY === "1" && process.env.PREVIEW_AT) {
   const fresh = new Set((process.env.PREVIEW_FRESH || "").split(",").map(x => x.trim()).filter(Boolean));
   const data = { sources: Object.fromEntries(Object.keys(previous.sources ?? {}).map(k => [k, { ...previous.sources[k], ok: true }])),
     articles: previous.articles.map(a => fresh.has(a.id) ? { ...a, firstSeen: new Date(at - 12 * 3600e3).toISOString() } : a) };
-  const pv = buildDigest(data, at, await makeThumbs(data, at, "data/preview/thumbs"));
+  const pv = buildDigest(data, at, { ...await makeThumbs(data, at, "data/preview/thumbs"), logo: "assets/logo-email.png" });
   await writeFile("data/preview/digest.json", JSON.stringify(pv, null, 1) + "\n");
   console.log(`Aperçu du ${pv.forDate} : ${pv.subject} (${pv.images.length} photos)`);
   process.exit(0);
@@ -434,7 +434,7 @@ function placeholderSvg(label, color) {
 }
 // photos jointes seulement si l'e-mail est envoyé par GitHub (secrets GMAIL_USER / GMAIL_APP_PASSWORD) :
 // l'envoi par l'outil Gmail de Claude ne permet pas de joindre les images de façon fiable
-const thumbs = process.env.GMAIL_USER ? await makeThumbs({ sources: status, articles }, NOW, "data/thumbs", sent) : {};
+const thumbs = process.env.GMAIL_USER ? { ...await makeThumbs({ sources: status, articles }, NOW, "data/thumbs", sent), logo: "assets/logo-email.png" } : {};
 const digest = buildDigest({ sources: status, articles }, NOW, thumbs, sent);
 // aperçu : PREVIEW_AT=2026-11-05T05:20:00Z prépare le digest de cette date dans data/preview/, sans toucher au vrai
 if (process.env.PREVIEW_AT) {
