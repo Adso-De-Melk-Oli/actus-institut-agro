@@ -82,6 +82,7 @@ fun NewPill(modifier: Modifier = Modifier) {
     Surface(shape = CircleShape, color = Brand, modifier = modifier) {
         Text(
             "Nouveau", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = Color(0xFF2B1D00),
+            maxLines = 1, softWrap = false,
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
         )
     }
@@ -116,7 +117,9 @@ fun FollowButton(followed: Boolean, onClick: () -> Unit, modifier: Modifier = Mo
 /** Pastille de l'école et, s'il y a lieu, la mention « Nouveau ». */
 @Composable
 fun PillsLine(article: Article, isNew: Boolean) {
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+    // si la place manque (carte étroite), « Nouveau » passe à la ligne entier au lieu de se couper
+    @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+    androidx.compose.foundation.layout.FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
         SchoolPill(article.school)
         if (isNew) NewPill()
     }
