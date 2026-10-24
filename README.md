@@ -20,7 +20,14 @@ Les actualités et l'agenda de l'Institut Agro, de ses écoles (Montpellier, Ren
 
 ## Digest du matin
 
-Après chaque relevé, le robot compose `data/digest.json` : les nouveautés depuis le précédent digest, rangées par école, les événements du jour sur les campus et ceux des 7 prochains jours. Le workflow « Envoi du digest » (`scripts/send.mjs`) l'envoie par Gmail à 7 h 00 du lundi au vendredi, photos jointes (secrets `GMAIL_USER` et `GMAIL_APP_PASSWORD`). Un envoi d'essai de l'aperçu se lance depuis Actions → Envoi du digest → Run workflow. Si une source reste en échec deux jours de relevé de suite, le fichier contient aussi une alerte, envoyée à part (puis rappelée chaque semaine tant que la panne dure).
+Chaque jour ouvré, le workflow « Relevé des actus » relève les sites puis envoie le digest à partir de 7 h (`scripts/send.mjs`, par Gmail, photos jointes ; secrets `GMAIL_USER`, `GMAIL_APP_PASSWORD`, `DIGEST_TO`). Le digest contient les nouveautés depuis le précédent envoi, rangées par école, les événements du jour sur les campus (et à part ceux à distance) et ceux des 7 prochains jours.
+
+- **Déclenchement** : une tâche Claude lance le relevé vers 6 h 35 ; des horaires GitHub servent de filet de sécurité, car GitHub retarde parfois ses horaires de plusieurs heures. Un lancement planifié ne fait rien si le digest du jour est déjà parti.
+- **Relevé en retard** : le digest du jour part quand même, dès la fin du relevé.
+- **`data/sent.json`** garde le dernier envoi : le digest suivant reprend exactement là où il s'arrête (pas de trou, pas de doublon).
+- **Alerte** à l'administrateur quand une source est en échec deux jours de relevé de suite, puis un rappel par semaine.
+- **Nouvelle source** : son historique rejoint le site mais n'est pas annoncé comme nouveau dans le digest.
+- **Essai** : Actions → « Envoi du digest (essai) » → Run workflow envoie l'aperçu (`data/preview`) à l'administrateur seul.
 
 Si une source échoue, ses contenus de la veille sont conservés et l'encadré « Sources suivies » du site affiche « Partiel ». Les actus de plus de 12 mois et les événements terminés depuis plus de 6 mois sont retirés automatiquement.
 
