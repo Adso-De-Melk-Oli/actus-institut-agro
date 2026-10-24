@@ -339,12 +339,14 @@ for (const [name, src] of Object.entries(SOURCES)) {
     try {
       const items = (await src[kind]()).filter(i => i.title && i.url);
       if (!items.length && !(kind === "agenda" && src.optionalAgenda)) throw new Error("aucun contenu trouvé (la page a peut-être changé)");
+      // nouvelle source : son historique rejoint le site mais n'est pas annoncé comme « nouveau » dans le digest
+      const firstImport = !previous.articles.some(a => a.source === name);
       for (const it of items) {
         const k = key(it); const old = byKey.get(k);
         const id = old?.id ?? `${src.prefix}-${it.kind === "agenda" ? "ag-" : ""}${slugFromUrl(it.url)}`;
         const fresh = Object.fromEntries(Object.entries(it).filter(([, v]) => v !== undefined && v !== ""));
         // un résumé ou un lieu déjà connus sont conservés : ils ont pu être relus à la main
-        const merged = { ...old, ...fresh, id, source: name, summary: old?.summary || fresh.summary || "", firstSeen: old?.firstSeen ?? NOW.toISOString() };
+        const merged = { ...old, ...fresh, id, source: name, summary: old?.summary || fresh.summary || "", firstSeen: old?.firstSeen ?? NOW.toISOString(), ...(!old && firstImport ? { seed: true } : {}) };
         if (!merged.date && merged.kind === "actu") merged.date = merged.firstSeen;
         byKey.set(k, merged);
       }

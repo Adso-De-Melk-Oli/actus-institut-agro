@@ -58,7 +58,7 @@ function select(data, now, sent = {}) {
   const from = sent.windowTo ? new Date(sent.windowTo) : parisInstant(prevWorkday(day), 7);
   const to = day === parisDay(now) ? new Date(Math.max(+now, +parisInstant(day, 7))) : parisInstant(day, 7);
   const arts = data.articles ?? [];
-  const fresh = arts.filter(a => a.firstSeen && new Date(a.firstSeen) > from && new Date(a.firstSeen) <= to);
+  const fresh = arts.filter(a => !a.seed && a.firstSeen && new Date(a.firstSeen) > from && new Date(a.firstSeen) <= to);
   const today = arts.filter(a => a.kind === "agenda" && eventDay(a) <= day && day <= eventEnd(a));
   const remote = today.filter(a => a.remote);
   const onCampus = today.filter(a => !a.remote && (!a.place || CAMPUS.test(a.place)));

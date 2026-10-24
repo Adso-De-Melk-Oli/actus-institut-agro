@@ -139,7 +139,8 @@
    "id": "dij-envie-de-decouvrir-nos-formations-rencontrons-nous",
    "source": "dijon",
    "firstSeen": "2026-10-24T14:19:18.677Z",
-   "date": "2026-10-24T14:19:18.677Z"
+   "date": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "date": "2026-10-24",
@@ -186,7 +187,8 @@
    "summary": "Avec l’Université Bourgogne Europe, le CNRS, INRAE et l’Inserm, l’Institut Agro Dijon s’engage dans une démarche collective de réduction de l’impact environnemental de ses activités de recherche. Un…",
    "id": "dij-empreinte-environnementale-de-la-recherche-linstitut-agro-dijon-sengag",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "date": "2026-10-13T15:46:40.000Z",
@@ -219,7 +221,8 @@
    "summary": "La Fête de la science est une occasion de découvrir le monde des sciences et de rencontrer les femmes et les hommes qui font la science d'aujourd'hui.L'Institut Agro Dijon participera les 10 et 11…",
    "id": "dij-la-science-vivante-captivante-ludique",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "date": "2026-10-10",
@@ -243,7 +246,8 @@
    "id": "dij-boissons-fermentees-quelles-sont-les-attentes-des-consommateurs",
    "source": "dijon",
    "firstSeen": "2026-10-24T14:19:18.677Z",
-   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/8/b/csm_IAD_8f9e36b660.png"
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/8/b/csm_IAD_8f9e36b660.png",
+   "seed": true
   },
   {
    "date": "2026-10-08T05:31:03.000Z",
@@ -334,7 +338,8 @@
    "summary": "Intimes et universelles, les émotions nous traversent sans que l’on puisse pour autant véritablement les comprendre. D’où viennent-elles ? Comment les perçoit-on ? Que font-elles ? Cette année les…",
    "id": "dij-les-nuits-des-chercheurs",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "date": "2026-09-24",
@@ -381,7 +386,8 @@
    "summary": "Un tribunal participatif pour débattre des agri-énergies Le 21 septembre, de 14h à 15h30, au Parc des Expositions et Congrès de Dijon, se tiendra un atelier pas tout à fait comme les autres : un…",
    "id": "dij-de-lassiette-de-demain-aux-agri-energies-linstitut-agro-dijon-aux-assi",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "date": "2026-09-21",
@@ -439,7 +445,8 @@
    "summary": "Une première sur le campus dijonnais En franchissant cette étape, l'Institut Agro Dijon devient le premier établissement du campus dijonnais à officialiser un engagement collectif sans tabac. Cette…",
    "id": "dij-linstitut-agro-dijon-premier-campus-dijonnais-a-sengager-sans-tabac",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "kind": "actu",
@@ -450,7 +457,8 @@
    "summary": "Une nouvelle promotion d'ingénieurs Cette année, l'école accueille 760 élèves ingénieurs, dont :140 nouveaux élèves ingénieurs en agronomie100 nouveaux élèves ingénieurs en alimentationCes deux…",
    "id": "dij-la-promo-2026-2029-fait-sa-rentree",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "date": "2026-09-07T12:04:58.000Z",
@@ -483,7 +491,8 @@
    "id": "dij-taxe-dapprentissage-2025-investissez-pour-lavenir",
    "source": "dijon",
    "firstSeen": "2026-10-24T14:19:18.677Z",
-   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/0/9/csm_carouselLK3Pages_59ddacc578.png"
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/0/9/csm_carouselLK3Pages_59ddacc578.png",
+   "seed": true
   },
   {
    "date": "2026-07-29T13:36:46.000Z",
@@ -575,7 +584,8 @@
    "summary": "Le liège, gardien discret d'un équilibre fragile Le bouchon en liège ferme les bouteilles de vin depuis la fin du XVIIe siècle. Aujourd'hui encore, il représente près de 56 % du marché mondial des…",
    "id": "dij-les-secrets-du-bouchon-de-liege-comment-loxygene-entre-dans-votre-bout",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "date": "2026-06-24",
@@ -597,7 +607,8 @@
    "summary": "Un concours national de référence Créé il y a 27 ans, Ecotrophelia est le principal tremplin national de l'innovation alimentaire étudiante. Chaque année, des équipes issues des meilleures écoles et…",
    "id": "dij-crocnous-remporte-le-prix-entrepreneuriat-decotrophelia-2026",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "date": "2026-06-15T07:19:02.000Z",
@@ -641,7 +652,8 @@
    "summary": "Ensemble, les deux institutions s'engagent sur cinq axes stratégiques, couvrant l'ensemble des missions de l'école : formation, recherche, entrepreneuriat, transition écologique et ancrage…",
    "id": "dij-linstitut-agro-dijon-et-dijon-metropole-signent-une-convention-de-part",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "kind": "actu",
@@ -652,7 +664,8 @@
    "id": "dij-le-microbiote-du-sol-un-levier-emergent-pour-ameliorer-les-plantes-cul",
    "source": "dijon",
    "firstSeen": "2026-10-24T14:19:18.677Z",
-   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/1/0/csm_microbiote_sol_34d82fc38e.jpg"
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/1/0/csm_microbiote_sol_34d82fc38e.jpg",
+   "seed": true
   },
   {
    "date": "2026-04-22",
@@ -674,7 +687,8 @@
    "summary": "Lors de la soirée de remise des prix des entrepreneuriales, dispositif porté par Réseau Entreprendre Bourgogne qui vise à acculturer les étudiants de l’enseignement supérieur à l’entrepreneuriat, nos…",
    "id": "dij-nos-etudiants-remportent-une-fois-de-plus-les-entrep-1",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "date": "2026-04-09T12:16:20.000Z",
@@ -707,7 +721,8 @@
    "summary": "La spectroscopie infrarouge : une technique au-delà de l'analyse alimentaire La spectroscopie proche infrarouge, ou NIRS, fonctionne en projetant de la lumière sur un échantillon et en analysant la…",
    "id": "dij-detection-virale-par-spectroscopie-infrarouge-une-premiere-dans-les-al",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "kind": "actu",
@@ -718,7 +733,8 @@
    "summary": "L'Institut Agro Dijon vous propose :10 dominantes pour la spécialité alimentation durable8 dominantes pour la spécialité agronomieIl s'agit de permettre aux étudiants de préparer leur insertion…",
    "id": "dij-3e-annee-du-cursus-ingenieur-quelle-specialisation-choisir",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "date": "2026-03-27",
@@ -740,7 +756,8 @@
    "id": "dij-tout-savoir-sur-le-concours-geipi-polytech",
    "source": "dijon",
    "firstSeen": "2026-10-24T14:19:18.677Z",
-   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/8/b/csm_IAD_8f9e36b660.png"
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/8/b/csm_IAD_8f9e36b660.png",
+   "seed": true
   },
   {
    "kind": "actu",
@@ -751,7 +768,8 @@
    "summary": "Dans une atmosphère conviviale, le matériau a été passé au crible. Renouvelable, recyclable et plébiscité par les consommateurs, il cumule indéniablement les atouts. Mais il soulève aussi de vraies…",
    "id": "dij-papier-carton-champion-des-emballages-ou-eleve-a-problemes",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "kind": "actu",
@@ -762,7 +780,8 @@
    "summary": "L'Institut Agro Dijon recrute chaque année une centaine d’élèves-ingénieurs agronomes. Parmi eux une quarantaine de places sont réservées pour des élèves fonctionnaires qui travailleront dans les…",
    "id": "dij-ingenieur-civil-ou-fonctionnaire",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "kind": "actu",
@@ -773,7 +792,8 @@
    "summary": "La ville de Dijon en partenariat avec nos élèves ingénieurs de la dominante Nutrisensas et l'UFR STAPS Dijon-Le Creusot organisent, de nouveau cette année, le Village Goût Nutrition Santé.Vendredi 13…",
    "id": "dij-village-gout-nutrition-sante",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "kind": "actu",
@@ -784,7 +804,8 @@
    "summary": "Étudiantes, étudiants et équipes seront mobilisés pour 9 jours de rencontres, d'échanges et de partage autour des grands enjeux de l'agriculture, de l'alimentation et de l'environnement. Parce que…",
    "id": "dij-linstitut-agro-au-salon-de-lagriculture-1-1",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "kind": "actu",
@@ -795,7 +816,8 @@
    "summary": "Samedi 7 février, les 261 nouveaux ingénieurs de l’Institut Agro Dijon ont été appelé sur la scène de l’amphithéâtre Aristote pour se voir remettre leur diplôme d'ingénieur. À la fois solennelle et…",
    "id": "dij-nos-nouveaux-ingenieurs-a-lhonneur-1",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "date": "2026-02-06",
@@ -817,7 +839,8 @@
    "summary": "Une conférence captivante sur les nouvelles méthodes de détection des drogues Marina Charest, chercheuse à l’École des sciences criminelles de l’Université de Lausanne a présenté une conférence…",
    "id": "dij-data-agro-une-edition-entre-science-et-pedagogie",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "kind": "actu",
@@ -828,7 +851,8 @@
    "summary": "Une matinée d’échange réunissant nos élèves ingénieurs en alimentation durable et huit de nos alumni. Des témoignages illustrant la diversité des métiers de l'emballage : gestion de projets R&D…",
    "id": "dij-journee-anniversaire-nos-alumni-de-la-dominante-foodpack-partagent-leu",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "kind": "actu",
@@ -839,7 +863,8 @@
    "summary": "Ces rencontres ont mis la lumière sur la façon dont l'agriculture pouvait être actrice de la production d'énergies renouvelables.Au programme : Méthanisation et agrivoltaïsme : deux filières…",
    "id": "dij-lenergie-de-demain-se-cultive-aujourdhui",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "date": "2025-12-10T15:14:00.000Z",
@@ -861,7 +886,8 @@
    "summary": "Qu’est-ce que le Packathon™ ? Inspiré du format hackathon, le Packathon™ a réuni étudiants, industriels et experts pour relever des défis concrets liés à l’emballage : efficience des machines…",
    "id": "dij-innovation-et-eco-conception-nos-etudiants-primes-au-packathon",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "kind": "actu",
@@ -894,7 +920,8 @@
    "summary": "L’édition 2025 s’est tenue les 14 et 15 novembre à Uppsala, en Suède, sur le thème Cultivating Scientific Innovation. Plus de 400 étudiants issus des établissements partenaires ont participé à ces…",
    "id": "dij-linstitut-agro-dijon-distingue-a-la-conference-internationale-ells-202",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   },
   {
    "kind": "actu",
@@ -905,7 +932,8 @@
    "summary": "Des espaces verts pensés pour la biodiversité Nos espaces s’étendent sur plus de 7 hectares et accueillent des prairies naturelles, des vergers, des haies champêtres et des zones de biodiversité. Ces…",
    "id": "dij-label-ecojardin-un-engagement-fort-pour-la-biodiversite-et-la-durabili",
    "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z"
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "seed": true
   }
  ]
 }
