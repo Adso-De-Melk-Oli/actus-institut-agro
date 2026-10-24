@@ -42,8 +42,9 @@ npx serve .       # puis ouvrir http://localhost:3000
 
 ## Application Android
 
-Le dossier `android/` contient l'application (Kotlin, Jetpack Compose, Material 3) : fil d'actus, agenda, recherche, filtre par école, notifications (nouvelles publications ; événements du jour sur les campus vers 7 h 15 en semaine) et widget « À venir ». Elle lit `data/articles.json` sur le site et garde une copie pour la consultation hors ligne.
+Le dossier `android/` contient l'application (Kotlin, Jetpack Compose, Material 3) : fil d'actus, agenda, recherche, filtre par école, notifications (nouvelles publications ; événements du jour sur les campus vers 7 h 15 en semaine), événements suivis avec rappel la veille et une semaine avant, mention « Nouveau » depuis la dernière visite, vue Mois de l'agenda, widgets « À venir » et « Dernières actus », et mise à jour directe depuis les Réglages (téléchargement, vérification puis installateur d'Android). Elle lit `data/articles.json` sur le site et garde une copie pour la consultation hors ligne.
 
 - **Compilation** : workflow « Application Android », à chaque modification du dossier `android/`. Tests et captures d'écran (Paparazzi) publiés dans la branche `android-build`.
+- **Sites qui ne répondent pas** : le robot écrit pour chaque source en échec une cause en français courant (`problem`, voir `scripts/reasons.mjs`), affichée par le site et l'application ; le détail technique reste dans `errors` et dans l'e-mail d'alerte.
 - **Installation** : l'APK signé est publié dans la release « android » du dépôt (`ActusInstitutAgro.apk`).
 - **Signature** : clé `android/release.p12` (chiffrée), mot de passe dans le secret `ANDROID_KEYSTORE_PASSWORD`. Garder ce mot de passe : sans lui, les mises à jour ne pourront plus s'installer par-dessus l'application existante.

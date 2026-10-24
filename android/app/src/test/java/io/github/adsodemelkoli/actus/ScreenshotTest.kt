@@ -89,6 +89,27 @@ class ScreenshotTest {
         shot(Tab.SETTINGS, s = settings.copy(update = UpdateState(latest = "1.0.9", latestCode = 9, downloadUrl = "u", problem = "La connexion a été interrompue.")))
     }
 
+    /** Cartes en gros plan : étoile, mention « Nouveau », pilule Bêta. */
+    @Test fun cartes() {
+        val a = { id: String -> feed.articles.first { it.id == id } }
+        paparazzi.snapshot {
+            ActusTheme {
+                androidx.compose.foundation.layout.Column(
+                    Modifier.background(androidx.compose.material3.MaterialTheme.colorScheme.background).padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    io.github.adsodemelkoli.actus.ui.BetaPill()
+                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        io.github.adsodemelkoli.actus.ui.UpcomingCard(a("fon-ag-journee-chaire-futurs-elevage"), {}, isNew = true, followed = true)
+                    }
+                    io.github.adsodemelkoli.actus.ui.UpcomingCard(a("ia-ag-sustainable-life-sciences-ells"), {}, followed = false)
+                    io.github.adsodemelkoli.actus.ui.ArticleRow(a("fon-ag-colloque-risque-climatique"), today, {}, {}, isNew = true, followed = false)
+                    io.github.adsodemelkoli.actus.ui.ArticleRow(a("mtp-concours-vignerons-terroirs-avenir-2027"), today, {}, {}, isNew = true)
+                }
+            }
+        }
+    }
+
     @Test fun icone() = paparazzi.snapshot {
         Row(Modifier.background(Color.White).padding(24.dp), horizontalArrangement = Arrangement.spacedBy(24.dp)) {
             listOf(CircleShape, RoundedCornerShape(28.dp), RoundedCornerShape(6.dp)).forEach { shape ->
