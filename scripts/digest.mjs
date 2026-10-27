@@ -182,5 +182,7 @@ export function buildDigest(data, now = new Date(), thumbs = {}, sent = {}) {
     ].join("\n"),
   } : null;
 
-  return { forDate: day, builtAt: now.toISOString(), window: { from: from.toISOString(), to: to.toISOString() }, counts: { actus: nActu, agenda: nEv, today: onCampus.length, remote: remote.length, week: upcoming.length }, subject, html, text: lines.join("\n"), images: images.map(x => ({ ...x, raw: `https://raw.githubusercontent.com/Adso-De-Melk-Oli/actus-institut-agro/main/${x.path}` })), alert };
+  // « rien de nouveau » : ni actu, ni date d'agenda, ni événement aujourd'hui (sur un campus ou à distance)
+  const empty = !nActu && !nEv && !onCampus.length && !remote.length;
+  return { forDate: day, builtAt: now.toISOString(), empty, window: { from: from.toISOString(), to: to.toISOString() }, counts: { actus: nActu, agenda: nEv, today: onCampus.length, remote: remote.length, week: upcoming.length }, subject, html, text: lines.join("\n"), images: images.map(x => ({ ...x, raw: `https://raw.githubusercontent.com/Adso-De-Melk-Oli/actus-institut-agro/main/${x.path}` })), alert };
 }

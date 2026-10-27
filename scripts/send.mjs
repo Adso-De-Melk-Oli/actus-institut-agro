@@ -4,6 +4,7 @@
 //   node scripts/send.mjs            → envoi du jour : seulement si le digest est celui d'aujourd'hui,
 //                                      qu'il est 7 h passées à Paris et qu'il n'a pas déjà été envoyé
 //   MODE=test node scripts/send.mjs  → envoie l'aperçu (data/preview/digest.json), objet préfixé [Test]
+//   Un digest « rien de nouveau » n'est envoyé qu'à l'administrateur.
 
 import { readFile, writeFile } from "node:fs/promises";
 import nodemailer from "nodemailer";
@@ -57,7 +58,9 @@ try {
     catch { console.warn(`photo manquante : ${img.path}`); }
   }
   const subject = (TEST ? "[Test] " : "") + digest.subject;
-  const to = TEST ? [ADMIN] : DIGEST_TO;
+  // un digest sans aucune nouveauté ne part qu'à l'administrateur, pour vérifier que le robot tourne
+  const empty = digest.empty ?? (digest.counts && !digest.counts.actus && !digest.counts.agenda && !digest.counts.today && !digest.counts.remote);
+  const to = TEST || empty ? [ADMIN] : DIGEST_TO;
   const info = await transport.sendMail({ from, to, subject, html: digest.html, text: digest.text, attachments });
   console.log(`Envoyé à ${to.length} destinataire${to.length > 1 ? "s" : ""} : ${subject} (${attachments.length} photos) — ${info.messageId}`);
 
