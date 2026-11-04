@@ -1,26 +1,20 @@
 {
- "updatedAt": "2026-11-03T05:36:08.663Z",
+ "updatedAt": "2026-11-04T05:36:11.700Z",
  "sources": {
   "montpellier": {
-   "ok": false,
-   "actus": 0,
-   "agenda": 0,
-   "errors": [
-    "actus : https://www.institut-agro-montpellier.fr/rss.xml injoignable (UND_ERR_CONNECT_TIMEOUT)",
-    "agenda : https://www.institut-agro-montpellier.fr/agenda/rss.xml injoignable (UND_ERR_CONNECT_TIMEOUT)"
-   ],
+   "ok": true,
+   "actus": 8,
+   "agenda": 10,
+   "errors": [],
    "count": 18,
-   "problem": "le site n'a pas répondu à temps",
-   "failDays": 1,
-   "lastFailDay": "2026-11-03",
-   "failingSince": "2026-11-03"
+   "failDays": 0
   },
   "rennes": {
    "ok": true,
    "actus": 5,
    "agenda": 3,
    "errors": [],
-   "count": 8,
+   "count": 9,
    "failDays": 0
   },
   "institut": {
@@ -36,7 +30,7 @@
    "actus": 30,
    "agenda": 0,
    "errors": [],
-   "count": 29,
+   "count": 30,
    "failDays": 0
   },
   "fondation": {
@@ -74,6 +68,18 @@
    "firstSeen": "2026-10-21T00:00:00.000Z"
   },
   {
+   "kind": "agenda",
+   "title": "Soutenance de thèse d'Abdelhamid Kebieche",
+   "url": "https://www.institut-agro-rennes-angers.fr/agenda/soutenance-de-these-dabdelhamid-kebieche",
+   "date": "2026-11-19",
+   "place": "Amphithéâtre Rachel Carson, campus d'Angers",
+   "summary": "Bases génétiques de la variabilité de réponse de la carotte à un stimulateur de défense des plantes pour la protection vis-à-vis d’Alternaria dauci : impact du génotype et de températures extrêmes",
+   "id": "ren-ag-soutenance-de-these-dabdelhamid-kebieche",
+   "source": "rennes",
+   "firstSeen": "2026-11-04T05:36:11.700Z",
+   "noImage": true
+  },
+  {
    "date": "2026-11-06",
    "endDate": "2026-11-07",
    "kind": "agenda",
@@ -89,13 +95,13 @@
   {
    "date": "2026-11-05",
    "kind": "agenda",
-   "place": "Institut Agro Montpellier · Campus La Gaillarde",
+   "place": "Domaine du Chapitre · 170 Boulevard du Chapitre",
    "source": "montpellier",
    "summary": "Le 5 novembre 2026 à La Gaillarde : regards croisés sur les protections physiques en viticulture et arboriculture, leurs effets sur les paysages et la biodiversité.",
    "title": "Colloque – Couvrir pour produire : promesses et limites des protections physiques - Regards croisés sur les innovations en viticulture et arboriculture",
    "url": "https://www.institut-agro-montpellier.fr/agenda/colloque-couvrir-pour-produire-promesses-et-limites-des-protections-physiques-regards",
    "id": "mtp-colloque-couvrir-pour-produire",
-   "image": "https://www.institut-agro-montpellier.fr/sites/supagro/files/styles/max_1440x940/public/media/2026/07/27/2026_07_SaveTheDate_affiche_Couvrir-pour-produire_100dpi.jpg.webp?itok=cY8v3nGl",
+   "image": "https://www.institut-agro-montpellier.fr/sites/supagro/files/styles/max_1440x940/public/media/2026/11/02/2026_07_SaveTheDate_affiche_Couvrir-pour-produire_100dpi.jpg.webp?itok=6-k_TUWI",
    "firstSeen": "2026-10-21T00:00:00.000Z"
   },
   {
@@ -122,6 +128,17 @@
    "place": "Institut Agro Montpellier",
    "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/09/affiche_Couvrir-pour-produire_V3.avif",
    "firstSeen": "2026-10-21T00:00:00.000Z"
+  },
+  {
+   "kind": "actu",
+   "title": "Les lives thématiques de l'Institut Agro Dijon",
+   "url": "https://institut-agro-dijon.fr/actualites/les-lives-thematiques-de-linstittut-agro-dijon",
+   "summary": "Le concept est simple : une présentation par thématique et la possibilité de poser toutes vos questions.19 novembre 2026 “Ingénieur agro par apprentissage” à partir de 18H30 sur notre chaine…",
+   "id": "dij-les-lives-thematiques-de-linstittut-agro-dijon",
+   "source": "dijon",
+   "firstSeen": "2026-11-04T05:36:11.700Z",
+   "date": "2026-11-04T05:36:11.700Z",
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/b/4/csm_JPO25_bandeauWEB_fc759c2478.png"
   },
   {
    "date": "2026-11-04",
@@ -245,7 +262,7 @@
    "title": "Fête de la science : vivante, captivante, ludique...",
    "url": "https://institut-agro-dijon.fr/actualites/la-science-vivante-captivante-ludique",
    "date": "2026-10-10T06:57:00.000Z",
-   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/8/2/csm_FDS26_affiche_print_297x420_RVB_ddadd4b3f3.jpg",
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/8/2/csm_FDS26_affiche_print_297x420_RVB_a7e426d4b1.jpg",
    "summary": "La Fête de la science est une occasion de découvrir le monde des sciences et de rencontrer les femmes et les hommes qui font la science d'aujourd'hui.L'Institut Agro Dijon participera les 10 et 11…",
    "id": "dij-la-science-vivante-captivante-ludique",
    "source": "dijon",
