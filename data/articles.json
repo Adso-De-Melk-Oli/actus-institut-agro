@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-04T05:36:11.700Z",
+ "updatedAt": "2026-11-05T05:35:42.946Z",
  "sources": {
   "montpellier": {
    "ok": true,
@@ -30,13 +30,13 @@
    "actus": 30,
    "agenda": 0,
    "errors": [],
-   "count": 30,
+   "count": 29,
    "failDays": 0
   },
   "fondation": {
    "ok": true,
    "actus": 10,
-   "agenda": 3,
+   "agenda": 2,
    "errors": [],
    "count": 15,
    "failDays": 0
@@ -964,18 +964,6 @@
    "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/f/8/csm_1000002151_6b92d5f5e6.jpg",
    "summary": "L’édition 2025 s’est tenue les 14 et 15 novembre à Uppsala, en Suède, sur le thème Cultivating Scientific Innovation. Plus de 400 étudiants issus des établissements partenaires ont participé à ces…",
    "id": "dij-linstitut-agro-dijon-distingue-a-la-conference-internationale-ells-202",
-   "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z",
-   "seed": true
-  },
-  {
-   "kind": "actu",
-   "title": "label EcoJardin : un engagement fort pour la biodiversité et la durabilité",
-   "url": "https://institut-agro-dijon.fr/actualites/label-ecojardin-un-engagement-fort-pour-la-biodiversite-et-la-durabilite",
-   "date": "2025-11-04T10:04:00.000Z",
-   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/d/a/csm_shared_image_ea112f5950.jpg",
-   "summary": "Des espaces verts pensés pour la biodiversité Nos espaces s’étendent sur plus de 7 hectares et accueillent des prairies naturelles, des vergers, des haies champêtres et des zones de biodiversité. Ces…",
-   "id": "dij-label-ecojardin-un-engagement-fort-pour-la-biodiversite-et-la-durabili",
    "source": "dijon",
    "firstSeen": "2026-10-24T14:19:18.677Z",
    "seed": true
