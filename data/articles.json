@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-05T05:35:42.946Z",
+ "updatedAt": "2026-11-06T05:35:30.488Z",
  "sources": {
   "montpellier": {
    "ok": true,
@@ -26,20 +26,31 @@
    "failDays": 0
   },
   "dijon": {
-   "ok": true,
-   "actus": 30,
+   "ok": false,
+   "actus": 0,
    "agenda": 0,
-   "errors": [],
+   "errors": [
+    "actus : aucun contenu trouvé (la page a peut-être changé)"
+   ],
    "count": 29,
-   "failDays": 0
+   "problem": "ses actus n'ont pas pu être lues : la page ne contient plus de contenus lisibles (sa mise en page a peut-être changé)",
+   "failDays": 1,
+   "lastFailDay": "2026-11-06",
+   "failingSince": "2026-11-06"
   },
   "fondation": {
-   "ok": true,
-   "actus": 10,
-   "agenda": 2,
-   "errors": [],
+   "ok": false,
+   "actus": 0,
+   "agenda": 0,
+   "errors": [
+    "actus : aucun contenu trouvé (la page a peut-être changé)",
+    "agenda : aucun contenu trouvé (la page a peut-être changé)"
+   ],
    "count": 15,
-   "failDays": 0
+   "problem": "la page ne contient plus de contenus lisibles (sa mise en page a peut-être changé)",
+   "failDays": 1,
+   "lastFailDay": "2026-11-06",
+   "failingSince": "2026-11-06"
   }
  },
  "articles": [
