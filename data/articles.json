@@ -1,12 +1,12 @@
 {
- "updatedAt": "2026-11-06T05:35:30.488Z",
+ "updatedAt": "2026-11-07T08:09:20.016Z",
  "sources": {
   "montpellier": {
    "ok": true,
-   "actus": 8,
+   "actus": 9,
    "agenda": 10,
    "errors": [],
-   "count": 18,
+   "count": 19,
    "failDays": 0
   },
   "rennes": {
@@ -14,7 +14,7 @@
    "actus": 5,
    "agenda": 3,
    "errors": [],
-   "count": 9,
+   "count": 13,
    "failDays": 0
   },
   "institut": {
@@ -26,31 +26,20 @@
    "failDays": 0
   },
   "dijon": {
-   "ok": false,
-   "actus": 0,
+   "ok": true,
+   "actus": 30,
    "agenda": 0,
-   "errors": [
-    "actus : aucun contenu trouvé (la page a peut-être changé)"
-   ],
+   "errors": [],
    "count": 29,
-   "problem": "ses actus n'ont pas pu être lues : la page ne contient plus de contenus lisibles (sa mise en page a peut-être changé)",
-   "failDays": 1,
-   "lastFailDay": "2026-11-06",
-   "failingSince": "2026-11-06"
+   "failDays": 0
   },
   "fondation": {
-   "ok": false,
-   "actus": 0,
-   "agenda": 0,
-   "errors": [
-    "actus : aucun contenu trouvé (la page a peut-être changé)",
-    "agenda : aucun contenu trouvé (la page a peut-être changé)"
-   ],
+   "ok": true,
+   "actus": 10,
+   "agenda": 2,
+   "errors": [],
    "count": 15,
-   "problem": "la page ne contient plus de contenus lisibles (sa mise en page a peut-être changé)",
-   "failDays": 1,
-   "lastFailDay": "2026-11-06",
-   "failingSince": "2026-11-06"
+   "failDays": 0
   }
  },
  "articles": [
@@ -91,6 +80,16 @@
    "noImage": true
   },
   {
+   "kind": "agenda",
+   "title": "Salon de l'Étudiant, spécial Grandes écoles à Rennes",
+   "url": "https://www.institut-agro-rennes-angers.fr/agenda/salon-de-letudiant-special-grandes-ecoles",
+   "date": "2026-11-14",
+   "summary": "Halls 2 et 3 - Stand B20",
+   "id": "ren-ag-salon-de-letudiant-special-grandes-ecoles",
+   "source": "rennes",
+   "firstSeen": "2026-11-07T08:09:20.016Z"
+  },
+  {
    "date": "2026-11-06",
    "endDate": "2026-11-07",
    "kind": "agenda",
@@ -102,6 +101,28 @@
    "id": "ia-ag-sustainable-life-sciences-ells",
    "noImage": true,
    "firstSeen": "2026-10-21T00:00:00.000Z"
+  },
+  {
+   "date": "2026-11-06",
+   "kind": "actu",
+   "source": "rennes",
+   "summary": "Journées portes ouvertes, version en ligne et salons pour découvrir les formations.",
+   "title": "JPO, JPO en ligne et salons : rencontrons-nous !",
+   "url": "https://www.institut-agro-rennes-angers.fr/actualites/jpo-jpo-en-ligne-et-salons-rencontrons-nous",
+   "id": "ren-jpo-salons",
+   "image": "https://www.institut-agro-rennes-angers.fr/sites/www.institut-agro-rennes-angers.fr/files/images/actualites/bandeaux/Bandeau-salons-JPO-2024_0.png",
+   "firstSeen": "2026-10-21T00:00:00.000Z"
+  },
+  {
+   "kind": "actu",
+   "title": "Ingénieur par apprentissage",
+   "url": "https://www.institut-agro-rennes-angers.fr/actualites/ingenieur-par-apprentissage",
+   "date": "2026-11-06",
+   "image": "https://www.institut-agro-rennes-angers.fr/sites/www.institut-agro-rennes-angers.fr/files/images/actualites/bandeaux/Bandeau-journee-preparation-concours-apprentissage-2024.jpg",
+   "id": "ren-ingenieur-par-apprentissage",
+   "source": "rennes",
+   "summary": "",
+   "firstSeen": "2026-11-07T08:09:20.016Z"
   },
   {
    "date": "2026-11-05",
@@ -139,6 +160,17 @@
    "place": "Institut Agro Montpellier",
    "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/09/affiche_Couvrir-pour-produire_V3.avif",
    "firstSeen": "2026-10-21T00:00:00.000Z"
+  },
+  {
+   "kind": "actu",
+   "title": "Salon de l'Étudiant, spécial Grandes écoles à Rennes",
+   "url": "https://www.institut-agro-rennes-angers.fr/actualites/salon-de-letudiant-special-grandes-ecoles-rennes",
+   "date": "2026-11-05",
+   "image": "https://www.institut-agro-rennes-angers.fr/sites/www.institut-agro-rennes-angers.fr/files/images/actualites/bandeaux/Bandeau-salon-etudiant-2025.jpg",
+   "id": "ren-salon-de-letudiant-special-grandes-ecoles-rennes",
+   "source": "rennes",
+   "summary": "",
+   "firstSeen": "2026-11-07T08:09:20.016Z"
   },
   {
    "kind": "actu",
@@ -342,6 +374,17 @@
    "firstSeen": "2026-10-21T00:00:00.000Z"
   },
   {
+   "kind": "actu",
+   "title": "Salon de l'Étudiant, spécial Grandes écoles à Paris",
+   "url": "https://www.institut-agro-rennes-angers.fr/actualites/salon-de-letudiant-special-grandes-ecoles-paris-2",
+   "date": "2026-10-06",
+   "image": "https://www.institut-agro-rennes-angers.fr/sites/www.institut-agro-rennes-angers.fr/files/images/actualites/bandeaux/Bandeau-salon-etudiant-2025_0.jpg",
+   "id": "ren-salon-de-letudiant-special-grandes-ecoles-paris-2",
+   "source": "rennes",
+   "summary": "",
+   "firstSeen": "2026-11-07T08:09:20.016Z"
+  },
+  {
    "date": "2026-10-05T05:15:53.000Z",
    "kind": "actu",
    "source": "montpellier",
@@ -361,17 +404,6 @@
    "url": "https://www.institut-agro-rennes-angers.fr/actualites/immersions-individuelles",
    "id": "ren-immersions-individuelles",
    "image": "https://www.institut-agro-rennes-angers.fr/sites/www.institut-agro-rennes-angers.fr/files/images/actualites/bandeaux/bandeau-immersions-individuelles2025_0.jpg",
-   "firstSeen": "2026-10-21T00:00:00.000Z"
-  },
-  {
-   "date": "2026-09-28",
-   "kind": "actu",
-   "source": "rennes",
-   "summary": "Journées portes ouvertes, version en ligne et salons pour découvrir les formations.",
-   "title": "JPO, JPO en ligne et salons : rencontrons-nous !",
-   "url": "https://www.institut-agro-rennes-angers.fr/actualites/jpo-jpo-en-ligne-et-salons-rencontrons-nous",
-   "id": "ren-jpo-salons",
-   "image": "https://www.institut-agro-rennes-angers.fr/sites/www.institut-agro-rennes-angers.fr/files/images/actualites/bandeaux/Bandeau-salons-JPO-2024_0.png",
    "firstSeen": "2026-10-21T00:00:00.000Z"
   },
   {
@@ -698,6 +730,17 @@
    "id": "mtp-agritech-eu",
    "image": "https://www.institut-agro-montpellier.fr/sites/supagro/files/styles/max_1440x940/public/media/2026/10/21/header-agritech-eu-article.jpg.webp?itok=XGOFIPUF",
    "firstSeen": "2026-10-21T00:00:00.000Z"
+  },
+  {
+   "kind": "actu",
+   "title": "Hommage à Jean-Louis Rastoin, un ardent défenseur de la sécurité alimentaire et de la durabilité des systèmes alimentaires",
+   "url": "https://www.institut-agro-montpellier.fr/actualites/hommage-jean-louis-rastoin-un-ardent-defenseur-de-la-securite-alimentaire-et-de-la",
+   "date": "2026-05-05T09:59:21.000Z",
+   "summary": "Jean-Louis Rastoin, professeur émérite à l’Institut Agro Montpellier s’est éteint dans sa 83ème année, dans la nuit du 1er au 2 mai 2026, après une vie professionnelle marquée par sa passion pour la…",
+   "id": "mtp-hommage-jean-louis-rastoin-un-ardent-defenseur-de-la-securite-alimenta",
+   "source": "montpellier",
+   "firstSeen": "2026-11-07T08:09:20.016Z",
+   "image": "https://www.institut-agro-montpellier.fr/sites/supagro/files/styles/max_1440x940/public/media/2026/05/05/DSC_3977.JPG.webp?itok=u6xXeTDF"
   },
   {
    "kind": "actu",
