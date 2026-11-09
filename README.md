@@ -27,6 +27,7 @@ Chaque jour ouvré, le workflow « Relevé des actus » relève les sites puis e
 - **`data/sent.json`** garde le dernier envoi : le digest suivant reprend exactement là où il s'arrête (pas de trou, pas de doublon).
 - **Alerte** à l'administrateur quand une source est en échec deux jours de relevé de suite, puis un rappel par semaine.
 - **Nouvelle source** : son historique rejoint le site mais n'est pas annoncé comme nouveau dans le digest.
+- **Ancien contenu remonté** : une actu publiée plus de 7 jours avant le précédent digest (republiée ou remontée dans un flux RSS) ou un événement déjà terminé n'est pas annoncé comme nouveau.
 - **Essai** : Actions → « Envoi du digest (essai) » → Run workflow envoie l'aperçu (`data/preview`) à l'administrateur seul.
 
 Si une source échoue, ses contenus de la veille sont conservés et l'encadré « Sources suivies » du site affiche « Partiel ». Les actus de plus de 12 mois et les événements terminés depuis plus de 6 mois sont retirés automatiquement.
