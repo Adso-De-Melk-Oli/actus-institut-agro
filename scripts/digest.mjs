@@ -14,6 +14,7 @@ const SCHOOLS = [
   ["dijon", "Institut Agro Dijon", "#8e2b4e", "#f6e6ec"],
   ["fondation", "Fondation de l'Institut Agro", "#0e7f81", "#e1f2f2"],
 ];
+const STALE_DAYS = 7; // au-delà, une actu « découverte » maintenant est un ancien contenu remonté
 export const MAX_PHOTOS = 15; // vignettes de 4 Ko environ
 export const SCHOOL_COLORS = Object.fromEntries(SCHOOLS.map(([k, l, c]) => [k, { label: l, color: c }]));
 const LABEL = Object.fromEntries(SCHOOLS.map(([k, l]) => [k, l]));
@@ -60,7 +61,10 @@ function select(data, now, sent = {}) {
   const from = sent.windowTo ? new Date(sent.windowTo) : parisInstant(prevWorkday(day), 7);
   const to = day === parisDay(now) ? new Date(Math.max(+now, +parisInstant(day, 7))) : parisInstant(day, 7);
   const arts = data.articles ?? [];
-  const fresh = arts.filter(a => !a.seed && a.firstSeen && new Date(a.firstSeen) > from && new Date(a.firstSeen) <= to);
+  // un contenu ancien qui réapparaît dans un flux (republié, remonté dans le RSS…) n'est pas une nouveauté :
+  // actu publiée plus de 7 jours avant la fenêtre, ou événement déjà terminé
+  const stale = a => a.kind === "agenda" ? eventEnd(a) && eventEnd(a) < day : a.date && new Date(a.date) < from - STALE_DAYS * 864e5;
+  const fresh = arts.filter(a => !a.seed && a.firstSeen && new Date(a.firstSeen) > from && new Date(a.firstSeen) <= to && !stale(a));
   const today = arts.filter(a => a.kind === "agenda" && eventDay(a) <= day && day <= eventEnd(a));
   const remote = today.filter(a => a.remote);
   const onCampus = today.filter(a => !a.remote && (!a.place || CAMPUS.test(a.place)));
