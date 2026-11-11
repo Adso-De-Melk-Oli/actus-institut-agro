@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-10T05:35:35.189Z",
+ "updatedAt": "2026-11-11T05:35:33.166Z",
  "sources": {
   "montpellier": {
    "ok": true,
@@ -14,7 +14,7 @@
    "actus": 5,
    "agenda": 3,
    "errors": [],
-   "count": 14,
+   "count": 15,
    "failDays": 0
   },
   "institut": {
@@ -54,6 +54,18 @@
    "id": "fon-ag-colloque-risque-climatique",
    "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/09/Colloque-DECALAGE-ENTRE-RISQUE-CLIMATIQUE-MODELISE-ET-PERCU-janvier-2027.avif",
    "firstSeen": "2026-10-21T00:00:00.000Z"
+  },
+  {
+   "kind": "agenda",
+   "title": "Soutenance de thèse de Maurane Grondin",
+   "url": "https://www.institut-agro-rennes-angers.fr/agenda/soutenance-de-these-de-maurane-grondin",
+   "date": "2026-11-24",
+   "place": "Amphithéâtre Camille Moule, campus de Rennes",
+   "summary": "PEAGWEAN, Ingrédients innovants à base de pois : impact sur les fonctions digestives et la croissance des porcelets",
+   "id": "ren-ag-soutenance-de-these-de-maurane-grondin",
+   "source": "rennes",
+   "firstSeen": "2026-11-11T05:35:33.166Z",
+   "noImage": true
   },
   {
    "kind": "agenda",
