@@ -1,12 +1,12 @@
 {
- "updatedAt": "2026-11-12T05:35:59.086Z",
+ "updatedAt": "2026-11-13T05:36:04.322Z",
  "sources": {
   "montpellier": {
    "ok": true,
-   "actus": 9,
+   "actus": 8,
    "agenda": 10,
    "errors": [],
-   "count": 19,
+   "count": 20,
    "failDays": 0
   },
   "rennes": {
@@ -54,6 +54,18 @@
    "id": "fon-ag-colloque-risque-climatique",
    "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/09/Colloque-DECALAGE-ENTRE-RISQUE-CLIMATIQUE-MODELISE-ET-PERCU-janvier-2027.avif",
    "firstSeen": "2026-10-21T00:00:00.000Z"
+  },
+  {
+   "kind": "agenda",
+   "title": "Colloque – Perception des risques climatiques",
+   "url": "https://www.institut-agro-montpellier.fr/agenda/colloque-perception-risques-climatiques-2027",
+   "date": "2027-01-21",
+   "place": "Institut Agro Montpellier · Campus La Gaillarde",
+   "image": "https://www.institut-agro-montpellier.fr/sites/supagro/files/styles/max_1440x940/public/media/2026/11/12/header-colloque-perception-risques-climatiques.jpg.webp?itok=ZNBG2_YB",
+   "summary": "L’Institut Agro Montpellier accueille le 21 janvier 2027 le colloque \"Perception des risques climatiques\", organisé par la Chaire partenariale AgroSYS. La journée réunira chercheur·ses et…",
+   "id": "mtp-ag-colloque-perception-risques-climatiques-2027",
+   "source": "montpellier",
+   "firstSeen": "2026-11-13T05:36:04.322Z"
   },
   {
    "kind": "agenda",
