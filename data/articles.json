@@ -1,12 +1,12 @@
 {
- "updatedAt": "2026-11-13T05:36:04.322Z",
+ "updatedAt": "2026-11-16T05:36:03.061Z",
  "sources": {
   "montpellier": {
    "ok": true,
-   "actus": 8,
+   "actus": 9,
    "agenda": 10,
    "errors": [],
-   "count": 20,
+   "count": 21,
    "failDays": 0
   },
   "rennes": {
@@ -30,7 +30,7 @@
    "actus": 30,
    "agenda": 0,
    "errors": [],
-   "count": 29,
+   "count": 28,
    "failDays": 0
   },
   "fondation": {
@@ -124,6 +124,17 @@
    "id": "ren-ag-salon-de-letudiant-special-grandes-ecoles",
    "source": "rennes",
    "firstSeen": "2026-11-07T08:09:20.016Z"
+  },
+  {
+   "kind": "actu",
+   "title": "Collaboration franco-ivoirienne renforcée entre deux partenaires académique et scientifique de longue date",
+   "url": "https://www.institut-agro-montpellier.fr/actualites/collaboration-franco-ivoirienne",
+   "date": "2026-11-12T17:22:46.000Z",
+   "summary": "Le 10 novembre 2026, l’Institut Agro a accueilli sur le campus de Lavalette à Montpellier, une délégation de l’Institut National Polytechnique Félix Houphouët-Boigny (INP-HB) de Côte d’Ivoire, dans…",
+   "id": "mtp-collaboration-franco-ivoirienne",
+   "source": "montpellier",
+   "firstSeen": "2026-11-16T05:36:03.061Z",
+   "image": "https://www.institut-agro-montpellier.fr/sites/supagro/files/styles/max_1440x940/public/media/2026/11/13/header-cooperation-cote-ivoire-institut-agro.jpg.webp?itok=d5aKZSU_"
   },
   {
    "date": "2026-11-06",
@@ -319,7 +330,7 @@
    "kind": "actu",
    "source": "montpellier",
    "summary": "Concours doté de 80 000 € qui accompagne les jeunes viticulteurs dans la création de leur exploitation. Candidatures ouvertes jusqu'au 15 décembre 2026.",
-   "title": "C’est parti pour la 11ème édition du Concours Vignerons et Terroirs d’Avenir !",
+   "title": "C’est parti pour la 11e édition du Concours Vignerons et Terroirs d’Avenir !",
    "url": "https://www.institut-agro-montpellier.fr/actualites/concours-vignerons-terroirs-avenir-2027",
    "id": "mtp-concours-vignerons-terroirs-avenir-2027",
    "image": "https://www.institut-agro-montpellier.fr/sites/supagro/files/styles/max_1440x940/public/media/2026/10/14/eclosion-vigne.jpg.webp?itok=DQtQRWya",
@@ -1045,18 +1056,6 @@
    "source": "fondation",
    "image": "https://fondation-institut-agro.fr/wp-content/uploads/2025/11/Visuel-actu-site-V2-1.avif",
    "firstSeen": "2026-10-21T00:00:00.000Z"
-  },
-  {
-   "kind": "actu",
-   "title": "L’Institut Agro Dijon distingué à la conférence internationale ELLS 2025",
-   "url": "https://institut-agro-dijon.fr/actualites/linstitut-agro-dijon-distingue-a-la-conference-internationale-ells-2025",
-   "date": "2025-11-14T10:04:00.000Z",
-   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/f/8/csm_1000002151_6b92d5f5e6.jpg",
-   "summary": "L’édition 2025 s’est tenue les 14 et 15 novembre à Uppsala, en Suède, sur le thème Cultivating Scientific Innovation. Plus de 400 étudiants issus des établissements partenaires ont participé à ces…",
-   "id": "dij-linstitut-agro-dijon-distingue-a-la-conference-internationale-ells-202",
-   "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z",
-   "seed": true
   }
  ]
 }
