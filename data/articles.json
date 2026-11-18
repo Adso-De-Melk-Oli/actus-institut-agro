@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-17T05:36:21.120Z",
+ "updatedAt": "2026-11-18T05:35:38.657Z",
  "sources": {
   "montpellier": {
    "ok": true,
@@ -18,12 +18,17 @@
    "failDays": 0
   },
   "institut": {
-   "ok": true,
+   "ok": false,
    "actus": 6,
-   "agenda": 2,
-   "errors": [],
+   "agenda": 0,
+   "errors": [
+    "agenda : aucun contenu trouvé (la page a peut-être changé)"
+   ],
    "count": 8,
-   "failDays": 0
+   "problem": "son agenda n'a pas pu être lu : la page ne contient plus de contenus lisibles (sa mise en page a peut-être changé)",
+   "failDays": 1,
+   "lastFailDay": "2026-11-18",
+   "failingSince": "2026-11-18"
   },
   "dijon": {
    "ok": true,
