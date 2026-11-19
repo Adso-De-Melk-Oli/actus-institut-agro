@@ -1,20 +1,20 @@
 {
- "updatedAt": "2026-11-18T05:35:38.657Z",
+ "updatedAt": "2026-11-19T05:36:02.148Z",
  "sources": {
   "montpellier": {
    "ok": true,
-   "actus": 9,
+   "actus": 8,
    "agenda": 10,
    "errors": [],
-   "count": 21,
+   "count": 22,
    "failDays": 0
   },
   "rennes": {
    "ok": true,
    "actus": 5,
-   "agenda": 3,
+   "agenda": 4,
    "errors": [],
-   "count": 16,
+   "count": 17,
    "failDays": 0
   },
   "institut": {
@@ -26,8 +26,8 @@
    ],
    "count": 8,
    "problem": "son agenda n'a pas pu être lu : la page ne contient plus de contenus lisibles (sa mise en page a peut-être changé)",
-   "failDays": 1,
-   "lastFailDay": "2026-11-18",
+   "failDays": 2,
+   "lastFailDay": "2026-11-19",
    "failingSince": "2026-11-18"
   },
   "dijon": {
@@ -74,6 +74,18 @@
   },
   {
    "kind": "agenda",
+   "title": "Soutenance de thèse de Julie Legrix",
+   "url": "https://www.institut-agro-rennes-angers.fr/agenda/soutenance-de-these-de-julie-legrix",
+   "date": "2026-12-01",
+   "place": "Amphithéâtre Rachel Carson, campus d'Angers",
+   "summary": "Identification des déterminants génétiques et moléculaires de la réponse germinative du soja (Glycine max (L.) Merr.) aux basses températures",
+   "id": "ren-ag-soutenance-de-these-de-julie-legrix",
+   "source": "rennes",
+   "firstSeen": "2026-11-19T05:36:02.148Z",
+   "noImage": true
+  },
+  {
+   "kind": "agenda",
    "title": "Soutenance de thèse d'Alexandre Hubert",
    "url": "https://www.institut-agro-rennes-angers.fr/agenda/soutenance-de-these-dalexandre-hubert",
    "date": "2026-11-27",
@@ -83,6 +95,18 @@
    "source": "rennes",
    "firstSeen": "2026-11-17T05:36:21.120Z",
    "noImage": true
+  },
+  {
+   "kind": "agenda",
+   "title": "Forum des Métiers 2026 : une journée indispensable pour favoriser l’insertion professionnelle des étudiants et jeunes diplômés",
+   "url": "https://www.institut-agro-montpellier.fr/agenda/forum-metiers-2026",
+   "date": "2026-11-26",
+   "place": "Institut Agro Montpellier · Campus La Gaillarde",
+   "image": "https://www.institut-agro-montpellier.fr/sites/supagro/files/styles/max_1440x940/public/media/2026/11/18/Img-Forum-M%C3%A9tiers-2025-stands%20%2836%29.jpg.webp?itok=Vl4nzXqn",
+   "summary": "Le Forum des Métiers revient pour une nouvelle édition sur le campus de La Gaillarde à Montpellier. Organisé par l’équipe du service d’accompagnement vers l’insertion professionnelle, cet événement…",
+   "id": "mtp-ag-forum-metiers-2026",
+   "source": "montpellier",
+   "firstSeen": "2026-11-19T05:36:02.148Z"
   },
   {
    "kind": "agenda",
