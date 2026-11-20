@@ -1,12 +1,12 @@
 {
- "updatedAt": "2026-11-19T05:36:02.148Z",
+ "updatedAt": "2026-11-20T13:33:26.265Z",
  "sources": {
   "montpellier": {
    "ok": true,
    "actus": 8,
    "agenda": 10,
    "errors": [],
-   "count": 22,
+   "count": 23,
    "failDays": 0
   },
   "rennes": {
@@ -14,7 +14,7 @@
    "actus": 5,
    "agenda": 4,
    "errors": [],
-   "count": 17,
+   "count": 19,
    "failDays": 0
   },
   "institut": {
@@ -26,8 +26,8 @@
    ],
    "count": 8,
    "problem": "son agenda n'a pas pu être lu : la page ne contient plus de contenus lisibles (sa mise en page a peut-être changé)",
-   "failDays": 2,
-   "lastFailDay": "2026-11-19",
+   "failDays": 3,
+   "lastFailDay": "2026-11-20",
    "failingSince": "2026-11-18"
   },
   "dijon": {
@@ -41,9 +41,9 @@
   "fondation": {
    "ok": true,
    "actus": 10,
-   "agenda": 2,
+   "agenda": 1,
    "errors": [],
-   "count": 15,
+   "count": 14,
    "failDays": 0
   }
  },
@@ -71,6 +71,18 @@
    "id": "mtp-ag-colloque-perception-risques-climatiques-2027",
    "source": "montpellier",
    "firstSeen": "2026-11-13T05:36:04.322Z"
+  },
+  {
+   "kind": "agenda",
+   "title": "Soutenance de thèse de Kofivi Mawuenam Dzegle",
+   "url": "https://www.institut-agro-rennes-angers.fr/agenda/soutenance-de-these-de-kofivi-mawuenam-dzegle",
+   "date": "2026-12-04",
+   "place": "Amphithéâtre Camille Moule, campus de Rennes",
+   "summary": "Durabilité des exploitations d’élevage : analyse de l’efficacité économique et environnementale par les approches de frontière et implications pour les politiques agricoles",
+   "id": "ren-ag-soutenance-de-these-de-kofivi-mawuenam-dzegle",
+   "source": "rennes",
+   "firstSeen": "2026-11-20T13:33:26.265Z",
+   "noImage": true
   },
   {
    "kind": "agenda",
@@ -110,6 +122,18 @@
   },
   {
    "kind": "agenda",
+   "title": "Soutenance de thèse d'Abel Masson",
+   "url": "https://www.institut-agro-rennes-angers.fr/agenda/soutenance-de-these-dabel-masson",
+   "date": "2026-11-26",
+   "place": "Amphithéâtre Jules Rieffel, campus de Rennes",
+   "summary": "Comprendre et prédire la régulation naturelle des ravageurs de culture:Inférences couplées de la structure des communautés de prédateurs (Coleoptera:Carabidae) et de leur activité de prédation, à…",
+   "id": "ren-ag-soutenance-de-these-dabel-masson",
+   "source": "rennes",
+   "firstSeen": "2026-11-20T13:33:26.265Z",
+   "noImage": true
+  },
+  {
+   "kind": "agenda",
    "title": "Soutenance de thèse de Maurane Grondin",
    "url": "https://www.institut-agro-rennes-angers.fr/agenda/soutenance-de-these-de-maurane-grondin",
    "date": "2026-11-24",
@@ -131,6 +155,17 @@
    "source": "rennes",
    "firstSeen": "2026-11-10T05:35:35.189Z",
    "noImage": true
+  },
+  {
+   "kind": "actu",
+   "title": "Les lives thématiques de l'Institut Agro Dijon",
+   "url": "https://institut-agro-dijon.fr/actualites/les-lives-thematiques-de-linstittut-agro-dijon",
+   "summary": "Le concept est simple : une présentation par thématique et la possibilité de poser toutes vos questions.19 novembre 2026 “Ingénieur agro par apprentissage” à partir de 18H30 sur notre chaine…",
+   "id": "dij-les-lives-thematiques-de-linstittut-agro-dijon",
+   "source": "dijon",
+   "firstSeen": "2026-11-04T05:36:11.700Z",
+   "date": "2026-11-19T13:41:00.000Z",
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/b/4/csm_JPO25_bandeauWEB_fc759c2478.png"
   },
   {
    "date": "2026-11-19",
@@ -155,6 +190,17 @@
    "source": "rennes",
    "firstSeen": "2026-11-04T05:36:11.700Z",
    "noImage": true
+  },
+  {
+   "kind": "actu",
+   "title": "Carole Sinfort reçoit les insignes de chevalier de la Légion d’honneur à l’occasion de la cérémonie commémorative de l’Armistice du 11 novembre",
+   "url": "https://www.institut-agro-montpellier.fr/actualites/carole-sinfort-insignes-chevalier-legion-honneur",
+   "date": "2026-11-18T15:29:20.000Z",
+   "summary": "C’est pour rendre hommage aux victimes de la Grande Guerre 14-18 que s’est tenue mardi dernier la cérémonie commémorative de l’Armistice du 11 novembre en présence des membres du comité de la Légion…",
+   "id": "mtp-carole-sinfort-insignes-chevalier-legion-honneur",
+   "source": "montpellier",
+   "firstSeen": "2026-11-20T13:33:26.265Z",
+   "image": "https://www.institut-agro-montpellier.fr/sites/supagro/files/styles/max_1440x940/public/media/2026/11/18/IMG_8109.JPG.webp?itok=T1Qeo5du"
   },
   {
    "kind": "agenda",
@@ -259,17 +305,6 @@
    "source": "rennes",
    "summary": "",
    "firstSeen": "2026-11-07T08:09:20.016Z"
-  },
-  {
-   "kind": "actu",
-   "title": "Les lives thématiques de l'Institut Agro Dijon",
-   "url": "https://institut-agro-dijon.fr/actualites/les-lives-thematiques-de-linstittut-agro-dijon",
-   "summary": "Le concept est simple : une présentation par thématique et la possibilité de poser toutes vos questions.19 novembre 2026 “Ingénieur agro par apprentissage” à partir de 18H30 sur notre chaine…",
-   "id": "dij-les-lives-thematiques-de-linstittut-agro-dijon",
-   "source": "dijon",
-   "firstSeen": "2026-11-04T05:36:11.700Z",
-   "date": "2026-11-04T05:36:11.700Z",
-   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/b/4/csm_JPO25_bandeauWEB_fc759c2478.png"
   },
   {
    "date": "2026-11-04",
@@ -1085,17 +1120,6 @@
    "id": "fon-plantes-de-services-levier-strategique-transition",
    "source": "fondation",
    "image": "https://fondation-institut-agro.fr/wp-content/uploads/2025/11/Photo-bandeau-actu-web.avif",
-   "firstSeen": "2026-10-21T00:00:00.000Z"
-  },
-  {
-   "kind": "actu",
-   "title": "La Fondation de l’Institut Agro lance sa campagne “Cultivons les talents”",
-   "url": "https://fondation-institut-agro.fr/campagne-cultivons-les-talents-2025/",
-   "date": "2025-11-20T08:32:47.000Z",
-   "summary": "Avec sa campagne “Cultivons les talents”, la Fondation de l’Institut Agro rejoint le Giving tuesday, mouvement mondial de la générosité.​ #Givingtuesday Porté par un collectif engagé d’associations…",
-   "id": "fon-campagne-cultivons-les-talents-2025",
-   "source": "fondation",
-   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2025/11/Visuel-actu-site-V2-1.avif",
    "firstSeen": "2026-10-21T00:00:00.000Z"
   }
  ]
