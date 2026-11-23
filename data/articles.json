@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-23T05:36:04.924Z",
+ "updatedAt": "2026-11-23T06:02:20.877Z",
  "sources": {
   "montpellier": {
    "ok": true,
@@ -18,24 +18,19 @@
    "failDays": 0
   },
   "institut": {
-   "ok": false,
+   "ok": true,
    "actus": 6,
    "agenda": 0,
-   "errors": [
-    "agenda : aucun contenu trouvé (la page a peut-être changé)"
-   ],
+   "errors": [],
    "count": 8,
-   "problem": "son agenda n'a pas pu être lu : la page ne contient plus de contenus lisibles (sa mise en page a peut-être changé)",
-   "failDays": 4,
-   "lastFailDay": "2026-11-23",
-   "failingSince": "2026-11-18"
+   "failDays": 0
   },
   "dijon": {
    "ok": true,
    "actus": 30,
-   "agenda": 0,
+   "agenda": 10,
    "errors": [],
-   "count": 28,
+   "count": 35,
    "failDays": 0
   },
   "fondation": {
@@ -169,6 +164,17 @@
    "seed": true
   },
   {
+   "kind": "agenda",
+   "title": "Envie de découvrir nos formations, rencontrons-nous !",
+   "url": "https://institut-agro-dijon.fr/agenda/envie-de-decouvrir-nos-formations-rencontrons-nous",
+   "date": "2026-11-20",
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/e/6/csm_IMG-20230225-WA0029_6091571da5.jpg",
+   "summary": "Vous êtes lycéen, élève de classe prépa, titulaire d'un bac + 1, + 2 ou + 3 ?",
+   "id": "dij-ag-envie-de-decouvrir-nos-formations-rencontrons-nous",
+   "source": "dijon",
+   "firstSeen": "2026-11-23T06:02:20.877Z"
+  },
+  {
    "kind": "actu",
    "title": "Les lives thématiques de l'Institut Agro Dijon",
    "url": "https://institut-agro-dijon.fr/actualites/les-lives-thematiques-de-linstittut-agro-dijon",
@@ -202,6 +208,17 @@
    "source": "rennes",
    "firstSeen": "2026-11-04T05:36:11.700Z",
    "noImage": true
+  },
+  {
+   "kind": "agenda",
+   "title": "Les lives thématiques de l'Institut Agro Dijon",
+   "url": "https://institut-agro-dijon.fr/agenda/les-lives-thematiques-de-linstittut-agro-dijon",
+   "date": "2026-11-19",
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/b/4/csm_JPO25_bandeauWEB_fc759c2478.png",
+   "summary": "Vous souhaitez en savoir plus sur les programmes et les voies d'admission de l'Institut Agro Dijon ?",
+   "id": "dij-ag-les-lives-thematiques-de-linstittut-agro-dijon",
+   "source": "dijon",
+   "firstSeen": "2026-11-23T06:02:20.877Z"
   },
   {
    "kind": "actu",
@@ -461,6 +478,17 @@
    "seed": true
   },
   {
+   "kind": "agenda",
+   "title": "Boissons fermentées : quelles sont les attentes des consommateurs ?",
+   "url": "https://institut-agro-dijon.fr/agenda/boissons-fermentees-quelles-sont-les-attentes-des-consommateurs",
+   "date": "2026-10-09",
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/f/a/csm_vignoble_84cd4aba92.png",
+   "summary": "Le marché des boissons fermentées peu ou pas alcoolisées (NoLo) est en pleine effervescence. En amont de son lancement, la Chaire Fermentation 3T …",
+   "id": "dij-ag-boissons-fermentees-quelles-sont-les-attentes-des-consommateurs",
+   "source": "dijon",
+   "firstSeen": "2026-11-23T06:02:20.877Z"
+  },
+  {
    "date": "2026-10-08T05:31:03.000Z",
    "kind": "actu",
    "source": "montpellier",
@@ -519,6 +547,18 @@
    "firstSeen": "2026-10-21T00:00:00.000Z"
   },
   {
+   "kind": "agenda",
+   "title": "AgroStat 2026 : la statistique et la science des données au service de l’agriculture et de l’agroalimentaire",
+   "url": "https://institut-agro-dijon.fr/agenda/agrostat-2026-la-statistique-et-la-science-des-donnees-au-service-de-lagriculture-et-de-lagroalimentaire",
+   "date": "2026-10-05",
+   "endDate": "2026-10-07",
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/7/d/csm_SPT_7695_4dcbfa500b.jpg",
+   "summary": "Nous avons participé au congrès AgroStat, organisé par le GS Agro-Industrie de la SFdS, en partenariat avec INRAE et…",
+   "id": "dij-ag-agrostat-2026-la-statistique-et-la-science-des-donnees-au-service-de-l",
+   "source": "dijon",
+   "firstSeen": "2026-11-23T06:02:20.877Z"
+  },
+  {
    "date": "2026-10-02",
    "kind": "actu",
    "source": "rennes",
@@ -564,6 +604,17 @@
    "image": "https://www.institut-agro-montpellier.fr/sites/supagro/files/styles/max_1440x940/public/media/2024/10/08/episodes-cevenols-site-mtp.png.webp?itok=MEHoPtiK",
    "firstSeen": "2026-10-21T00:00:00.000Z",
    "remote": true
+  },
+  {
+   "kind": "agenda",
+   "title": "Les nuits des chercheurs",
+   "url": "https://institut-agro-dijon.fr/agenda/les-nuits-des-chercheurs",
+   "date": "2026-09-24",
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/1/8/csm_Screenshot_2026-09-16_at_10-26-46_Nuits_des_chercheurs_2026_venez_ressentir_1001_%C3%A9motions___-_Nuit_europ%C3%A9enne_des_chercheurs_%C3%A0_Dijon_08cc8cdaa0.png",
+   "summary": "Joie, peur, dégoût, colère, surprise, stress ou tristesse… les émotions nous accompagnent à chaque instant. Elles colorent nos souvenirs, influent sur…",
+   "id": "dij-ag-les-nuits-des-chercheurs",
+   "source": "dijon",
+   "firstSeen": "2026-11-23T06:02:20.877Z"
   },
   {
    "date": "2026-09-23",
@@ -706,6 +757,17 @@
    "seed": true
   },
   {
+   "kind": "agenda",
+   "title": "Taxe d'apprentissage 2026 : votre impôt pousse ici",
+   "url": "https://institut-agro-dijon.fr/agenda/taxe-dapprentissage-2025-investissez-pour-lavenir",
+   "date": "2026-08-21",
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/0/9/csm_carouselLK3Pages_59ddacc578.png",
+   "summary": "La campagne de taxe d'apprentissage 2026 est en cours... Chaque année, les entreprises françaises ont la possibilité de flécher le solde de leur taxe…",
+   "id": "dij-ag-taxe-dapprentissage-2025-investissez-pour-lavenir",
+   "source": "dijon",
+   "firstSeen": "2026-11-23T06:02:20.877Z"
+  },
+  {
    "date": "2026-07-29T13:36:46.000Z",
    "kind": "actu",
    "source": "fondation",
@@ -808,6 +870,17 @@
    "id": "ia-odd-9e-monde",
    "image": "https://www.institut-agro.fr/sites/www.institut-agro.fr/files/styles/format_9_4_large_720x320_image_style/public/images/focus/act.png?itok=sH8NhEkz",
    "firstSeen": "2026-10-21T00:00:00.000Z"
+  },
+  {
+   "kind": "agenda",
+   "title": "Les secrets du bouchon de liège : comment l'oxygène entre dans votre bouteille de vin",
+   "url": "https://institut-agro-dijon.fr/agenda/les-secrets-du-bouchon-de-liege-comment-loxygene-entre-dans-votre-bouteille-de-vin",
+   "date": "2026-06-24",
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/0/d/csm_Photo_Chanut_Karbowiak_Dijon_cf9cfb8c3b.jpg",
+   "summary": "Pourquoi un vin vieillit-il si différemment selon la façon dont la bouteille est bouchée ? Les chercheurs de l’UMR PAM viennent d'apporter des…",
+   "id": "dij-ag-les-secrets-du-bouchon-de-liege-comment-loxygene-entre-dans-votre-bout",
+   "source": "dijon",
+   "firstSeen": "2026-11-23T06:02:20.877Z"
   },
   {
    "kind": "actu",
