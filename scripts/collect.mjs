@@ -271,6 +271,7 @@ const SOURCES = {
 
   institut: {
     prefix: "ia",
+    optionalAgenda: true, // la page d'accueil masque son bloc Agenda quand aucun événement n'est à venir
     async actus() {
       const base = "https://www.institut-agro.fr/fr/toutes-les-actualites";
       return listing(await get(base), base, /^\/fr\/toutes-les-actualites\/[^/]+\/?$/).slice(0, 12)
