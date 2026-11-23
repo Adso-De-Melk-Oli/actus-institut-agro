@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-20T13:33:26.265Z",
+ "updatedAt": "2026-11-23T05:36:04.924Z",
  "sources": {
   "montpellier": {
    "ok": true,
@@ -26,8 +26,8 @@
    ],
    "count": 8,
    "problem": "son agenda n'a pas pu être lu : la page ne contient plus de contenus lisibles (sa mise en page a peut-être changé)",
-   "failDays": 3,
-   "lastFailDay": "2026-11-20",
+   "failDays": 4,
+   "lastFailDay": "2026-11-23",
    "failingSince": "2026-11-18"
   },
   "dijon": {
@@ -155,6 +155,18 @@
    "source": "rennes",
    "firstSeen": "2026-11-10T05:35:35.189Z",
    "noImage": true
+  },
+  {
+   "kind": "actu",
+   "title": "Envie de découvrir nos formations, rencontrons-nous !",
+   "url": "https://institut-agro-dijon.fr/actualites/envie-de-decouvrir-nos-formations-rencontrons-nous",
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/e/6/csm_IMG-20230225-WA0029_ef4fb6814e.jpg",
+   "summary": "Retrouvez-nous sur les salons, nous vous donnerons toutes les informations qui vous permettront de connaître les concours d'entrée et les débouchés de l'Institut Agro Dijon. Le but : vous conseiller…",
+   "id": "dij-envie-de-decouvrir-nos-formations-rencontrons-nous",
+   "source": "dijon",
+   "firstSeen": "2026-10-24T14:19:18.677Z",
+   "date": "2026-11-20T15:18:00.000Z",
+   "seed": true
   },
   {
    "kind": "actu",
@@ -340,18 +352,6 @@
    "id": "fon-seminaire-boissons-fermentees-quelles-sont-les-attentes-des-consommate",
    "source": "fondation",
    "firstSeen": "2026-11-03T05:36:08.663Z"
-  },
-  {
-   "kind": "actu",
-   "title": "Envie de découvrir nos formations, rencontrons-nous !",
-   "url": "https://institut-agro-dijon.fr/actualites/envie-de-decouvrir-nos-formations-rencontrons-nous",
-   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/e/6/csm_IMG-20230225-WA0029_ef4fb6814e.jpg",
-   "summary": "Retrouvez-nous sur les salons, nous vous donnerons toutes les informations qui vous permettront de connaître les concours d'entrée et les débouchés de l'Institut Agro Dijon. Le but : vous conseiller…",
-   "id": "dij-envie-de-decouvrir-nos-formations-rencontrons-nous",
-   "source": "dijon",
-   "firstSeen": "2026-10-24T14:19:18.677Z",
-   "date": "2026-10-24T14:19:18.677Z",
-   "seed": true
   },
   {
    "date": "2026-10-24",
