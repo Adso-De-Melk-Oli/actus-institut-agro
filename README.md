@@ -14,7 +14,7 @@ Les actualités et l'agenda de l'Institut Agro, de ses écoles (Montpellier, Ren
 |---|---|
 | Montpellier | Flux RSS actus et agenda |
 | Fondation | Flux RSS + page Événements |
-| Institut Agro | Pages Actualités et Agenda (pas de flux RSS) |
+| Institut Agro | Page Actualités ; agenda lu sur la page d'accueil, quand elle en affiche (pas de flux RSS) |
 | Rennes-Angers | Pages Actualités et Agenda (flux RSS vide) |
 | Dijon | Flux RSS (actus ; ses événements quand le flux en contient) |
 
