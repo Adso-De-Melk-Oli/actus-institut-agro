@@ -292,9 +292,20 @@ const SOURCES = {
         // quelques entrées portent une date future (date d'un événement) : on garde alors le jour où l'actu est apparue
         .map(i => ({ kind: "actu", title: i.title, url: i.url, date: i.pubDate && new Date(i.pubDate) > NOW ? undefined : i.pubDate, image: i.image, summary: summarize(cleanDesc(i.text, i.title)) }));
     },
-    async agenda() {
-      const items = (await rss("https://institut-agro-dijon.fr/rss.xml")).filter(i => /\/agenda\//.test(i.url));
-      return events(items.map(i => ({ url: i.url, title: i.title, text: cleanDesc(i.text, i.title), image: i.image })));
+    async agenda() { // page Agenda (liste complète) + événements du flux RSS ; si l'une des deux manque, l'autre suffit
+      const base = "https://institut-agro-dijon.fr/agenda";
+      const cands = new Map();
+      let pageError;
+      try {
+        for (const x of listing(await get(base), base, /^\/agenda\/[^/]+\/?$/).slice(0, 12))
+          cands.set(x.url, { url: x.url, title: x.title, text: x.text, teaser: x.teaser, image: x.image });
+      } catch (e) { pageError = e; }
+      try {
+        for (const i of (await rss("https://institut-agro-dijon.fr/rss.xml")).filter(i => /\/agenda\//.test(i.url)))
+          if (!cands.has(i.url)) cands.set(i.url, { url: i.url, title: i.title, text: cleanDesc(i.text, i.title), image: i.image });
+      } catch (e) { if (pageError) throw pageError; }
+      if (!cands.size && pageError) throw pageError;
+      return events([...cands.values()]);
     },
   },
 
