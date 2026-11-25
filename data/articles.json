@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-24T05:36:08.161Z",
+ "updatedAt": "2026-11-25T05:35:57.502Z",
  "sources": {
   "montpellier": {
    "ok": true,
@@ -14,7 +14,7 @@
    "actus": 5,
    "agenda": 4,
    "errors": [],
-   "count": 19,
+   "count": 22,
    "failDays": 0
   },
   "institut": {
@@ -38,7 +38,7 @@
    "actus": 10,
    "agenda": 1,
    "errors": [],
-   "count": 14,
+   "count": 16,
    "failDays": 0
   }
  },
@@ -69,6 +69,18 @@
   },
   {
    "kind": "agenda",
+   "title": "Soutenance de thèse d'Élodie Bertrou",
+   "url": "https://www.institut-agro-rennes-angers.fr/agenda/soutenance-de-these-delodie-bertrou",
+   "date": "2026-12-14",
+   "place": "Amphithéâtre Hildegarde Von Bingen (F), campus d'Angers",
+   "summary": "Dynamiques de relocalisation : une approche territorialisée des filières agricoles alternatives – l’exemple du sarrasin",
+   "id": "ren-ag-soutenance-de-these-delodie-bertrou",
+   "source": "rennes",
+   "firstSeen": "2026-11-25T05:35:57.502Z",
+   "noImage": true
+  },
+  {
+   "kind": "agenda",
    "title": "Soutenance de thèse de Kofivi Mawuenam Dzegle",
    "url": "https://www.institut-agro-rennes-angers.fr/agenda/soutenance-de-these-de-kofivi-mawuenam-dzegle",
    "date": "2026-12-04",
@@ -81,6 +93,18 @@
   },
   {
    "kind": "agenda",
+   "title": "Soutenance de thèse de Juan Carlos Ariute Oliveira",
+   "url": "https://www.institut-agro-rennes-angers.fr/agenda/soutenance-de-these-de-juan-carlos-ariute-oliveira",
+   "date": "2026-12-03",
+   "place": "Université Fédérale du Minas Gerais - Brésil",
+   "summary": "Prospection de souches bactériennes probiotiques prometteuses pour l’alimentation et la santé par une approche multi-omique",
+   "id": "ren-ag-soutenance-de-these-de-juan-carlos-ariute-oliveira",
+   "source": "rennes",
+   "firstSeen": "2026-11-25T05:35:57.502Z",
+   "noImage": true
+  },
+  {
+   "kind": "agenda",
    "title": "Soutenance de thèse de Julie Legrix",
    "url": "https://www.institut-agro-rennes-angers.fr/agenda/soutenance-de-these-de-julie-legrix",
    "date": "2026-12-01",
@@ -89,6 +113,29 @@
    "id": "ren-ag-soutenance-de-these-de-julie-legrix",
    "source": "rennes",
    "firstSeen": "2026-11-19T05:36:02.148Z",
+   "noImage": true
+  },
+  {
+   "kind": "agenda",
+   "title": "Les lives thématiques de l'Institut Agro Dijon",
+   "url": "https://institut-agro-dijon.fr/agenda/les-lives-thematiques-de-linstittut-agro-dijon",
+   "date": "2026-12-01",
+   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/b/4/csm_JPO25_bandeauWEB_fc759c2478.png",
+   "summary": "Vous souhaitez en savoir plus sur les programmes et les voies d'admission de l'Institut Agro Dijon ?",
+   "id": "dij-ag-les-lives-thematiques-de-linstittut-agro-dijon",
+   "source": "dijon",
+   "firstSeen": "2026-11-23T06:02:20.877Z"
+  },
+  {
+   "kind": "agenda",
+   "title": "Soutenance de thèse de Romaric Jac",
+   "url": "https://www.institut-agro-rennes-angers.fr/agenda/soutenance-de-these-de-romaric-jac",
+   "date": "2026-12-01",
+   "place": "Université du Québec à Rimouski - Canada",
+   "summary": "Structure spatial de la population de capelan du Golfe du Saint-Laurent : variabilité ontogénique, temporelle et déterminants environnementaux",
+   "id": "ren-ag-soutenance-de-these-de-romaric-jac",
+   "source": "rennes",
+   "firstSeen": "2026-11-25T05:35:57.502Z",
    "noImage": true
   },
   {
@@ -126,6 +173,28 @@
    "source": "rennes",
    "firstSeen": "2026-11-20T13:33:26.265Z",
    "noImage": true
+  },
+  {
+   "kind": "actu",
+   "title": "Campagne cultivons les talents #2",
+   "url": "https://fondation-institut-agro.fr/campagne-cultivons-les-talents-2/",
+   "date": "2026-11-24T13:05:10.000Z",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/11/PDF-CARROUSEL-LINKEDIN-_-POST-FACEBOOK.avif",
+   "summary": "Pour la deuxième année consécutive, la Fondation de l’Institut Agro lance sa campagne “Cultivons les talents”. Elle rejoint ainsi le Giving tuesday, mouvement mondial de la générosité.​…",
+   "id": "fon-campagne-cultivons-les-talents-2",
+   "source": "fondation",
+   "firstSeen": "2026-11-25T05:35:57.502Z"
+  },
+  {
+   "kind": "actu",
+   "title": "L’agroéquipement grandeur nature : nos étudiants à l’EIMA de Bologne",
+   "url": "https://fondation-institut-agro.fr/lagroequipement-grandeur-nature-nos-etudiants-a-leima-de-bologne/",
+   "date": "2026-11-24T08:11:20.000Z",
+   "summary": "Du 11 au 14 novembre, dix étudiants de l’Institut Agro Dijon ont plongé au cœur des innovations agricoles en participant à l’EIMA de Bologne, l’un des grands rendez-vous internationaux du machinisme…",
+   "id": "fon-lagroequipement-grandeur-nature-nos-etudiants-a-leima-de-bologne",
+   "source": "fondation",
+   "firstSeen": "2026-11-25T05:35:57.502Z",
+   "image": "https://fondation-institut-agro.fr/wp-content/uploads/2026/11/IMG_3574-tech.avif"
   },
   {
    "kind": "agenda",
@@ -208,17 +277,6 @@
    "source": "rennes",
    "firstSeen": "2026-11-04T05:36:11.700Z",
    "noImage": true
-  },
-  {
-   "kind": "agenda",
-   "title": "Les lives thématiques de l'Institut Agro Dijon",
-   "url": "https://institut-agro-dijon.fr/agenda/les-lives-thematiques-de-linstittut-agro-dijon",
-   "date": "2026-11-19",
-   "image": "https://institut-agro-dijon.fr/fileadmin/_processed_/b/4/csm_JPO25_bandeauWEB_fc759c2478.png",
-   "summary": "Vous souhaitez en savoir plus sur les programmes et les voies d'admission de l'Institut Agro Dijon ?",
-   "id": "dij-ag-les-lives-thematiques-de-linstittut-agro-dijon",
-   "source": "dijon",
-   "firstSeen": "2026-11-23T06:02:20.877Z"
   },
   {
    "kind": "actu",
