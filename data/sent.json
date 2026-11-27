@@ -1,8 +1,8 @@
 {
- "digestFor": "2026-11-26",
- "sentAt": "2026-11-26T06:00:01.856Z",
- "subject": "Actus Institut Agro · jeudi 26 novembre · 2 événements sur les campus aujourd'hui",
- "windowTo": "2026-11-26T06:00:00.000Z",
+ "digestFor": "2026-11-27",
+ "sentAt": "2026-11-27T06:00:02.084Z",
+ "subject": "Actus Institut Agro · vendredi 27 novembre · 1 événement sur les campus aujourd'hui, 1 actu, 1 date d'agenda",
+ "windowTo": "2026-11-27T06:00:00.000Z",
  "alerts": {
   "institut": {
    "since": "2026-11-18",
