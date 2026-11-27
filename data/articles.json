@@ -1,20 +1,20 @@
 {
- "updatedAt": "2026-11-26T05:35:42.700Z",
+ "updatedAt": "2026-11-27T05:36:02.529Z",
  "sources": {
   "montpellier": {
    "ok": true,
-   "actus": 8,
+   "actus": 7,
    "agenda": 10,
    "errors": [],
-   "count": 23,
+   "count": 24,
    "failDays": 0
   },
   "rennes": {
    "ok": true,
    "actus": 5,
-   "agenda": 4,
+   "agenda": 3,
    "errors": [],
-   "count": 22,
+   "count": 23,
    "failDays": 0
   },
   "institut": {
@@ -26,20 +26,31 @@
    "failDays": 0
   },
   "dijon": {
-   "ok": true,
-   "actus": 30,
-   "agenda": 10,
-   "errors": [],
+   "ok": false,
+   "actus": 0,
+   "agenda": 0,
+   "errors": [
+    "actus : aucun contenu trouvé (la page a peut-être changé)"
+   ],
    "count": 35,
-   "failDays": 0
+   "problem": "ses actus n'ont pas pu être lues : la page ne contient plus de contenus lisibles (sa mise en page a peut-être changé)",
+   "failDays": 1,
+   "lastFailDay": "2026-11-27",
+   "failingSince": "2026-11-27"
   },
   "fondation": {
-   "ok": true,
-   "actus": 10,
-   "agenda": 1,
-   "errors": [],
+   "ok": false,
+   "actus": 0,
+   "agenda": 0,
+   "errors": [
+    "actus : aucun contenu trouvé (la page a peut-être changé)",
+    "agenda : aucun contenu trouvé (la page a peut-être changé)"
+   ],
    "count": 16,
-   "failDays": 0
+   "problem": "la page ne contient plus de contenus lisibles (sa mise en page a peut-être changé)",
+   "failDays": 1,
+   "lastFailDay": "2026-11-27",
+   "failingSince": "2026-11-27"
   }
  },
  "articles": [
@@ -78,6 +89,18 @@
    "source": "rennes",
    "firstSeen": "2026-11-25T05:35:57.502Z",
    "noImage": true
+  },
+  {
+   "kind": "agenda",
+   "title": "Vinidays, lancement de la 1ère édition du festival dédié aux savoirs et aux solutions sur la vigne et le vin",
+   "url": "https://www.institut-agro-montpellier.fr/agenda/vinidays-festival-vigne-vin",
+   "date": "2026-12-07",
+   "endDate": "2026-12-11",
+   "image": "https://www.institut-agro-montpellier.fr/sites/supagro/files/styles/max_1440x940/public/media/2026/11/26/header-vinidays-2026.jpg.webp?itok=INVuedqZ",
+   "summary": "Une série d’événements complémentaires sur la thématique de la vigne et du vin seront réunis sous une bannière commune pour proposer au grand public et aux professionnels de la filière, des temps…",
+   "id": "mtp-ag-vinidays-festival-vigne-vin",
+   "source": "montpellier",
+   "firstSeen": "2026-11-27T05:36:02.529Z"
   },
   {
    "kind": "agenda",
@@ -173,6 +196,17 @@
    "source": "rennes",
    "firstSeen": "2026-11-20T13:33:26.265Z",
    "noImage": true
+  },
+  {
+   "kind": "actu",
+   "title": "Salon Studyrama à Angers",
+   "url": "https://www.institut-agro-rennes-angers.fr/actualites/salon-studyrama-angers",
+   "date": "2026-11-26",
+   "image": "https://www.institut-agro-rennes-angers.fr/sites/www.institut-agro-rennes-angers.fr/files/images/actualites/bandeaux/bandeau-studyrama-2026.png",
+   "id": "ren-salon-studyrama-angers",
+   "source": "rennes",
+   "summary": "",
+   "firstSeen": "2026-11-27T05:36:02.529Z"
   },
   {
    "kind": "actu",
